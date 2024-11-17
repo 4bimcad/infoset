@@ -323,8 +323,8 @@ h6 {
   }
 
   .navmenu .dropdown ul a {
-    padding: 10px 20px;
-    font-size: 15px;
+    padding: 5px 10px;
+    font-size: 14px;
     text-transform: none;
     color: var(--nav-dropdown-color);
   }
