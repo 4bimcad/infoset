@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calcule de manera sencilla la rentabilidad de la producción de oro artesanal con nuestras herramientas interactivas. Obtén análisis detallados de costos, ingresos y beneficios.">
+    <meta name="keywords" content="cálculo de rentabilidad, producción de oro, minería artesanal, costos de producción, beneficios de minería, oro artesanal, herramientas de minería">
+    <meta name="author" content="Stanislav Tsvitkov">
+    <meta name="robots" content="index, follow">
+    <title>Cálculo de Rentabilidad de Producción de Oro Artesanal - INFOSET</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"  rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/img/favicon.png">
+
+    
+
+</head>
+
+<body>
+
+<!-- Autor y Diseñador - Stanislav Tsvitkov -->
+
+    <!-- Header -->
+    <header class="bg-light text-white py-3" style="background-color: #1742a4;">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Логотип или название сайта -->
+                <a href="index.html" class="d-flex align-items-center text-decoration-none">
+                    <img src="assets/img/logo.png" alt="INFOSET" style="height: 35px; margin-right: 10px;">
+                </a>
+
+                <!-- Навигационное меню -->
+                <nav>
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a href="#" onclick="openVideo()" class="nav-link text-danger bordered-link"><b>COMO USAR <i class="bi bi-patch-question"></i></b></a>
+                        </li> 
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+        <!-- Блок для видео, который будет показываться поверх страницы -->
+        <div id="videoContainer" style="display:none;" onclick="closeVideo(event)">
+            <div id="videoWrapper" onclick="event.stopPropagation();">
+                <span class="close" onclick="closeVideo(event)">Cerrar</span>
+                <video id="video" width="100%" controls>
+                    <source src="assets/videos/como_usar_calculadora_de_rentabilidad.mp4" type="video/mp4"> <!-- Укажите свой путь к видео -->
+                    Su navegador no soporta vídeo.
+                </video>
+            </div>
+        </div>
+
+
+    <div class="container mt-4" id="archivo">
+        <h4 class="text-center mb-4">CALCULO DE RENTABILIDAD DE PRODUCCION DE ORO ARTESANAL</h4>
+
+
+        <div class="row">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <strong>Cálculo de Gastos</strong>
+                </div>
+
+                <div class="card-body">
+
+
+                    <!-- GASTOS -->
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-fuel-pump"></i>&nbsp; GASTOS DE COMBUSTIBLE POR DIA:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">gal</span>
+                                <input type="number" class="form-control" placeholder="0" id="gastos_de_petroleo_por_dia">
+                                <span class="input-group-text">Galones por Día</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-cash-coin"></i>&nbsp; PRECIO DE 1 GALON DE COMBUSTIBLE:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">S/.</span>
+                                <input type="number" class="form-control" placeholder="0" id="precio_1_galon_de_petroleo">
+                                <span class="input-group-text">Soles por Galón</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-exclamation-circle-fill"></i>&nbsp; TOTAL GASTOS DE COMBUSTIBLE POR DIA:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">S/.</span>
+                                <input type="number" class="form-control" placeholder="0" id="total_gastos_de_petroleo_por_dia" readonly>
+                                <span class="input-group-text">Soles por Día</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-people"></i>&nbsp; TOTAL GASTOS DE SUELDO DE TRABAJADORES POR DIA:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">S/.</span>
+                                <input type="number" class="form-control" placeholder="0" id="total_de_sueldo_de_trabajadores_por_dia">
+                                <span class="input-group-text">Soles por Día</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-cart4"></i>&nbsp; TOTAL GASTOS DE COMIDA POR DIA:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">S/.</span>
+                                <input type="number" class="form-control" placeholder="0" id="total_gastos_de_comida_por_dia">
+                                <span class="input-group-text">Soles por Día</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-gear-wide"></i>&nbsp; TOTAL ALQUILER DE MAQUINARIA POR DIA:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">S/.</span>
+                                <input type="number" class="form-control" placeholder="0" id="total_alquiler_maquina_por_dia">
+                                <span class="input-group-text">Soles por Día</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-wallet2"></i>&nbsp; OTROS GASTOS POR DIA:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">S/.</span>
+                                <input type="number" class="form-control" placeholder="0" id="otros_gastos_por_dia">
+                                <span class="input-group-text">Soles por Día</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row text-danger">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-exclamation-circle-fill"></i>&nbsp; TOTAL GASTOS POR DIA:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text text-danger">S/.</span>
+                                <input type="number" class="form-control text-danger" placeholder="0" id="total_gastos_por_dia" readonly>
+                                <span class="input-group-text text-danger">Soles por Día</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">
+                    <strong>Cálculo de Beneficio</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- BENEFICIO -->
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-bar-chart-line"></i>&nbsp; PRODUCCION DE ORO POR DIA:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">g</span>
+                                <input type="number" class="form-control" placeholder="0" id="produccion_de_oro_por_dia">
+                                <span class="input-group-text">Gramos por Día</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-cash-coin"></i>&nbsp; PRECIO DE ORO POR 1 GRAMO:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">S/.</span>
+                                <input type="number" class="form-control" placeholder="0" id="precio_de_oro_por_1_gramo">
+                                <span class="input-group-text">Soles por Gramo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row text-success">
+                        <div class="d-flex col-md-6">
+                            <i class="bi bi-question-circle-fill"></i>&nbsp; TOTAL BENEFICIO POR DIA:
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text text-success" >S/.</span>
+                                <input type="number" class="form-control text-success" placeholder="0" id="total_beneficio_por_dia" readonly>
+                                <span class="input-group-text text-success">Soles por Día</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <strong>Resumen</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center justify-content-center col-md-12 form-section row text-primary">
+                        <div class="d-flex col-md-6">
+                            <b><i class="bi bi-question-circle-fill"></i>&nbsp; TOTAL RENTABILIDAD:</b>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text text-primary" style="font-weight: 600;">S/.</span>
+                                <input type="number" class="form-control text-primary" placeholder="0" id="total_rentabilidad" style="font-weight: 600;" readonly >
+                                <span class="input-group-text text-primary" style="font-weight: 600;">Soles por Día</span>
+                            </div>
+                        </div>
+                    </div>
+                    <span id="time"></span>
+                    <div>
+                        Precio de ORO (Au): <span id="gold_price_online" style="color: #c99400;">Cargando...</span>
+                    </div>
+                    <div>
+                        Precio de ORO (Au): <span id="gold_price_online_2" style="color: #c99400;">Cargando...</span>
+                    </div>
+                    <div>
+                        <span id="update_time"></span>
+                    </div>
+                    <div>
+                        1 USD = <span id="precio_de_usd_a_pen" class="text-primary" >...</span> Nuevos Soles (PEN) 
+                    </div>
+                    <div>
+                        <b>Precio de ORO (Au): <span id="precio_oro_gramo_a_pen" style="color: #c99400;">...</span><span style="color: #c99400;"> Nuevos Soles (PEN) por Gramo</span> </b> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="container mt-4">
+        <button class="btn btn-primary" onclick="printPage()"><i class="bi bi-printer-fill"></i> Imprimir</button>
+        <a href="#" id="aviso-link" class="btn btn-outline-secondary"><i class="bi bi-file-earmark-text"></i> Aviso Legal</a>
+        <a href="http://infoset.org.pe/contactos.html" id="aviso-link" class="btn btn-outline-success" target="_blank">Comprar <i class="bi bi-android2"></i> APK Archivo (Versión Offline para Smartphone, S./49.00 Soles)</a>
+    </div>
+
+    <script>
+            function printPage() {
+        window.print(); // Открывает встроенное окно печати в браузере
+        }
+    </script>
+
+
+    <div id="dynamic-alert" class="container mt-4 alert alert-light alert-dismissible fade show alert-dynamic d-none" role="alert">
+        <div class="aviso-legal">
+            <h5><strong>Aviso Legal</strong></h5>
+            <p>Este cálculo de rentabilidad de producción de oro artesanal ha sido desarrollado para apoyar a los <strong>mineros artesanales de Perú</strong>, especialmente de las regiones de <strong>Madre de Dios, Cusco</strong> y otras áreas donde la minería artesanal es una actividad económica clave.</p>
+        
+            <p>El propósito principal de este calculador es proporcionar una herramienta práctica que permita a los mineros:</p>
+            <ul>
+                <li>Planificar su presupuesto de manera más eficiente.</li>
+                <li>Estimar los costos de producción y beneficios.</li>
+                <li>Optimizar la gestión de sus recursos financieros y materiales.</li>
+                <li>Tomar decisiones informadas para mejorar la rentabilidad de su actividad minera.</li>
+            </ul>
+        
+            <p>Los cálculos en este sistema están diseñados para realizarse en <strong>soles peruanos (PEN)</strong>, pero la herramienta no está vinculada directamente a ninguna moneda en línea. Esto significa que puede ser utilizada por usuarios de otros países que deseen adaptar los cálculos a sus propias monedas o sistemas económicos.</p>
+        
+            <h5><strong>Restricciones y Derechos de Autor</strong></h5>
+            <p>El uso de este calculador es exclusivo para fines personales y educativos. <strong>Está prohibido copiar el código completo o partes del mismo sin el permiso expreso del autor.</strong> Cualquier infracción será tratada conforme a las leyes de derechos de autor.</p>
+        
+            <h5><strong>Ventajas de Usar Este Calculador</strong></h5>
+            <p>Este calculador está diseñado para ofrecer múltiples beneficios, entre los cuales se incluyen:</p>
+            <ul>
+                <li>Facilidad de uso gracias a su interfaz interactiva y amigable.</li>
+                <li>Capacidad para realizar cálculos rápidos y precisos.</li>
+                <li>Flexibilidad para adaptarse a diferentes escenarios de producción minera.</li>
+                <li>Mejor planificación financiera y organización del trabajo diario.</li>
+                <li>Herramienta útil tanto para pequeños como medianos mineros.</li>
+            </ul>
+        
+            <h5><strong>Cómo Utilizar el Calculador</strong></h5>
+            <p>Para utilizar el calculador, simplemente complete los campos requeridos relacionados con costos de producción, ingresos y otros datos relevantes. Una vez ingresados los datos, podrá obtener un análisis claro de:</p>
+            <ul>
+                <li>Sus costos diarios de operación.</li>
+                <li>Los beneficios potenciales por día.</li>
+                <li>El margen de rentabilidad total de sus actividades.</li>
+            </ul>
+            <p>Con esta información, los mineros podrán mejorar su planificación diaria y tomar decisiones más estratégicas en cuanto a la asignación de recursos y la rentabilidad de sus proyectos.</p>
+            
+            <p>Es posible que los centavos no se muestren correctamente, ya que la fórmula calcula los datos obtenidos a través de la API y luego redondea los resultados. Los redondeos pueden influir en el resultado final, especialmente si lo vuelve a calcular con una calculadora.</p>
+
+            <p>Si tiene preguntas o necesita soporte, no dude en contactar al autor de este proyecto.</p>
+            <p>Email: <b>info@infoset.org.pe</b></p>
+        </div>
+        <button type="button" class="btn-close" aria-label="Close"></button>
+    </div>
+
+    <script>
+        // Логика для показа и скрытия alert
+        document.getElementById('aviso-link').addEventListener('click', function (e) {
+            e.preventDefault(); // Предотвращаем стандартное действие ссылки
+            const alertElement = document.getElementById('dynamic-alert');
+            alertElement.classList.remove('d-none'); // Показываем alert
+        });
+
+        // Закрытие alert при клике на кнопку "закрыть"
+        document.querySelector('#dynamic-alert .btn-close').addEventListener('click', function () {
+            document.getElementById('dynamic-alert').classList.add('d-none'); // Скрываем alert
+        });
+    </script>
+    
+
+
+
+    <!-- Footer -->
+    <footer class="text-white py-4 mt-5" style="background-color: #1742a4;">
+        <div class="container">
+            </div>
+            <!-- Авторские права -->
+            <div class="text-center mt-4">
+                <p>&copy; 2024 <a href="index.html" class="text-white text-decoration-none" target="_blank">INFOSET</a> | Todos los derechos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/calculadora_rentabilidad_oro/script.js"></script>
+    <script src="assets/js/calculadora_rentabilidad_oro/script-2.js"></script>
+    <script src="assets/js/calculadora_rentabilidad_oro/script-3.js"></script>
+    <script src="assets/js/calculadora_rentabilidad_oro/script-4.js"></script>
+    <script src="assets/js/calculadora_rentabilidad_oro/script-5.js"></script>
+</body>
+
+</html>
