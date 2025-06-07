@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Precios del Oro y la Plata</title>
+  <!-- Подключаем стили -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon-192x192.png">
+</head>
+<body>
+  <div class="main-container">
+    <!-- Контейнер для цен на золото и серебро -->
+  <div class="gold-container">
+    <div class="price-container">
+      <span class="metal-text">Oro (Au):</span>
+      <span id="gold-price" class="price">Cargando...</span>
+    </div>
+  </div>
+  <div class="silver-container">
+    <div class="price-container">
+      <span class="metal-text">Plata (Ag):</span>
+      <span id="silver-price" class="price">Cargando...</span>
+    </div>
+  </div>
+   <!-- Обновляем время -->
+  <div class="small-text">
+    <span>Hora actualizada:</span>
+    <span id="update-time">...</span>
+  </div>
+  <!-- Ссылка на website -->
+  <div class="link-text">
+    <a id="buy-link" href="http://infoset.org.pe" target="_blank">Desarrollado por INFOSET</a>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+    </div>
+  </div>
+  <!-- Подключаем JS для работы расширения -->
+  <script src="jquery.min.js"></script>
+  <script src="sw.js"></script>
+  <script src="popup.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <script src="theme-switcher.js"></script>
+</body>
+</html>

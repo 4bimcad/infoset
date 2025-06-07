@@ -1,0 +1,104 @@
+/* Основные стили для всех тем */
+body {
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    mmargin: 0 auto;
+    padding: 5px;
+    box-sizing: border-box;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#buy-link {
+    color: #4f4a4a;
+    transition: color 0.3s;
+}
+
+.main-container {
+    width: 50%;
+    min-height: 130px;
+    /* Остальные ваши стили */
+}
+
+.price-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.gold-container {
+    background-color: #f3d19b; /* Золотой фон для золота */
+    color: black;
+    border-radius: 7px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.silver-container {
+    background-color: #d3d6e2; /* Серый фон для серебра */
+    color: black;
+    border-radius: 7px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.small-text {
+    font-size: 10px;
+    color: black;
+    text-align: right;
+    transition: color 0.3s;
+}
+
+.link-text {
+    display: flex;
+    font-size: 8px;
+    color: blue;
+    justify-content: right;
+    height: 10px;
+    gap: 3px; /* Расстояние между чекбоксом и ссылкой */
+}
+
+.price {
+    font-weight: 700;
+    font-size: 16px;
+    text-align: right;
+}
+
+.metal-text {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+/* Стили для светлой темы */
+.bg-light {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Стили для темной темы */
+.bg-dark {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.bg-dark .gold-container {
+    background-color: #c1a264; /* Темный оттенок золота */
+    color: white;
+}
+
+.bg-dark .silver-container {
+    background-color: #8b8c96; /* Темный оттенок серебра */
+    color: white;
+}
+
+.bg-dark #buy-link {
+    color: #a6a6a6;
+}
+
+.bg-dark .small-text {
+    color: #cccccc;
+}
