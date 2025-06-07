@@ -24,7 +24,7 @@
   "screenshots": [
   {
     "src": "./screen.png",
-    "screens": "792x292",
+    "screens": "1584x584",
     "type": "image/png",
     "form_factor": "wide"
   },
