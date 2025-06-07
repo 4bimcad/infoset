@@ -8,12 +8,12 @@
   "theme_color": "#000000",  
   "icons": [
     {
-      "src": "/icon-192x192.png",  
+      "src": "./icon-192x192.png",  
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/icon-512x512.png",  
+      "src": "./icon-512x512.png",  
       "sizes": "512x512",
       "type": "image/png"
     }
@@ -22,10 +22,16 @@
   "service_worker": "sw.js" ,
   "screenshots": [
   {
-    "src": "/screen.png",
+    "src": "./screen.png",
     "screens": "1920x1080",
     "type": "image/png",
     "form_factor": "wide"
-  }
+  },
+  {
+      "src": "./screenshot-mobile.png",
+      "type": "image/png",
+      "sizes": "670x670",
+      "form_factor": "narrow"
+    }
 ]
 }
