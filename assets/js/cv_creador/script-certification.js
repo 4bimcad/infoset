@@ -12,16 +12,16 @@ function addCertificate() {
 
     // Вставляем поля ввода
     formDiv.innerHTML = `
-        <input type="text" id="certInstitution${certificationCount}" class="w-full border p-2 rounded mb-2" placeholder="Institution name" oninput="updateCertificationPreview()">
+        <input type="text" id="certInstitution${certificationCount}" class="w-full border p-2 rounded mb-2" placeholder="Nombre de la institución" oninput="updateCertificationPreview()">
 
-        <input type="text" id="certName${certificationCount}" class="w-full border p-2 rounded mb-2" placeholder="Certificate title" oninput="updateCertificationPreview()">
+        <input type="text" id="certName${certificationCount}" class="w-full border p-2 rounded mb-2" placeholder="Título del certificado" oninput="updateCertificationPreview()">
 
-        <input type="text" id="certYear${certificationCount}" class="w-full border p-2 rounded mb-2" placeholder="Year of completion" oninput="updateCertificationPreview()">
+        <input type="text" id="certYear${certificationCount}" class="w-full border p-2 rounded mb-2" placeholder="Año de finalización" oninput="updateCertificationPreview()">
 
-        <input type="text" id="certURL${certificationCount}" class="w-full border p-2 rounded mb-2" placeholder="Link to certificate (optional)" oninput="updateCertificationPreview()">
+        <input type="text" id="certURL${certificationCount}" class="w-full border p-2 rounded mb-2" placeholder="Enlace al certificado (opcional)" oninput="updateCertificationPreview()">
 
         <!-- Кнопка удаления сертификата -->
-        <button onclick="removeCertificate(${certificationCount})" class="bg-red-500 text-white px-2 py-2 rounded-md mt-2">Remove</button>
+        <button onclick="removeCertificate(${certificationCount})" class="bg-red-500 text-white px-2 py-2 rounded-md mt-2">Eliminar</button>
     `;
 
     container.appendChild(formDiv); // Добавляем форму в контейнер

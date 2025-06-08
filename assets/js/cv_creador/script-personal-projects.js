@@ -7,13 +7,13 @@ function addProject() {
     container.setAttribute('id', `project${projectCount}`);
 
     container.innerHTML = `
-        <input type="text" id="title${projectCount}" class="w-full border p-2 rounded mb-2" placeholder="Title" oninput="updateProjectsPreview()">
+        <input type="text" id="title${projectCount}" class="w-full border p-2 rounded mb-2" placeholder="Título" oninput="updateProjectsPreview()">
         
-        <input type="text" id="desc${projectCount}" class="w-full border p-2 rounded mb-2" placeholder="Description" oninput="updateProjectsPreview()">
+        <input type="text" id="desc${projectCount}" class="w-full border p-2 rounded mb-2" placeholder="Descripción" oninput="updateProjectsPreview()">
         
         <input type="text" id="link${projectCount}" class="w-full border p-2 rounded mb-2" placeholder="https://example.com" oninput="updateProjectsPreview()">
         
-        <button onclick="removeProject(${projectCount})" class="bg-red-500 text-white px-4 py-1 rounded-md text-sm">Remove</button>
+        <button onclick="removeProject(${projectCount})" class="bg-red-500 text-white px-4 py-1 rounded-md text-sm">Eliminar</button>
     `;
 
     document.getElementById('projectsForms').appendChild(container);

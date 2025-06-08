@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create CV Free Online</title>
+    <title>CV Creador Gratis - INFOSET.ORG.PE</title>
     <link href="css/styles.css" rel="stylesheet">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="assets/img/Logo Minimal.jpg">
 
 </head>
 <body class="bg-gray-100 p-6">
@@ -17,84 +17,84 @@
 
     <div class="w-full md:w-1/4 bg-white p-5 shadow-lg rounded-md print:hidden">
 
-        <label class="block text-sm"><strong>Name</strong></label>
-        <input type="text" id="nameInput" class="w-full border p-2 rounded mb-2" oninput="updateName()" value="JOHN">
-        <label class="block text-sm"><strong>Surname</strong></label>
-        <input type="text" id="surnameInput" class="w-full border p-2 rounded mb-2" oninput="updateSurname()" value="DOE">
-        <label class="block text-sm"><strong>Occupation</strong></label>
-        <input type="text" id="occupationInput" class="w-full border p-2 rounded mb-2" oninput="updateOccupation()" value="Engineer">
-        <label class="block text-sm"><strong>Contacts</strong></label>
-        <input type="text" id="contactsInput" class="w-full border p-2 rounded mb-2" oninput="updateContacts()" value="+1 963 255 2372 | youremail@gmail.com | New Yor, USA">
+        <label class="block text-sm"><strong>Nombres</strong></label>
+        <input type="text" id="nameInput" class="w-full border p-2 rounded mb-2" oninput="updateName()" value="MARK">
+        <label class="block text-sm"><strong>Apellidos</strong></label>
+        <input type="text" id="surnameInput" class="w-full border p-2 rounded mb-2" oninput="updateSurname()" value="BERNARD">
+        <label class="block text-sm"><strong>Profesión</strong></label>
+        <input type="text" id="occupationInput" class="w-full border p-2 rounded mb-2" oninput="updateOccupation()" value="Ingeniero">
+        <label class="block text-sm"><strong>Contactos</strong></label>
+        <input type="text" id="contactsInput" class="w-full border p-2 rounded mb-2" oninput="updateContacts()" value="+51 963 255 272 | tucorreo@gmail.com | Arequipa, Peru">
 
 
-        <label class="block text-sm"><strong>Professional Summary Title</strong></label>
-        <input type="text" id="profsumtitleInput" class="w-full border p-2 rounded mb-2 mb-2" oninput="updateProfsumtitle()" value="Professional Summary">
-        <label class="block text-sm"><strong>Professional Summary Text</strong></label>
-        <textarea id="profsumtextInput" class="w-full border p-2 rounded h-30" oninput="updateProfsumtext()">Experienced and versatile professional with a strong background in mining production, installation and calibration of mining equipment. Expert in reserve calculations and profitability analysis in Excel. Proficient in construction documentation, estimates, and planning using AutoCAD. Equally comfortable in both engineering roles and hands-on tasks, including working with tools and performing manual labor when needed.</textarea>
-        <label class="block text-sm"><strong>Work History</strong></label>
-        <input type="text" id="workhistorytitleInput" class="w-full border p-2 rounded mb-2" oninput="updateWorkhistorytitle()" value="Work History">
-        <label class="block text-sm"><strong>Experience</strong></label>
+        <label class="block text-sm"><strong>Título del Resumen profesional</strong></label>
+        <input type="text" id="profsumtitleInput" class="w-full border p-2 rounded mb-2 mb-2" oninput="updateProfsumtitle()" value="Resumen Profesional">
+        <label class="block text-sm"><strong>Texto de Resumen profesional</strong></label>
+        <textarea id="profsumtextInput" class="w-full border p-2 rounded h-30" oninput="updateProfsumtext()">Profesional experimentado y versátil con sólida experiencia en producción minera, instalación y calibración de equipos mineros. Experto en cálculos de reservas y análisis de rentabilidad en Excel. Dominio de la documentación de construcción, estimaciones y planificación con AutoCAD. Se desenvuelve con facilidad tanto en funciones de ingeniería como en tareas prácticas, incluyendo el manejo de herramientas y la realización de trabajos manuales cuando es necesario.</textarea>
+        <label class="block text-sm"><strong>Historial laboral</strong></label>
+        <input type="text" id="workhistorytitleInput" class="w-full border p-2 rounded mb-2" oninput="updateWorkhistorytitle()" value="Historial laboral">
+        <label class="block text-sm"><strong>Experiencia</strong></label>
 
         <!-- ADD Expirience -->
 
         <!-- BUTTON -->
-        <button onclick="addExperience()" class="bg-blue-500 text-white px-2 py-2 rounded-md mb-2 flex items-center gap-1">
+        <button onclick="addExperience()" class="bg-blue-500 text-white px-2 py-2 rounded-md mb-2 flex items-center gap-1 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            Add Experience
+            Añadir Experiencia
         </button>
         <!-- FORM EXPERIENCE-->
         <div id="experienceContainer" class="space-y-3"></div>
 
-        <label class="block text-sm mt-1"><strong>Skills Title</strong></label>
-        <input type="text" id="skillsTitleInput" class="w-full border p-2 rounded mb-2" value="Skills" oninput="updateSkillsTitle()">
-        <label class="block text-sm"><strong>Skills Text</strong></label>
-        <textarea id="skillsInput" class="w-full border p-2 rounded h-24 resize-y" placeholder="Enter your skills, each on a new line..." oninput="updateSkills()"></textarea>
+        <label class="block text-sm mt-1"><strong>Título de habilidades</strong></label>
+        <input type="text" id="skillsTitleInput" class="w-full border p-2 rounded mb-2" value="Habilidades" oninput="updateSkillsTitle()">
+        <label class="block text-sm"><strong>Texto de habilidades</strong></label>
+        <textarea id="skillsInput" class="w-full border p-2 rounded h-24 resize-y" placeholder="Ingresa tus habilidades, cada una en una nueva línea..." oninput="updateSkills()"></textarea>
 
-        <label class="block text-sm"><strong>Software & Tools Title</strong></label>
-        <input type="text" id="toolsTitleInput" class="w-full border p-2 rounded mb-2" value="Software & Tools" oninput="updateToolsTitle()">
-        <label class="block text-sm"><strong>Software & Tools Text</strong></label>
-        <textarea id="toolsInput" class="w-full border p-2 rounded h-24 resize-y" placeholder="Enter software/tools, each on a new line..." oninput="updateTools()"></textarea>
+        <label class="block text-sm"><strong>Título de software y herramientas</strong></label>
+        <input type="text" id="toolsTitleInput" class="w-full border p-2 rounded mb-2" value="Software y herramientas" oninput="updateToolsTitle()">
+        <label class="block text-sm"><strong>Texto de software y herramientas</strong></label>
+        <textarea id="toolsInput" class="w-full border p-2 rounded h-24 resize-y" placeholder="Introduzca el software/las herramientas, cada uno en una nueva línea..." oninput="updateTools()"></textarea>
 
-        <label class="block text-sm"><strong>Education</strong></label>
-        <input type="text" id="educationtitleInput" class="w-full border p-2 rounded mb-2" oninput="updatetitleEducation()" value="Education">
+        <label class="block text-sm"><strong>Educación</strong></label>
+        <input type="text" id="educationtitleInput" class="w-full border p-2 rounded mb-2" oninput="updatetitleEducation()" value="Educación">
         <!-- Кнопка для добавления формы Education -->
-            <button onclick="addEducation()" class="bg-blue-500 text-white px-2 py-2 rounded-md mb-2 flex items-center">
+            <button onclick="addEducation()" class="bg-blue-500 text-white px-2 py-2 rounded-md mb-2 flex items-center cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
-                Add Education
+                Añadir Educación
             </button>
         <!-- Контейнер для динамических форм Education -->
         <div id="educationForms"></div>
         
-        <label class="block text-sm"><strong>Certification</strong></label>
-        <input type="text" id="certificationtitleInput" class="w-full border p-2 rounded mb-2" oninput="updatetitleCertification()" value="Certification">
+        <label class="block text-sm"><strong>Certificación</strong></label>
+        <input type="text" id="certificationtitleInput" class="w-full border p-2 rounded mb-2" oninput="updatetitleCertification()" value="Certificación">
          <!-- Кнопка добавления нового сертификата -->
-        <button onclick="addCertificate()" class="bg-blue-500 text-white px-2 py-2 rounded-md flex items-center mb-2">
+        <button onclick="addCertificate()" class="bg-blue-500 text-white px-2 py-2 rounded-md flex items-center mb-2 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            Add Certification
+            Añadir Certificación
         </button>
         <!-- Контейнер для форм с сертификатами -->
         <div id="certificationForms"></div>
 
-        <label class="block text-sm"><strong>Languages</strong></label>
-        <input type="text" id="languagesTitleInput" class="w-full border p-2 rounded mb-2" value="Languages" oninput="updateLanguagesTitle()">
-        <label class="block text-sm"><strong>Languages</strong></label>
-        <textarea id="languagesInput" class="w-full border p-2 rounded h-24 resize-none" placeholder="Enter languages, each on a new line" oninput="updateLanguages()"></textarea>
+        <label class="block text-sm"><strong>Idiomas</strong></label>
+        <input type="text" id="languagesTitleInput" class="w-full border p-2 rounded mb-2" value="Idiomas" oninput="updateLanguagesTitle()">
+        <label class="block text-sm"><strong>Idiomas</strong></label>
+        <textarea id="languagesInput" class="w-full border p-2 rounded h-24 resize-none" placeholder="EIntroduzca los idiomas, cada uno en una nueva línea..." oninput="updateLanguages()"></textarea>
 
 
-        <label class="block text-sm"><strong>Personal Projects</strong></label>
-        <input type="text" id="projectstitleInput" class="w-full border p-2 rounded mb-2" value="Personal Projects & Achievments" oninput="updatetitleProjects()">
+        <label class="block text-sm"><strong>Proyectos personales</strong></label>
+        <input type="text" id="projectstitleInput" class="w-full border p-2 rounded mb-2" value="Proyectos y logros personales" oninput="updatetitleProjects()">
 
-        <button onclick="addProject()" class="bg-blue-500 text-white px-2 py-2 rounded-md flex items-center">
+        <button onclick="addProject()" class="bg-blue-500 text-white px-2 py-2 rounded-md flex items-center cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
             </svg>
-            Add Project
+            Añadir proyecto
         </button>
         <div id="projectsForms"></div>
 
@@ -106,18 +106,18 @@
 
         <!-- HEADER START -->
 
-        <h1 class="text-4xl font-bold" id="namePreview">JOHN <span class="text-blue-600" id="surnamePreview">DOE</span></h1>
+        <h1 class="text-4xl font-bold" id="namePreview">MARK <span class="text-blue-600" id="surnamePreview">BERNARD</span></h1>
         <p class="text-gray-700 ml-1" id="occupationPreview">
-            Engineer
+            Ingeniero
         </p>
         <p class="bg-black text-white text-sm p-2 mt-1 ml w-full block text-left print:text-black print:bg-gray-300">
-            <span class="ml-2" id="contactsPreview"><a href="tel:+51963299237">+1 963 255 2372</a> | <a href="mailto:4bimcad@gmail.com ">youremail@gmail.com</a> | New York, USA</span>
+            <span class="ml-2" id="contactsPreview"><a>+51 963 255 372</a> | <a>tucorreo@gmail.com</a> | Arequipa, Peru</span>
         </p>
 
         <div class="border-gray-300 mt-2 pt-2">
-            <h2 class="text-xl font-bold border-b border-blue-600" id="profsumtitlePreview">Professional Summary</h2>
+            <h2 class="text-xl font-bold border-b border-blue-600" id="profsumtitlePreview">Resumen profesional</h2>
             <p class="text-gray-700 leading-relaxed ml-5 mt-3" id="profsumtextPreview">
-                Experienced and versatile professional with a strong background in mining production, installation and calibration of mining equipment. Expert in reserve calculations and profitability analysis in Excel. Proficient in construction documentation, estimates, and planning using AutoCAD. Equally comfortable in both engineering roles and hands-on tasks, including working with tools and performing manual labor when needed.
+                Profesional experimentado y versátil con sólida experiencia en producción minera, instalación y calibración de equipos mineros. Experto en cálculos de reservas y análisis de rentabilidad en Excel. Dominio de la documentación de construcción, estimaciones y planificación con AutoCAD. Se desenvuelve con facilidad tanto en funciones de ingeniería como en tareas prácticas, incluyendo el manejo de herramientas y la realización de trabajos manuales cuando es necesario.
             </p>
         </div>
 
@@ -125,7 +125,7 @@
         <!-- WORK HISTORY START-->
 
         <div class="border-gray-300 mt-2 pt-2">
-            <h2 class="text-xl font-bold border-b border-blue-600" id="workhistorytitlePreview">Work History</h2>
+            <h2 class="text-xl font-bold border-b border-blue-600" id="workhistorytitlePreview">Historial laboral</h2>
             <!-- CONTAINER WORK HISTORY -->
             <div id="previewContainer" class=""></div>
         </div>
@@ -134,15 +134,15 @@
         <!-- SKILLS START -->
 
         <div class="border-gray-300 mt-2 pt-2">
-            <h2 id="skillsTitlePreview" class="text-xl font-bold border-b border-blue-600">Skills</h2>
+            <h2 id="skillsTitlePreview" class="text-xl font-bold border-b border-blue-600">Habilidades</h2>
             <div class="mt-3">
                 <ul id="skillsPreview" class="list-disc list-inside text-gray-700 text-sm ml-6 mt-3">
-                    <li>Project Management</li>
-                    <li>Communication</li>
-                    <li>Adaptability</li>
-                    <li>Technical Proficiency</li>
-                    <li>Teamwork</li>
-                    <li>Problem-solving</li>
+                    <li>Gestión de proyectos</li>
+                    <li>Comunicación</li>
+                    <li>Adaptabilidad</li>
+                    <li>Competencia técnica</li>
+                    <li>Trabajo en equipo</li>
+                    <li>Resolución de problemas</li>
                 </ul>
             </div>
         </div>
@@ -151,7 +151,7 @@
         <!-- SOFTWARE START -->
 
         <div class="border-gray-300 mt-2 pt-2">
-            <h2 id="toolsTitlePreview" class="text-xl font-bold border-b border-blue-600">Software & Tools</h2>
+            <h2 id="toolsTitlePreview" class="text-xl font-bold border-b border-blue-600">Software y herramientas</h2>
             <div class="mt-3">
                 <ul id="toolsPreview" class="list-disc list-inside text-gray-700 text-sm ml-6 mt-3">
                     <li>Microsoft Office (Excel, Word, PowerPoint, Microsoft Project, etc.)</li>
@@ -168,28 +168,27 @@
         <!-- EDUCATION START -->
 
         <!-- Превью Education -->
-        <h2 class="text-xl font-bold border-b border-blue-600 mt-1" id="educationtitlePreview">Education</h2>
+        <h2 class="text-xl font-bold border-b border-blue-600 mt-1" id="educationtitlePreview">Educación</h2>
         <div id="educationPreview" class="pt-1"></div>
 
         <!-- EDUCATION END -->
         <!-- CERTIFICATION START -->
 
         <!-- Превью сертификатов -->
-        <h2 class="text-xl font-bold border-b border-blue-600 mt-1" id="certificationtitlePreview">Certification</h2>
+        <h2 class="text-xl font-bold border-b border-blue-600 mt-1" id="certificationtitlePreview">Certificación</h2>
         <div id="certificationPreview" class=""></div>
 
         <!-- CERTIFICATION END -->
         <!-- LANGUAGES START -->
 
         <div class="border-gray-300 mt-1 pt-1">
-            <h2 id="languagesTitlePreview" class="text-xl font-bold border-b border-blue-600">Languages</h2>
+            <h2 id="languagesTitlePreview" class="text-xl font-bold border-b border-blue-600">Idiomas</h2>
             
             <div class="mt-3">
                 <ul id="languagesPreview" class="list-disc list-inside text-gray-700 text-sm ml-6 mt-3">
-                    <li>English</li>
-                    <li>Spanish</li>
-                    <li>Ukrainian</li>
-                    <li>Russian</li>
+                    <li>Ingles</li>
+                    <li>Español</li>
+                    <li>Aleman</li>
                 </ul>
             </div>
         </div>
@@ -199,7 +198,7 @@
         <!-- PROJECTS START -->
 
         <div class="border-gray-300 pt-2">
-            <h2 class="text-xl font-bold border-b border-blue-600" id="projectstitlePreview">Personal Projects & Achievements</h2>
+            <h2 class="text-xl font-bold border-b border-blue-600" id="projectstitlePreview">Proyectos y logros personales</h2>
             
             <div id="projectsPreview" class="mt-2">
             </div>
@@ -223,9 +222,9 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                     </svg>                  
-                    <span class="font-medium">Download PDF</span>
+                    <span class="font-medium">DESCARGAR PDF</span>
                     <span class="absolute bottom-full mb-1 hidden group-hover:flex items-center text-gray-800 text-xs px-2 py-1 rounded-md shadow-md bg-white border border-gray-300">
-                        Download PDF
+                        DESCARGAR PDF
                     </span>
                 </button>
             </div>
@@ -235,7 +234,7 @@
         <div class="w-full sm:w-auto flex justify-center my-3 sm:my-0 p-3">
             <a href="http://infoset.org.pe" target="_blank" class="flex items-center space-x-2 text-gray-600 hover:text-black">
                 <span>Desarrolado por</span>
-                <img src="logo.png" alt="INFOSET" class="h-5">
+                <img src="assets/img/logo.png" alt="INFOSET" class="h-5">
             </a>
         </div>
 
@@ -243,14 +242,14 @@
 
     <!-- FOOTER END -->
  
-    <script src="js/script-forma.js"></script>  forma.js
-    <script src="js/script-expirience.js"></script> expirience.js
-    <script src="js/script-skills.js"></script> skills.js
-    <script src="js/script-software-tools.js"></script> software-tools.js
-    <script src="js/script-education.js"></script> education.js
-    <script src="js/script-certification.js"></script> certification.js
-    <script src="js/script-languages.js"></script> languages.js
-    <script src="js/script-personal-projects.js"></script> personal-projects.js
+    <script src="assets/js/cv_creador/script-forma.js"></script>  
+    <script src="assets/js/cv_creador/script-expirience.js"></script> 
+    <script src="assets/js/cv_creador/script-skills.js"></script> 
+    <script src="assets/js/cv_creador/script-software-tools.js"></script> 
+    <script src="assets/js/cv_creador/script-education.js"></script> 
+    <script src="assets/js/cv_creador/script-certification.js"></script> 
+    <script src="assets/js/cv_creador/script-languages.js"></script> 
+    <script src="assets/js/cv_creador/script-personal-projects.js"></script> 
 
 </body>
 </html>

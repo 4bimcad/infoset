@@ -9,11 +9,11 @@ let educationCount = 0;
         formContainer.className = "p-2 rounded-md mb-3";
         
         formContainer.innerHTML = `
-            <input type="text" id="degree${educationCount}" class="w-full border p-2 rounded mb-2" placeholder="Degree (e.g. Bachelor's in Engineering)" oninput="updateEducationPreview()">
-            <input type="text" id="university${educationCount}" class="w-full border p-2 rounded mb-2" placeholder="University (e.g. Harvard University)" oninput="updateEducationPreview()">
-            <input type="text" id="location${educationCount}" class="w-full border p-2 rounded mb-2" placeholder="Location (e.g. New York, USA)" oninput="updateEducationPreview()">
-            <input type="text" id="years${educationCount}" class="w-full border p-2 rounded mb-2" placeholder="Years (e.g. 2010-2014)" oninput="updateEducationPreview()">
-            <button onclick="removeEducation('${formId}')" class="bg-red-500 text-white px-2 py-2 rounded-md">Remove</button>
+            <input type="text" id="degree${educationCount}" class="w-full border p-2 rounded mb-2" placeholder="Título (por ejemplo, Licenciatura en Ingeniería)" oninput="updateEducationPreview()">
+            <input type="text" id="university${educationCount}" class="w-full border p-2 rounded mb-2" placeholder="Universidad (por ejemplo, la UNSA)" oninput="updateEducationPreview()">
+            <input type="text" id="location${educationCount}" class="w-full border p-2 rounded mb-2" placeholder="Ubicación (por ejemplo, Arequipa, Peru)" oninput="updateEducationPreview()">
+            <input type="text" id="years${educationCount}" class="w-full border p-2 rounded mb-2" placeholder="Años (por ejemplo, 2010-2014)" oninput="updateEducationPreview()">
+            <button onclick="removeEducation('${formId}')" class="bg-red-500 text-white px-2 py-2 rounded-md">Eliminar</button>
         `;
         
         document.getElementById('educationForms').appendChild(formContainer);

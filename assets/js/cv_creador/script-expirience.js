@@ -12,22 +12,22 @@ function addExperience() {
     newExperience.id = `experienceBlock${experienceCount}`;
 
     newExperience.innerHTML = `
-        <label class="block text-sm font-medium">Company Name</label>
-        <input type="text" id="company${experienceCount}" class="w-full border p-2 rounded mb-2" placeholder="Company" oninput="updatePreview(${experienceCount})">
+        <label class="block text-sm font-medium">Nombre de empresa</label>
+        <input type="text" id="company${experienceCount}" class="w-full border p-2 rounded mb-2" placeholder="Empresa" oninput="updatePreview(${experienceCount})">
 
-        <label class="block text-sm font-medium">Location</label>
-        <input type="text" id="location${experienceCount}" class="w-full border p-2 rounded mb-2" placeholder="City, Country" oninput="updatePreview(${experienceCount})">
+        <label class="block text-sm font-medium">Ubicación</label>
+        <input type="text" id="location${experienceCount}" class="w-full border p-2 rounded mb-2" placeholder="Ciudad, País" oninput="updatePreview(${experienceCount})">
 
-        <label class="block text-sm font-medium">Date</label>
+        <label class="block text-sm font-medium">Fecha</label>
         <input type="text" id="date${experienceCount}" class="w-full border p-2 rounded mb-2" placeholder="05/2018 - Present" oninput="updatePreview(${experienceCount})">
 
-        <label class="block text-sm font-medium">Position</label>
-        <input type="text" id="position${experienceCount}" class="w-full border p-2 rounded mb-2" placeholder="Engineer, Manager" oninput="updatePreview(${experienceCount})">
+        <label class="block text-sm font-medium">Posición</label>
+        <input type="text" id="position${experienceCount}" class="w-full border p-2 rounded mb-2" placeholder="Ingeniero, Gerente" oninput="updatePreview(${experienceCount})">
 
-        <label class="block text-sm font-medium">Responsibilities</label>
-        <textarea id="tasks${experienceCount}" class="w-full border p-2 rounded mb-1 h-24 resize-y" placeholder="Brief description of your responsibilities" oninput="updatePreview(${experienceCount})"></textarea>
+        <label class="block text-sm font-medium">Responsabilidades</label>
+        <textarea id="tasks${experienceCount}" class="w-full border p-2 rounded mb-1 h-24 resize-y" placeholder="Breve descripción de sus responsabilidades" oninput="updatePreview(${experienceCount})"></textarea>
 
-        <button onclick="removeExperience(${experienceCount})" class="bg-red-500 text-white px-3 py-1 rounded-md mt-3">Remove</button>
+        <button onclick="removeExperience(${experienceCount})" class="bg-red-500 text-white px-3 py-1 rounded-md mt-3">Eliminar</button>
     `;
 
     container.appendChild(newExperience);
@@ -39,14 +39,14 @@ function addExperience() {
 
     newPreview.innerHTML = `
         <p class="text-gray-700">
-            <span class="font-semibold text-lg text-gray-600 inline-block mt-1">
-                <strong id="companyPreview${experienceCount}">Company Name</strong>
+            <span class="text-lg text-gray-600 inline-block mt-1">
+                <strong id="companyPreview${experienceCount}">Nombre de empresa</strong>
             </span> 
-            – <span id="locationPreview${experienceCount}">Location</span>
-            <span class="float-right text-sm mt-1" id="datePreview${experienceCount}">Date</span>
+            – <span id="locationPreview${experienceCount}">Ubicación</span>
+            <span class="float-right text-sm mt-1" id="datePreview${experienceCount}">Fecha</span>
         </p>
-        <p class="font-semibold" id="positionPreview${experienceCount}">Position</p>
-        <p class="text-gray-700 text-sm ml-6 mt-3" id="tasksPreview${experienceCount}">Responsibilities</p>
+        <p class="font-semibold" id="positionPreview${experienceCount}">Posición</p>
+        <p class="text-gray-700 text-sm ml-6 mt-3" id="tasksPreview${experienceCount}">Responsabilidades</p>
     `;
 
     previewContainer.appendChild(newPreview);
