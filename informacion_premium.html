@@ -4,11 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Dashboard Socios - INFOSET</title>
-  <meta name="description" content="Panel en línea para socios de INFOSET. Consulta tus registros, códigos de referido, comisiones y estado de afiliación en tiempo real. Actualizado automáticamente desde la base de datos de socios.">
-  <meta name="keywords" content="INFOSET, socios, programa de socios, dashboard, afiliados, referidos, comisiones, informes, sistema de socios, panel de control">
-
-
+  <title>Información Premium - INFOSET</title>
+  <meta name="description" content="Accede a la Información Premium de INFOSET: documentos técnicos, modelos 3D, informes especializados y recursos exclusivos sobre minería, ingeniería y desarrollo profesional. Contenido verificado y orientado a la práctica.">
+  <meta name="keywords" content="información premium, INFOSET, documentos técnicos, modelos 3D, minería, ingeniería, informes especializados, recursos exclusivos, recuperación de oro, desarrollo profesional">
+    
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -52,14 +51,14 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html">Inicio</a></li>
-          <li><a href="cursos.html"><span>Cursos Gratis</span></a></li>
+          <li><a href="cursos.html" class="active"><span>Cursos Gratis</span></a></li>
           <li><a href="herramientas.html">Herramientas Gratis</a></li>
           <li><a href="certificacion.html">Certificación</a></li>
           <li class="dropdown"><a href="#"><span>Invita y Gana</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="invita_y_gana.html">Programa de los Socios</a></li>
               <li><a href="programa_de_socios_infoset.html">Contrato de Afiliación</a></li>
-              <li><a href="dashboard_socios.html" class="active">Dashboard</a></li>
+              <li><a href="dashboard_socios.html">Dashboard</a></li>
               <li><a href="https://forms.gle/phnxmgAWbXeyHxtU7">Registrarse como Socio</a></li>
             </ul>
           </li>
@@ -83,11 +82,11 @@
     <!-- Page Title -->
     <div class="page-title dark-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">Dashboard Socios</h1>
+        <h1 class="mb-2 mb-lg-0">Información Premium</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Inicio</a></li>
-            <li class="current">Dashboard Socios</li>
+            <li class="current">Información Premium</li>
           </ol>
         </nav>
       </div>
@@ -98,26 +97,70 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Dashboard Socios</h2>
+        <h2>Información Premium</h2>
+        <p class="lead">Información confiable y exclusiva para profesionales de los sectores minero, de construcción industrial y de administración.</p>
       </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up">
+      <!-- FILTRO -->
+      <div class="container mb-4" data-aos="fade-up">
+          <label for="filtroCursos" class="form-label"><strong>Filtrar por categoría:</strong></label>
+          <select id="filtroCursos" class="form-select" style="max-width: 300px;">
+            <option value="todos">Mostrar Todos</option>
+            <option value="mineria">Minería</option>
+            <option value="construccion">Construcción</option>
+            <option value="administracion">Administración</option>
+          </select>
+        </div>
 
-      <iframe 
-        src="https://docs.google.com/spreadsheets/d/1m514IfVlQhSw4zTYcAU8iQgdEzr-S9hYhkiF4MIBj5M/edit?usp=sharing" 
-        width="100%" 
-        height="600">
-      </iframe>
+        <!-- LISTA DE CURSOS GRATIS -->
+        <div class="container" data-aos="fade-up">
+
+          <h5 class="curso" data-categoria="mineria">
+            <i class="bi bi-chevron-right"></i> 
+            <a href="clasificadora_z_de_oro.html">Clasificadora de Oro tipo "Z" (Chute Z) Modelo 3D (Plano) + PDF</a>
+          </h5>
+
+          
+
+        </div>
+
+      <!-- SCRIPT DE FILTRO -->
+      <script>
+        const filtro = document.getElementById("filtroCursos");
+        const cursos = document.querySelectorAll(".curso");
+
+        // При загрузке страницы — применяем сохранённый фильтр
+        window.addEventListener("DOMContentLoaded", () => {
+          const savedCategoria = localStorage.getItem("categoriaSeleccionada");
+          if (savedCategoria) {
+            filtro.value = savedCategoria;
+            aplicarFiltro(savedCategoria);
+          } else {
+            aplicarFiltro("todos");
+          }
+        });
+
+        // При изменении — фильтруем и сохраняем
+        filtro.addEventListener("change", () => {
+          const categoria = filtro.value;
+          localStorage.setItem("categoriaSeleccionada", categoria);
+          aplicarFiltro(categoria);
+        });
+
+        function aplicarFiltro(categoria) {
+          cursos.forEach(curso => {
+            const cursoCategoria = curso.dataset.categoria;
+            curso.style.display = (categoria === "todos" || cursoCategoria === categoria) ? "block" : "none";
+          });
+        }
+      </script>
 
 
-      </div>
     </section><!-- /Starter Section Section -->
 
   </main>
-
- 
-
-  <footer id="footer" class="footer dark-background">
+  
+<footer id="footer" class="footer dark-background">
 
     <div class="container footer-top">
       <div class="row gy-4">
@@ -151,7 +194,7 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Menu</h4>
           <ul>
-            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html" class="active">Inicio</a></li>
             <li><a href="nosotros.html">Nosotros</a></li>
             <li><a href="servicios.html">Servicios</a></li>
             <li><a href="cursos.html">Cursos Gratis</a></li>
