@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Curso Avanzado de Excel: Power Query, Dashboards y Automatización | Certificación Nivel Experto | INFOSET
+  </title>
+  <meta name="description"
+    content="Domina Excel a nivel experto. Curso práctico de 50h con Power Query para automatizar datos, crear Dashboards interactivos, Tablas Dinámicas avanzadas y usar Solver. Incluye módulo de IA generativa. Obtén tu Certificación Nivel Experto de INFOSET y lleva el análisis de datos de tu empresa al siguiente nivel.">
+  <meta name="keywords"
+    content="curso avanzado de excel, excel experto, power query excel, dashboard excel, automatización excel, tablas dinámicas, análisis de datos, solver excel, macros, funciones lambda, excel con ia, certificación excel, infoset, curso online excel, excel para negocios, 50 horas académicas">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NewBiz
+  * Template URL: https://bootstrapmade.com/newbiz-bootstrap-business-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="portfolio-details-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <!-- Uncomment the line below if you also wish to use text logo -->
+        <!-- <h1 class="sitename">NewBiz</h1>  -->
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="cursos.html"><span>Cursos Gratis</span></a></li>
+          <li><a href="herramientas.html">Herramientas Gratis</a></li>
+          <li><a href="certificacion.html">Certificación</a></li>
+          <li class="dropdown"><a href="#"><span>Más</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="nosotros.html">Nosotros</a></li>
+              <li><a href="servicios.html">Servicios</a></li>
+              <li><a href="informacion_premium.html">Info Premium</a></li>
+              <li><a href="contactos.html">Contactos</a></li>
+            </ul>
+          </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Excel Empresarial. Nivel Experto</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="cursos.html">Cursos</a></li>
+            <li class="current">Excel Empresarial. Nivel Experto</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Portfolio Details Section -->
+    <section id="portfolio-details" class="portfolio-details section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-8">
+            <div class="portfolio-details-slider swiper init-swiper">
+
+              <script type="application/json" class="swiper-config">
+                {
+                  "loop": true,
+                  "speed": 600,
+                  "autoplay": {
+                    "delay": 5000
+                  },
+                  "slidesPerView": "auto",
+                  "pagination": {
+                    "el": ".swiper-pagination",
+                    "type": "bullets",
+                    "clickable": true
+                  }
+                }
+              </script>
+
+              <div class="swiper-wrapper align-items-center">
+
+                <div class="swiper-slide">
+                  <img src="assets/img/cursos_premium/excel experto 1.png" alt="excel experto">
+                </div>
+
+                <div class="swiper-slide">
+                  <img src="assets/img/cursos_premium/excel experto 2.png" alt="excel experto">
+                </div>
+
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
+              <h3>Detalles del Curso:</h3>
+              <ul>
+                <li class="d-flex align-items-start mb-3">
+                  <i class="bi bi-file-earmark-text text-primary fs-5 me-3"></i>
+                  <div>
+                    <strong class="d-block">Nombre del Curso:</strong>
+                    <span>Excel Empresarial. Nivel Experto</span>
+                  </div>
+                </li>
+                <li class="d-flex align-items-start mb-3">
+                  <i class="bi bi-clock-history text-primary fs-5 me-3"></i>
+                  <div>
+                    <strong class="d-block">Duración:</strong>
+                    <span>50 horas académicas</span>
+                  </div>
+                </li>
+                <li class="d-flex align-items-start mb-3">
+                  <i class="bi bi-play-btn text-primary fs-5 me-3"></i>
+                  <div>
+                    <strong class="d-block">Formato de Aprendizaje:</strong>
+                    <span>Videos pregrabados en HD + Archivos PDF descargables</span>
+                  </div>
+                </li>
+                <li class="d-flex align-items-start mb-3">
+                  <i class="bi bi-headset text-primary fs-5 me-3"></i>
+                  <div>
+                    <strong class="d-block">Soporte:</strong>
+                    <span>Soporte técnico</span>
+                  </div>
+                </li>
+                <li class="d-flex align-items-start mb-3">
+                  <i class="bi bi-award text-primary fs-5 me-3"></i>
+                  <div>
+                    <strong class="d-block"> Certificación:</strong>
+                    <span>Archivo: <b>PDF</b>, Formato: <b>A5</b></span>
+                  </div>
+                </li>
+                <li class="d-flex align-items-start mb-3">
+                  <i class="bi bi-tags text-primary fs-5 me-3"></i>
+                  <div>
+                    <strong class="d-block">Inversión:</strong>
+                    <span
+                      style="color: #00823b; background-color: #ebfff6; border: 1px solid #7ce1b5; padding: 2px 4px; border-radius: 4px;"><b>S/149
+                        soles</b></span> (equivalente en otras monedas)
+                  </div>
+                </li>
+                <h6 class="mt-4 mb-3 fw-bold">Después de completar con éxito el curso, recibirás:</h6>
+                <ul class="list-unstyled">
+                  <li class="d-flex align-items-start mb-2">
+                    <i class="bi bi-file-earmark-pdf text-primary me-3"></i>
+                    <span>Certificado Digital (PDF)</span>
+                  </li>
+                  <li class="d-flex align-items-start mb-2">
+                    <i class="bi bi-card-list text-primary me-3"></i>
+                    <span>Transcripción con Temas y Horas académicas</span>
+                  </li>
+                  <li class="d-flex align-items-start mb-2">
+                    <i class="bi bi-file-check text-primary me-3"></i>
+                    <span>Carta de Excelencia Profesional para tu empleador o red profesional* 
+                      <br><small class="text-muted d-block">* - (Los estudiantes que demuestren un dominio sobresaliente (calificación máxima) en el examen final recibirán la 'Carta de Excelencia Profesional de INFOSET').</small></span>
+                  </li>
+                </ul>
+                <li><strong>Comprobante de Pago</strong>: Boleta o Factura</li>
+                <li><strong>Contactos</strong>:
+                  WhatsApp: <a href="https://wa.me/51963299237" target="_blank">+51 963 299 237</a>,
+                  Email: <a href="mailto:infoset.oficina@gmail.com">infoset.oficina@gmail.com</a>
+                </li>
+                <li><strong>Comprar el Curso</strong>:
+                  <script src="https://www.mercadopago.com.pe/integrations/v1/web-payment-checkout.js"
+                    data-preference-id="155438193-d4f18bf2-db72-44b4-ad2d-2e57459b3783" data-source="button">
+                    </script>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!--   BLOQUE GENERAL  -->
+
+        <div class="col-lg-8 m-5">
+          <div class="portfolio-description">
+            <h1>Curso: Excel Empresarial. Nivel Experto (50 horas)</h1>
+
+            <section class="course-description py-4">
+              <div class="container">
+                <h3>Descripcion</h3>
+                <p class="lead">Domina <strong>Excel a Nivel Experto</strong> con un curso práctico de <strong>50
+                    horas</strong> donde aprenderás a <strong>automatizar procesos, crear dashboards
+                    interactivos</strong> y aplicar <strong>análisis avanzado</strong> para la toma de decisiones
+                  empresariales. Va más allá de las funciones básicas para ofrecer una <strong>metodología completa de
+                    transformación de datos</strong>.</p>
+
+                <!-- Краткий блок "Para quién es" -->
+                <div class="mt-4">
+                  <h4 class="h6 fw-bold"><i class="bi bi-person-check text-primary me-2"></i>Este curso es ideal para:
+                  </h4>
+                  <ul class="list-unstyled mb-0">
+                    <li><i class="bi bi-check2 text-primary me-2"></i><strong>Analistas, ingenieros y
+                        financieros</strong> que requieren optimizar sus reportes.</li>
+                    <li><i class="bi bi-check2 text-primary me-2"></i><strong>Profesionales y jefes de área</strong> que
+                      toman decisiones basadas en datos.</li>
+                    <li><i class="bi bi-check2 text-primary me-2"></i><strong>Estudiantes universitarios</strong> de
+                      carreras técnicas o administrativas que buscan una ventaja competitiva.</li>
+                    <li><i class="bi bi-check2 text-primary me-2"></i><strong>Cualquier profesional</strong> que desee
+                      dominar Excel para automatizar sus tareas y aumentar su productividad.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+            <hr>
+
+            <h3>Objetivos Generales del Curso</h3>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <i class="bi bi-check2-circle text-success me-2"></i>
+                <strong>Dominar la automatización de datos</strong> utilizando <strong>Power Query</strong> para la
+                extracción, limpieza y consolidación eficiente de información desde múltiples fuentes.
+              </li>
+              <li class="list-group-item">
+                <i class="bi bi-check2-circle text-success me-2"></i>
+                <strong>Diseñar e implementar dashboards ejecutivos interactivos</strong> con Tablas y Gráficos
+                Dinámicos que permitan la visualización clara y el monitoreo en tiempo real de los indicadores clave
+                (KPIs) del negocio.
+              </li>
+              <li class="list-group-item">
+                <i class="bi bi-check2-circle text-success me-2"></i>
+                <strong>Desarrollar modelos avanzados de análisis</strong> aplicando herramientas como
+                <strong>Solver</strong> y tablas de datos para la optimización de recursos, simulación de escenarios y
+                la toma de decisiones estratégicas basadas en datos.
+              </li>
+              <li class="list-group-item">
+                <i class="bi bi-check2-circle text-success me-2"></i>
+                <strong>Implementar las funciones más modernas de Excel</strong> (como <strong>XLOOKUP, LAMBDA</strong>
+                y los <strong>arrays dinámicos</strong>) para construir soluciones robustas, escalables y fáciles de
+                mantener.
+              </li>
+              <li class="list-group-item">
+                <i class="bi bi-check2-circle text-success me-2"></i>
+                <strong>Integrar metodologías de IA generativa</strong> (ej. ChatGPT) como asistente en el flujo de
+                trabajo para agilizar la creación de fórmulas complejas, la generación de ideas de análisis y la
+                documentación de procesos.
+              </li>
+            </ul>
+            <hr>
+
+            <h3 class="mb-3">Programa del Curso</h3>
+            <ul class="content-list">
+              <li><strong>MÓDULO 1: FUNDAMENTOS AVANZADOS Y TRABAJO EFICIENTE (6 horas)</strong>
+                <ul>
+                  <li>1.1. Entorno profesional. Personalización, atajos clave y buenas prácticas.</li>
+                  <li>1.2. "Tablas inteligentes" y formatos dinámicos como base de todo análisis.</li>
+                  <li>1.3. Referencias avanzadas y nombramiento de rangos para modelos escalables.</li>
+                </ul>
+              </li>
+              <li><strong>MÓDULO 2: AUTOMATIZACIÓN Y TRANSFORMACIÓN DE DATOS CON POWER QUERY (10 horas)</strong>
+                <ul>
+                  <li>2.1. Introducción a Power Query (Get & Transform). Filosofía ETL (Extraer, Transformar, Cargar).
+                  </li>
+                  <li>2.2. Conexión a fuentes múltiples (Excel, CSV, web, bases de datos).</li>
+                  <li>2.3. Limpieza y transformación avanzada de datos: unir, fusionar, columnas condicionales.</li>
+                  <li>2.4. Creación de informes automáticos que se actualizan con un clic.</li>
+                </ul>
+              </li>
+              <li><strong>MÓDULO 3: ANÁLISIS MULTIDIMENSIONAL CON TABLAS Y GRÁFICOS DINÁMICOS (8 horas)</strong>
+                <ul>
+                  <li>3.1. Tablas dinámicas avanzadas: campos calculados, tablas de datos externas.</li>
+                  <li>3.2. Segmentación de datos y líneas de tiempo para dashboards interactivos.</li>
+                  <li>3.3. Gráficos dinámicos avanzados y mini gráficos (sparklines).</li>
+                  <li>3.4. Caso práctico: Análisis de ventas y rentabilidad por múltiples dimensiones.</li>
+                </ul>
+              </li>
+              <li><strong>MÓDULO 4: FUNCIONES MODERNAS Y LÓGICA COMPLEJA (8 horas)</strong>
+                <ul>
+                  <li>4.1. Funciones dinámicas: XLOOKUP, FILTRO, SORT, UNIQUE, SECUENCIA.</li>
+                  <li>4.2. Funciones lógicas complejas: anidamiento de SI con Y/O, SI.CONJUNTO.</li>
+                  <li>4.3. Nuevas funciones: LET (para fórmulas legibles) y LAMBDA (para crear funciones
+                    personalizadas).</li>
+                  <li>4.4. Depuración y auditoría de fórmulas complejas.</li>
+                </ul>
+              </li>
+              <li><strong>MÓDULO 5: HERRAMIENTAS DE SIMULACIÓN Y OPTIMIZACIÓN PARA LA TOMA DE DECISIONES (6
+                  horas)</strong>
+                <ul>
+                  <li>5.1. Análisis de hipótesis: Tablas de datos de una y dos variables.</li>
+                  <li>5.2. Administrador de escenarios y Buscar objetivo.</li>
+                  <li>5.3. Optimización con el complemento Solver: casos de minimización de costos y maximización de
+                    recursos (ejemplo aplicado a logística o producción).</li>
+                </ul>
+              </li>
+              <li><strong>MÓDULO 6: POTENCIANDO LA PRODUCTIVIDAD CON IA GENERATIVA (4 horas)</strong>
+                <ul>
+                  <li>6.1. Introducción a la IA en el flujo de trabajo. Cómo interactuar con ChatGPT, Deepseek o Claude.
+                  </li>
+                  <li>6.2. Prompting efectivo para Excel: Generar fórmulas complejas, explicar funciones, planear
+                    estructuras de datos.</li>
+                  <li>6.3. Casos prácticos:
+                    <ul>
+                      <li>Pedir a la IA que cree una fórmula de XLOOKUP con múltiples condiciones.</li>
+                      <li>Pedir que explique la lógica de un conjunto de datos y sugiera un tipo de análisis.</li>
+                      <li>Pedir ayuda para escribir un script básico de Power Query (código M).</li>
+                    </ul>
+                  </li>
+                  <li>6.4. Limitaciones y verificación de resultados. La IA como asistente, no como reemplazo.</li>
+                </ul>
+              </li>
+              <li><strong>MÓDULO 7: DASHBOARDS PROFESIONALES Y PRESENTACIÓN EJECUTIVA (8 horas)</strong>
+                <ul>
+                  <li>7.1. Diseño de dashboards: principios de visualización de datos.</li>
+                  <li>7.2. Integración de tablas dinámicas, gráficos, segmentadores y formas para un panel interactivo.
+                  </li>
+                  <li>7.3. Protección y distribución de informes. Control de lo que ve cada usuario.</li>
+                </ul>
+              </li>
+            </ul>
+            <hr>
+
+            <h3>Duración</h3>
+            <div>Este curso tiene una duración equivalente de <strong>50 horas</strong> académicas.</div>
+            <hr>
+
+            <h3>¿Cómo Empezar?</h3>
+            <section class="how-to-start py-3">
+              <div class="container">
+                <div class="row g-4">
+
+                  <!-- Paso 1 -->
+                  <div class="col-md-4">
+                    <div class="card h-100 border-primary shadow-sm text-center">
+                      <div class="card-header bg-primary text-white py-3">
+                        <span class="display-6 fw-bold">Paso 1</span>
+                      </div>
+                      <div class="card-body p-4 d-flex flex-column">
+                        <div class="my-3">
+                          <i class="bi bi-credit-card-2-front display-4 text-primary"></i>
+                        </div>
+                        <h4 class="card-title">Pagar el Curso</h4>
+                        <p class="card-text flex-grow-1">Realiza el pago seguro de <strong>S/ 149</strong> y obtén
+                          acceso inmediato y permanente a todos los materiales.</p>
+                        <div class="mt-auto">
+                          <a href="https://mpago.la/2f1HYMi" class="btn btn-outline-primary btn-lg w-100"
+                            target="_blank">
+                            <i class="bi bi-cart-check me-2"></i>Comprar Ahora
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Paso 2 -->
+                  <div class="col-md-4">
+                    <div class="card h-100 border-primary shadow-sm text-center">
+                      <div class="card-header bg-primary text-white py-3">
+                        <span class="display-6 fw-bold">Paso 2</span>
+                      </div>
+                      <div class="card-body p-4 d-flex flex-column">
+                        <div class="my-3">
+                          <i class="bi bi-journals display-4 text-primary"></i>
+                        </div>
+                        <h4 class="card-title">Estudiar y Aprobar</h4>
+                        <p class="card-text flex-grow-1">Accede a las <strong>50 horas</strong> académicas de contenido
+                          en video y
+                          PDF. Domina los módulos y aprueba el examen final.</p>
+                        <ul class="list-unstyled text-start small mt-2">
+                          <li><i class="bi bi-check-circle-fill text-primary me-2"></i>Videos HD pregrabados</li>
+                          <li><i class="bi bi-check-circle-fill text-primary me-2"></i>Archivos descargables</li>
+                          <li><i class="bi bi-check-circle-fill text-primary me-2"></i>Soporte</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Paso 3 -->
+                  <div class="col-md-4">
+                    <div class="card h-100 border-primary shadow-sm text-center">
+                      <div class="card-header bg-primary text-white py-3">
+                        <span class="display-6 fw-bold">Paso 3</span>
+                      </div>
+                      <div class="card-body p-4 d-flex flex-column">
+                        <div class="my-3">
+                          <i class="bi bi-trophy display-4 text-primary"></i>
+                        </div>
+                        <h4 class="card-title">Obtener tu Certificado</h4>
+                        <p class="card-text flex-grow-1">Tras aprobar, recibe digitalmente tus credenciales oficiales
+                          que validan tus competencias.</p>
+                        <div class="mt-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-file-earmark-pdf text-primary fs-5 me-3"></i>
+                            <span>Certificado Digital</span>
+                          </div>
+                          <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-card-checklist text-primary fs-5 me-3"></i>
+                            <span>Transcripción</span>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <i class="bi bi-file-check text-primary fs-5 me-3"></i>
+                            <span><small>Carta de Excelencia*</small></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+
+                <h3>Los Documentos que Recibirás</h3>
+                Este es un ejemplo de certificado que demuestra la finalización exitosa de un curso o programa,
+                destacando las habilidades y conocimientos adquiridos por el participante:
+                <div class="mt-3">
+                  <img src="assets/img/Certificado 0002 - Juan Carlos Martínez López.jpg" alt="ejemplo de certificado"
+                    class="custom-image img-fluid" width="600px">
+                </div>
+
+
+
+              </div>
+            </section>
+
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </section><!-- /Portfolio Details Section -->
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">INFOSET</span>
+          </a>
+          <p><strong>INFOSET</strong> - Información y Servicios Tecnológicos para minería y construcción.</p>
+          <div class="footer-contact pt-3">
+            <p><strong>Ubicación:</strong> Arequipa, Perú</p>
+            <p><strong>Celular, Whatsapp:</strong><span><a href="tel:+51963299237" style="color: white;"> (+51) 963 299
+                  237</a></span></p>
+            <p><strong>Email:</strong><span> <a href="mailto:infoset.oficina@gmail.com"
+                  style="color: white;">infoset.oficina@gmail.com</a> </span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href="https://www.linkedin.com/company/infoset-linkedin/" target="_blank"><i
+                class="bi bi-linkedin"></i></a>
+            <a href="https://wa.me/51963299237" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://www.facebook.com/people/InfoSet/61568924857923/" target="_blank"><i
+                class="bi bi-facebook"></i></a>
+            <a href="http://infoset.org.pe" target="_blank"><i class="bi bi-globe"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Enlaces útiles</h4>
+          <ul>
+            <li><a href="aviso_legal.html">Aviso Legal</a></li>
+            <li><a href="terminos_y_condiciones.html">Términos y Condiciones</a></li>
+            <li><a href="politica_de_privacidad.html">Política de Privacidad</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Menu</h4>
+          <ul>
+            <li><a href="index.html" class="active">Inicio</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="servicios.html">Servicios</a></li>
+            <li><a href="cursos.html">Cursos Gratis</a></li>
+            <li><a href="herramientas.html">Herramientas Gratis</a></li>
+            <li><a href="certificacion.html">Certificación</a></li>
+            <li><a href="contactos.html">Contactos</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Tracker de Metales</h4>
+          <p>App de <strong>Monitoreo de los precios spot actuales</strong> del oro (Au) y la plata (Ag) en tiempo real.
+          </p>
+          <a href="https://infoset.org.pe/PWA_Tracker_de_Metales/index.html" class="btn btn-light" target="_blank">
+            Instalar Gratis
+          </a>
+          <img src="assets/img/android_logo.png" width="32" height="32" alt="Logo Android" class="me-2">
+          <img src="assets/img/windows_logo.png" width="32" height="32" alt="Logo Android" class="me-2">
+          <br>
+          <a href="pwa-info.html" class="btn btn-primary btn-sm mt-2">
+            <i class="bi bi-question-circle"></i> Como Instalar
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>
+        © <span>Copyright</span>
+        <strong class="px-1 sitename">INFOSET</strong>
+        <span>| Todos los derechos reservados</span><br>
+        <small>
+          <strong>INFOSET</strong> es una marca de <strong>INCAJATA S.A.C.</strong> | RUC 20614558491
+        </small>
+      </p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
