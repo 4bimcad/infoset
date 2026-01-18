@@ -306,7 +306,7 @@
 
   </main>
 
-  <footer id="footer" class="footer dark-background">
+<footer id="footer" class="footer dark-background">
 
     <div class="container footer-top">
       <div class="row gy-4">
@@ -314,16 +314,20 @@
           <a href="index.html" class="logo d-flex align-items-center">
             <span class="sitename">INFOSET</span>
           </a>
-          <p><strong>INFOSET</strong> - Información y Servicios Tecnológicos para minería y construcción.</p>
+          <p><strong>INFOSET</strong> - Información y Servicios Tecnológicos. Plataforma Digital del Sector Minero</p>
           <div class="footer-contact pt-3">
             <p><strong>Ubicación:</strong> Arequipa, Perú</p>
-            <p><strong>Celular, Whatsapp:</strong><span><a href="tel:+51963299237" style="color: white;"> (+51) 963 299 237</a></span></p>
-            <p><strong>Email:</strong><span> <a href="mailto:infoset.oficina@gmail.com" style="color: white;">infoset.oficina@gmail.com</a> </span></p>
+            <p><strong>Celular, Whatsapp:</strong><span><a href="tel:+51963299237" style="color: white;"> (+51) 963 299
+                  237</a></span></p>
+            <p><strong>Email:</strong><span> <a href="mailto:infoset.oficina@gmail.com"
+                  style="color: white;">infoset.oficina@gmail.com</a> </span></p>
           </div>
           <div class="social-links d-flex mt-4">
-            <a href="https://www.linkedin.com/company/infoset-linkedin/" target="_blank"><i class="bi bi-linkedin"></i></a>
+            <a href="https://www.linkedin.com/company/infoset-linkedin/" target="_blank"><i
+                class="bi bi-linkedin"></i></a>
             <a href="https://wa.me/51963299237" target="_blank"><i class="bi bi-whatsapp"></i></a>
-            <a href="https://www.facebook.com/people/InfoSet/61568924857923/" target="_blank"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.facebook.com/people/InfoSet/61568924857923/" target="_blank"><i
+                class="bi bi-facebook"></i></a>
             <a href="http://infoset.org.pe" target="_blank"><i class="bi bi-globe"></i></a>
           </div>
         </div>
@@ -331,7 +335,7 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Enlaces útiles</h4>
           <ul>
-            <li><a href="aviso_legal.html">Aviso Legal</a></li>         
+            <li><a href="aviso_legal.html">Aviso Legal</a></li>
             <li><a href="terminos_y_condiciones.html">Términos y Condiciones</a></li>
             <li><a href="politica_de_privacidad.html">Política de Privacidad</a></li>
           </ul>
@@ -341,26 +345,22 @@
           <h4>Menu</h4>
           <ul>
             <li><a href="index.html" class="active">Inicio</a></li>
-            <li><a href="nosotros.html">Nosotros</a></li>
-            <li><a href="servicios.html">Servicios</a></li>
             <li><a href="cursos.html">Cursos Gratis</a></li>
             <li><a href="herramientas.html">Herramientas Gratis</a></li>
             <li><a href="certificacion.html">Certificación</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="servicios.html">Servicios</a></li>
+            <li><a href="informacion_premium.html">Info Premium</a></li>
             <li><a href="contactos.html">Contactos</a></li>
           </ul>
         </div>
 
         <div class="col-lg-4 col-md-12 footer-newsletter">
-          <h4>Tracker de Metales</h4>
-          <p>App de <strong>Monitoreo de los precios spot actuales</strong> del oro (Au) y la plata (Ag) en tiempo real.</p>
-          <a href="https://infoset.org.pe/PWA_Tracker_de_Metales/index.html" class="btn btn-light" target="_blank" >
-            Instalar Gratis
-          </a>
-          <img src="assets/img/android_logo.png" width="32" height="32" alt="Logo Android" class="me-2">
-          <img src="assets/img/windows_logo.png" width="32" height="32" alt="Logo Android" class="me-2">
-          <br>
-          <a href="pwa-info.html" class="btn btn-primary btn-sm mt-2">
-            <i class="bi bi-question-circle"></i> Como Instalar
+          <h4>Atención al Cliente</h4>
+          <p><strong>Disponibilidad:</strong> 24/7 todos los días</p>
+          <p><strong>Respuesta:</strong> Rápida y garantizada</p>
+          <a href="https://wa.me/51963299237" class="btn btn-light" target="_blank">
+            <i class="bi bi-whatsapp"></i> Contáctanos
           </a>
         </div>
 
@@ -369,13 +369,19 @@
 
     <div class="container copyright text-center mt-4">
       <p>
-        © <span>Copyright</span>
-        <strong class="px-1 sitename">INFOSET</strong>
+        © <span>Copyright 2024-<span id="year"></span> |</span>
+        <strong class="px-1 sitename">
+          <a href="index.html" style="color: white; text-decoration: none;" onmouseover="this.style.opacity='0.8'"
+            onmouseout="this.style.opacity='1'">INFOSET.ORG.PE</a>
+        </strong>
         <span>| Todos los derechos reservados</span><br>
         <small>
-          <strong>INFOSET</strong> es una marca de <strong>INCAJATA S.A.C.</strong> | RUC 20614558491 
+          <strong>INFOSET</strong> es una marca de <strong>INCAJATA S.A.C.</strong> | RUC 20614558491
         </small>
       </p>
+      <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+      </script>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
