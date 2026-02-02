@@ -89,229 +89,721 @@
     </div><!-- End Page Title -->
 
     <!-- Starter Section Section -->
-    <section id="starter-section" class="starter-section section">
+<section id="starter-section" class="starter-section section">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Cursos Gratis</h2>
-        <p class="lead">Aquí se presentan nuestros cursos gratuitos.</p>
-      </div><!-- End Section Title -->
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Cursos Gratis</h2>
+    <p class="lead">Aquí se presentan nuestros cursos gratuitos.</p>
+  </div><!-- End Section Title -->
 
-      <!-- FILTRO -->
-      <div class="container mb-4" data-aos="fade-up">
-        <label for="filtroCursos" class="form-label"><strong>Filtrar por categoría:</strong></label>
-        <select id="filtroCursos" class="form-select" style="max-width: 300px;">
-          <option value="todos">Mostrar Todos</option>
-          <option value="mineria">Minería</option>
-          <option value="industrial">Industrial</option>
-          <option value="administracion">Administración</option>
-        </select>
+  <div class="container">
+    <div class="row">
+      
+      <!-- FILTRO (слева на больших экранах, сверху на мобильных) -->
+      <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-up">
+        <div class="mb-3">
+          <label for="filtroCursos" class="form-label"><strong>Filtrar por categoría:</strong></label>
+          <select id="filtroCursos" class="form-select">
+            <option value="todos">Mostrar Todos</option>
+            <option value="mineria">Minería</option>
+            <option value="industrial">Industrial</option>
+            <option value="administracion">Administración</option>
+          </select>
+        </div>
       </div>
 
-      <!-- LISTA DE CURSOS GRATIS -->
-      <div class="container" data-aos="fade-up">
+      <!-- CURSOS (справа на больших экранах, снизу на мобильных) -->
+      <div class="col-lg-9 col-md-8" data-aos="fade-up">
+        
+        <!-- Curso 1 -->
+        <div class="card curso mb-3" data-categoria="industrial" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/constr_seguridad.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_seguridad_en_construccion.html" class="text-decoration-none">
+                    Seguridad en los Trabajos de Construcción
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="industrial">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_seguridad_en_construccion.html">Seguridad en los Trabajos de Construcción</a>
-        </h5>
+        <!-- Curso 2 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/seguridad_minera.jpg" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_seguridad_minera.html" class="text-decoration-none">
+                    Seguridad Minera
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_seguridad_minera.html">Seguridad Minera</a>
-        </h5>
+        <!-- Curso 3 -->
+        <div class="card curso mb-3" data-categoria="administracion" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/como_crear_CV_de_alta_calidad.jpg" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_como_crear_CV_de_alta_calidad.html" class="text-decoration-none">
+                    Administración de carrera: de los documentos a la acción
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="administracion">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_como_crear_CV_de_alta_calidad.html">Administración de carrera: de los documentos a la
-            acción</a>
-        </h5>
+        <!-- Curso 4 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Alfabetización Digital en la Minería Peruana.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_alfabetizacion_digital_en_la_mineria_peruana.html" class="text-decoration-none">
+                    Alfabetización Digital en la Minería Peruana
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_alfabetizacion_digital_en_la_mineria_peruana.html">Alfabetización Digital en la Minería
-            Peruana</a>
-        </h5>
+        <!-- Curso 5 -->
+        <div class="card curso mb-3" data-categoria="administracion" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/CURSO Insumos Químicos y Bienes Fiscalizados - SUNAT - INFOSET.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_insumos_quimicos_y_bienes_fiscalizados-sunat.html" class="text-decoration-none">
+                    Insumos Químicos y Bienes Fiscalizados - SUNAT
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="administracion">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_insumos_quimicos_y_bienes_fiscalizados-sunat.html">Insumos Químicos y Bienes Fiscalizados -
-            SUNAT</a>
-        </h5>
+        <!-- Curso 6 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Curso de Monitoreo de Agentes Ocupacionales en Peru.jpg" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_monitoreo_de_agentes_ocupacionales.html" class="text-decoration-none">
+                    Monitoreo de Agentes Ocupacionales
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_monitoreo_de_agentes_ocupacionales.html">Monitoreo de Agentes Ocupacionales</a>
-        </h5>
+        <!-- Curso 7 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Curso gratis Perforacion en Turnos- Trabajo en Equipo sin Errores Peru.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_perforacion_en_turnos_trabajo_en_equipo_sin_errores.html" class="text-decoration-none">
+                    Perforación en Turnos: Trabajo en Equipo sin Errores
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_perforacion_en_turnos_trabajo_en_equipo_sin_errores.html">Perforación en Turnos: Trabajo en
-            Equipo sin Errores</a>
-        </h5>
+        <!-- Curso 8 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Trabajos en espacios confinados Curso gratis peru lima arequipa.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_trabajos_en_espacios_confinados.html" class="text-decoration-none">
+                    Trabajos en Espacios Confinados
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_trabajos_en_espacios_confinados.html">Trabajos en Espacios Confinados</a>
-        </h5>
+        <!-- Curso 9 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Curso PREVENCION DE RIESGOS LABORALES EN MINERIA Peruana.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_prevencion_de_riesgos_laborales_en_mineria.html" class="text-decoration-none">
+                    Prevención de Riesgos Laborales en Minería
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_prevencion_de_riesgos_laborales_en_mineria.html">Prevención de Riesgos Laborales en Minería</a>
-        </h5>
+        <!-- Curso 10 -->
+        <div class="card curso mb-3" data-categoria="administracion" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Curso Régimenes Tributarios para Empresas  – SUNAT.jpg" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_regimenes_tributarios_para_empresas_sunat.html" class="text-decoration-none">
+                    Régimenes Tributarios para Empresas – SUNAT
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="administracion">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_regimenes_tributarios_para_empresas_sunat.html">Régimenes Tributarios para Empresas – SUNAT</a>
-        </h5>
+        <!-- Curso 11 -->
+        <div class="card curso mb-3" data-categoria="administracion" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/curso comprobantes electronicos para empresas sunat.jpg" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_comprobantes_electrónicos_para_empresas_sunat.html" class="text-decoration-none">
+                    Comprobantes Electrónicos para Empresas – SUNAT
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="administracion">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_comprobantes_electrónicos_para_empresas_sunat.html">Comprobantes Electrónicos para Empresas –
-            SUNAT</a>
-        </h5>
+        <!-- Curso 12 -->
+        <div class="card curso mb-3" data-categoria="administracion" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/curso Cumplimiento Tributario Mensual para Empresas – SUNAT.jpg" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_сumplimiento_tributario_mensual_para_empresas_sunat.html" class="text-decoration-none">
+                    Cumplimiento Tributario Mensual para Empresas - SUNAT
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="administracion">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_сumplimiento_tributario_mensual_para_empresas_sunat.html">Cumplimiento Tributario Mensual para
-            Empresas - SUNAT</a>
-        </h5>
+        <!-- Curso 13 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/curso Normas, Uso y Control del EPP en Minería.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_normas_uso_y_control_del_epp_en_mineria.html" class="text-decoration-none">
+                    Normas, Uso y Control del EPP en Minería
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_normas_uso_y_control_del_epp_en_mineria.html">Normas, Uso y Control del EPP en Minería</a>
-        </h5>
+        <!-- Curso 14 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/curso Derecho Minero y Permisos Operativos.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_derecho_minero_ y_ permisos_operativos.html" class="text-decoration-none">
+                    Derecho Minero y Permisos Operativos
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_derecho_minero_ y_ permisos_operativos.html">Derecho Minero y Permisos Operativos</a>
-        </h5>
+        <!-- Curso 15 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/curso Derechos Laborales en Minería – SUNAFIL.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_derechos_laborales_en_mineria_sunafil.html" class="text-decoration-none">
+                    Derechos Laborales en Minería – SUNAFIL
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_derechos_laborales_en_mineria_sunafil.html">Derechos Laborales en Minería – SUNAFIL</a>
-        </h5>
+        <!-- Curso 16 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Profesional Gestión femenina en la Industria Minera.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_profesional_gestion_femenina_en_la_industria_minera.html" class="text-decoration-none">
+                    Profesional Gestión femenina en la Industria Minera
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_profesional_gestion_femenina_en_la_industria_minera.html">Profesional Gestión femenina en la
-            Industria Minera</a>
-        </h5>
+        <!-- Curso 17 -->
+        <div class="card curso mb-3" data-categoria="administracion" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Curso Gestión de Proyectos (PMP-PMBOK).png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_gestion_de_proyectos_(pmp-pmbok).html" class="text-decoration-none">
+                    Gestión de Proyectos (PMP-PMBOK)
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="administracion">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_gestion_de_proyectos_(pmp-pmbok).html">Gestión de Proyectos (PMP-PMBOK)</a>
-        </h5>
+        <!-- Curso 18 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Gestión de Incidentes Críticos curso.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_gestion_de_incidentes_criticos.html" class="text-decoration-none">
+                    Gestión de Incidentes Críticos
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_gestion_de_incidentes_criticos.html">Gestión de Incidentes Críticos</a>
-        </h5>
+        <!-- Curso 19 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Sílice Cristalina en Minería - Prevención y Control.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_silice_cristalina_en_mineria_prevencion_y_control.html" class="text-decoration-none">
+                    Sílice Cristalina en Minería - Prevención y Control
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_silice_cristalina_en_mineria_prevencion_y_control.html">Sílice Cristalina en Minería -
-            Prevención y Control</a>
-        </h5>
+        <!-- Curso 20 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/oro_ecologico.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_oro_ecologico_y_mineria_sostenible.html" class="text-decoration-none">
+                    Oro Ecológico y Minería Sostenible
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_oro_ecologico_y_mineria_sostenible.html">Oro Ecológico y Minería Sostenible</a>
-        </h5>
+        <!-- Curso 21 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Bloqueo y Etiquetado de Energías Peligrosas (LOTO).png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_bloqueo_y_etiquetado_de_energias_peligrosas_(loto).html" class="text-decoration-none">
+                    Bloqueo y Etiquetado de Energías Peligrosas (LOTO)
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_bloqueo_y_etiquetado_de_energias_peligrosas_(loto).html">Bloqueo y Etiquetado de Energías
-            Peligrosas (LOTO)</a>
-        </h5>
+        <!-- Curso 22 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Peligros Químicos y su Control (SGA-GHS).png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_peligros_quimicos_y_su_control_(sga-ghs).html" class="text-decoration-none">
+                    Peligros Químicos y su Control (SGA-GHS)
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_peligros_quimicos_y_su_control_(sga-ghs).html">Peligros Químicos y su Control (SGA-GHS)</a>
-        </h5>
+        <!-- Curso 23 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/RRHH_cursos_gratis.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_gestion_de_recursos_humanos_en_mineria.html" class="text-decoration-none">
+                    Gestión de Recursos Humanos en Minería
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_gestion_de_recursos_humanos_en_mineria.html">Gestión de Recursos Humanos en Minería</a>
-        </h5>
+        <!-- Curso 24 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/curso logistica en mineria.jpg" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_logistica_en_mineria.html" class="text-decoration-none">
+                    Logística en Minería
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_logistica_en_mineria.html">Logística en Minería</a>
-        </h5>
+        <!-- Curso 25 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/compra y contrataciones en mineria.jpg" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_compras_y_contrataciones_en_mineria.html" class="text-decoration-none">
+                    Compras y Contrataciones en Minería
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_compras_y_contrataciones_en_mineria.html">Compras y Contrataciones en Minería</a>
-        </h5>
+        <!-- Curso 26 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/planeamineto de inventarios curso.jpg" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_planeamiento_y_control_de_inventarios_en_mineria.html" class="text-decoration-none">
+                    Planeamiento y Control de Inventarios en Minería
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_planeamiento_y_control_de_inventarios_en_mineria.html">Planeamiento y Control de Inventarios en
-            Minería</a>
-        </h5>
+        <!-- Curso 27 -->
+        <div class="card curso mb-3" data-categoria="administracion" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Contabilidad Financiera para Empresas.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_contabilidad_financiera_para_empresas.html" class="text-decoration-none">
+                    Contabilidad Financiera para Empresas
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="administracion">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_contabilidad_financiera_para_empresas.html">Contabilidad Financiera para Empresas</a>
-        </h5>
+        <!-- Curso 28 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Gestión Legal en Minería.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_gestion_legal_en_mineria.html" class="text-decoration-none">
+                    Gestión Legal en Minería
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_gestion_legal_en_mineria.html">Gestión Legal en Minería</a>
-        </h5>
+        <!-- Curso 29 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Planificación y Control de Operaciones Mineras.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_planificacion_y_control_de_operaciones_mineras.html" class="text-decoration-none">
+                    Planificación y Control de Operaciones Mineras
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_planificacion_y_control_de_operaciones_mineras.html">Planificación y Control de Operaciones
-            Mineras</a>
-        </h5>
+        <!-- Curso 30 -->
+        <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Medio Ambiente en Minería.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_medio_ambiente_en_mineria.html" class="text-decoration-none">
+                    Medio Ambiente en Minería
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="mineria">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_medio_ambiente_en_mineria.html">Medio Ambiente en Minería</a>
-        </h5>
+        <!-- Curso 31 -->
+        <div class="card curso mb-3" data-categoria="industrial" style="max-width: 100%;">
+          <div class="row g-0">
+            <div class="col-auto d-flex align-items-center ps-3">
+              <img src="assets/img/cursos/Trabajos en Altura - Estándar Peruano.png" 
+                   style="width: 80px; height: 40px; object-fit: cover;" 
+                   class="rounded" 
+                   alt="Curso">
+            </div>
+            <div class="col">
+              <div class="card-body py-3">
+                <h5 class="card-title mb-0">
+                  <a href="curso_trabajos_en_altura_segun_normativa_peruana.html" class="text-decoration-none">
+                    Trabajos en Altura según Normativa Peruana
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5 class="curso" data-categoria="industrial">
-          <i class="bi bi-chevron-right"></i>
-          <a href="curso_trabajos_en_altura_segun_normativa_peruana.html">Trabajos en Altura según Normativa Peruana</a>
-        </h5>
+      </div><!-- End cursos column -->
 
-      </div>
+    </div><!-- End row -->
+  </div><!-- End container -->
 
-      <!-- SCRIPT DE FILTRO -->
-      <script>
-        const filtro = document.getElementById("filtroCursos");
-        const cursos = document.querySelectorAll(".curso");
+  <!-- SCRIPT DE FILTRO -->
+  <script>
+    const filtro = document.getElementById("filtroCursos");
+    const cursos = document.querySelectorAll(".curso");
 
-        // При загрузке страницы — применяем сохранённый фильтр
-        window.addEventListener("DOMContentLoaded", () => {
-          const savedCategoria = localStorage.getItem("categoriaSeleccionada");
-          if (savedCategoria) {
-            filtro.value = savedCategoria;
-            aplicarFiltro(savedCategoria);
-          } else {
-            aplicarFiltro("todos");
-          }
-        });
+    // При загрузке страницы — применяем сохранённый фильтр
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedCategoria = localStorage.getItem("categoriaSeleccionada");
+      if (savedCategoria) {
+        filtro.value = savedCategoria;
+        aplicarFiltro(savedCategoria);
+      } else {
+        aplicarFiltro("todos");
+      }
+    });
 
-        // При изменении — фильтруем и сохраняем
-        filtro.addEventListener("change", () => {
-          const categoria = filtro.value;
-          localStorage.setItem("categoriaSeleccionada", categoria);
-          aplicarFiltro(categoria);
-        });
+    // При изменении — фильтруем и сохраняем
+    filtro.addEventListener("change", () => {
+      const categoria = filtro.value;
+      localStorage.setItem("categoriaSeleccionada", categoria);
+      aplicarFiltro(categoria);
+    });
 
-        function aplicarFiltro(categoria) {
-          cursos.forEach(curso => {
-            const cursoCategoria = curso.dataset.categoria;
-            curso.style.display = (categoria === "todos" || cursoCategoria === categoria) ? "block" : "none";
-          });
-        }
-      </script>
+    function aplicarFiltro(categoria) {
+      cursos.forEach(curso => {
+        const cursoCategoria = curso.dataset.categoria;
+        curso.style.display = (categoria === "todos" || cursoCategoria === categoria) ? "block" : "none";
+      });
+    }
+  </script>
 
-
-    </section><!-- /Starter Section Section -->
+</section><!-- /Starter Section Section -->
 
   </main>
 
