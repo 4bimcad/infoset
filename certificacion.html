@@ -145,7 +145,11 @@
         <p>
           <b>Costo del Certificado:</b> <span
             style="color: #00823b; background-color: #ebfff6; border: 1px solid #7ce1b5; padding: 2px 4px; border-radius: 4px;"><b>S/39
-              soles</b></span> (~$11.60 USD, equivalente en otras monedas) (Archivo PDF, Formato A5)
+              soles</b></span>
+          (<span
+            style="color: #00823b; background-color: #ebfff6; border: 1px solid #7ce1b5; padding: 2px 4px; border-radius: 4px;"><b>~$11.60
+              USD
+            </b></span>, equivalente en otras monedas) (Archivo PDF, Formato A5)
         </p>
         <h3>Datos para Transferencia Bancaria</h3>
         <p>
@@ -160,15 +164,30 @@
         <p>
           <b>Mercado Pago:</b>
           <br>
-          <script src="https://www.mercadopago.com.pe/integrations/v1/web-payment-checkout.js"
-            data-preference-id="155438193-55c092d9-9856-4f44-bb2a-b4148f61423d" data-source="button">
-            </script>
-          <br>
-          <a href="https://youtu.be/-clpHE86FCs" class="btn btn-sm d-inline-flex align-items-center gap-2 px-3 py-1 fw-semibold text-white"
-            style="background:#1DA1F2; border:none;" target="_blank">
-            <i class="bi bi-youtube"></i>
-            Ver video: ¿Cómo pagar?
-          </a>
+          <!-- Payment + Help block -->
+        <div class="container my-3">
+          <div class="card border-warning shadow-sm">
+            <div class="card-body bg-warning-subtle text-start">
+
+              <!-- Mercado Pago Button -->
+              <div class="mb-3">
+                <script src="https://www.mercadopago.com.pe/integrations/v1/web-payment-checkout.js"
+                  data-preference-id="155438193-55c092d9-9856-4f44-bb2a-b4148f61423d" data-source="button">
+                  </script>
+              </div>
+
+              <!-- YouTube Help Button (normal size, left aligned) -->
+              <a href="https://youtu.be/-clpHE86FCs"
+                class="btn btn-danger d-inline-flex align-items-center gap-2 fw-semibold shadow-sm" target="_blank"
+                style="text-transform: uppercase;">
+                <i class="bi bi-youtube"></i>
+                ¿CÓMO PAGAR?
+              </a>
+
+            </div>
+          </div>
+        </div>
+
 
 
         <div>
@@ -184,21 +203,29 @@
         <p>
           <b>Yape: </b>963299237
           <br>
+          <b>Administrador:</b> Stanislav Tsvitkov
+          <br>
         <div class="container text-left">
           <img src="assets/img/yape.jpg" alt="yape" class="custom-image img-fluid" width="200px">
         </div>
         </p>
-        <p>
-          <i class="bi bi-exclamation-circle"></i>
-          Para una <strong>atención más rápida</strong> y la correcta
-          <strong>gestión del proceso de certificación</strong>, adjunte primero su
-          <strong>comprobante de pago en el formulario</strong> y, una vez enviado,
-          <strong>envíelo adicionalmente</strong> a este número de WhatsApp, que corresponde al
-          <strong>WhatsApp Business oficial de INFOSET</strong>:
-          <a href="https://wa.me/+51913090906?text=Voucher%20de%20pago" target="_blank">
+        <div class="alert alert-danger shadow-sm" role="alert">
+          <p class="mb-2">
+            <i class="bi bi-exclamation-circle-fill me-2 fs-4"></i>
+            Para una <strong>atención más rápida</strong> y la correcta
+            <strong>gestión del proceso de certificación</strong>, adjunte primero su
+            <strong>comprobante de pago en el formulario</strong> y, una vez enviado,
+            <strong>envíelo adicionalmente</strong> a este número de WhatsApp, que corresponde al
+            <strong>WhatsApp Business oficial de INFOSET</strong>:
+          </p>
+
+          <a href="https://wa.me/+51913090906?text=Voucher%20de%20pago" target="_blank"
+            class="btn btn-light btn-sm fw-semibold">
+            <i class="bi bi-whatsapp me-1"></i>
             +51 913 090906
-          </a>.
-        </p>
+          </a>
+        </div>
+
 
         <p>
         <h3>Ejemplo de Certificado</h3>
@@ -233,7 +260,7 @@
               class="bi bi-award"></i>Solicitar
             Certificado </a>
         </p>
-        <div class="alert alert-warning d-flex align-items-start" role="alert">
+        <div class="alert alert-danger d-flex align-items-start" role="alert">
           <i class="bi bi-exclamation-circle-fill me-2 fs-4"></i>
           <div>
             <strong>Aviso:</strong> Después de la verificación de su formulario y la aprobación del examen de
