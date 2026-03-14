@@ -110,6 +110,7 @@
                 <option value="industrial">Industrial</option>
                 <option value="administracion">Administración</option>
                 <option value="construccion">Construcción</option>
+                <option value="sst-ssoma">SST/SSOMA</option>
               </select>
             </div>
           </div>
@@ -899,8 +900,41 @@
                 </div>
               </div>
             </div>
+
+            <!-- Curso 32 -->
+            <div class="card curso mb-3" data-categoria="sst-ssoma" style="max-width: 100%;">
+              <div class="row g-0">
+                <div class="col-auto d-flex align-items-center ps-3">
+                  <img src="assets/img/img_cursos_mini/Seguridad y Salud en el Trabajo (SST-SSOMA).jpg"
+                    style="width: 80px; height: 40px; object-fit: cover;" class="rounded" alt="Curso">
+                </div>
+                <div class="col">
+                  <div class="card-body py-3">
+                    <h5 class="card-title mb-0">
+                      <a href="curso_seguridad_y_salud_en_el_trabajo_(sst-ssoma).html" class="text-decoration-none">
+                        Seguridad y Salud en el Trabajo (SST/SSOMA)
+                      </a>
+                    </h5>
+                    <small class="text-muted">
+                      <i class="bi bi-clock"></i> 12 h.a. ·
+                      <i class="bi bi-journal-bookmark"></i> 8 módulos ·
+                      <i class="bi bi-tag"></i> SST/SSOMA
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
             <br>
             <hr>
+
+
+            <!-- END COURSES -->
+
+
+
             <br>
             <h2 class="fw-bold mb-4">
               <i class="bi bi-mortarboard-fill text-primary me-2"></i>
@@ -1044,7 +1078,7 @@
 
                     <small class="text-muted">
                       <i class="bi bi-clock"></i> 51 horas ·
-                      <i class="bi bi-journal-bookmark"></i> 4 cursos · 
+                      <i class="bi bi-journal-bookmark"></i> 4 cursos ·
                       <i class="bi bi-tag"></i> Minería
                     </small>
 
@@ -1187,18 +1221,18 @@
 
 
       <!-- SCRIPT DE FILTRO -->
+      <!-- SCRIPT DE FILTRO -->
       <script>
         const filtro = document.getElementById("filtroCursos");
         const cursos = document.querySelectorAll(".curso");
 
-        // считаем категории
         function contarCategorias() {
-
           const conteo = {
             mineria: 0,
             industrial: 0,
             administracion: 0,
-            construccion: 0
+            construccion: 0,
+            "sst-ssoma": 0
           };
 
           cursos.forEach(curso => {
@@ -1208,7 +1242,6 @@
             }
           });
 
-          // обновляем текст option
           filtro.querySelector('option[value="todos"]').textContent =
             "Mostrar Todos (" + cursos.length + ")";
 
@@ -1223,12 +1256,12 @@
 
           filtro.querySelector('option[value="construccion"]').textContent =
             "Construcción (" + conteo.construccion + ")";
+
+          filtro.querySelector('option[value="sst-ssoma"]').textContent =
+            "SST/SSOMA (" + conteo["sst-ssoma"] + ")";
         }
 
-
-        // При загрузке страницы
         window.addEventListener("DOMContentLoaded", () => {
-
           contarCategorias();
 
           const savedCategoria = localStorage.getItem("categoriaSeleccionada");
@@ -1241,14 +1274,11 @@
           }
         });
 
-
-        // При изменении фильтра
         filtro.addEventListener("change", () => {
           const categoria = filtro.value;
           localStorage.setItem("categoriaSeleccionada", categoria);
           aplicarFiltro(categoria);
         });
-
 
         function aplicarFiltro(categoria) {
           cursos.forEach(curso => {
