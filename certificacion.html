@@ -156,12 +156,18 @@
           }
 
           .plan:hover {
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+            border-color: #378ADD;
+            transform: translateY(-2px);
+            transition: all 0.2s;
+            cursor: pointer;
           }
 
-          .plan.featured {
-            border-color: #378ADD;
-            border-width: 2px;
+          .plan.featured:hover {
+            border-color: #185FA5;
+            box-shadow: 0 4px 20px rgba(24, 95, 165, 0.18);
+            transform: translateY(-2px);
+            cursor: pointer;
           }
 
           .plan-left {
