@@ -142,15 +142,382 @@
         estándares de excelencia y cumplimiento normativo.</p>
         </p>
         <h3>Precio</h3>
-        <p>
-          <b>Costo del Certificado:</b> <span
-            style="color: #00823b; background-color: #ebfff6; border: 1px solid #7ce1b5; padding: 2px 4px; border-radius: 4px;"><b>S/39
-              soles</b></span>
-          (<span
-            style="color: #00823b; background-color: #ebfff6; border: 1px solid #7ce1b5; padding: 2px 4px; border-radius: 4px;"><b>~$11.60
-              USD
-            </b></span>, equivalente en otras monedas) (Archivo PDF, Formato A5)
-        </p>
+
+        <style>
+          body {
+            background: transparent;
+          }
+
+          .plan {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+          }
+
+          .plan:hover {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+          }
+
+          .plan.featured {
+            border-color: #378ADD;
+            border-width: 2px;
+          }
+
+          .plan-left {
+            background: #f8f9fa;
+            padding: 20px 16px;
+            border-right: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 120px;
+          }
+
+          .plan.featured .plan-left {
+            background: #E6F1FB;
+            border-right-color: #B5D4F4;
+          }
+
+          .plan-tier {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: #6c757d;
+            margin-bottom: 4px;
+          }
+
+          .plan.featured .plan-tier {
+            color: #185FA5;
+          }
+
+          .plan-price {
+            font-size: 26px;
+            font-weight: 600;
+            color: #212529;
+            line-height: 1;
+          }
+
+          .plan.featured .plan-price {
+            color: #185FA5;
+          }
+
+          .plan-usd {
+            font-size: 10px;
+            color: #adb5bd;
+            margin-top: 2px;
+          }
+
+          .plan-pago {
+            font-size: 11px;
+            color: #6c757d;
+            margin-top: 5px;
+          }
+
+          .plan-right {
+            padding: 14px 18px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 16px;
+          }
+
+          .feat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #212529;
+            white-space: nowrap;
+          }
+
+          .feat i {
+            font-size: 15px;
+          }
+
+          .ic-yes {
+            color: #1D9E75;
+          }
+
+          .ic-gold {
+            color: #BA7517;
+          }
+
+          .feat.gold {
+            color: #BA7517;
+            font-weight: 600;
+          }
+
+          .sep {
+            width: 1px;
+            height: 16px;
+            background: #dee2e6;
+          }
+
+          .expand-bar {
+            border-top: 1px solid #dee2e6;
+            padding: 9px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            background: #f8f9fa;
+            font-size: 12px;
+            color: #6c757d;
+            user-select: none;
+            transition: background 0.15s;
+          }
+
+          .expand-bar:hover {
+            background: #e9ecef;
+          }
+
+          .expand-bar i.arrow {
+            font-size: 13px;
+            transition: transform 0.2s;
+            margin-left: auto;
+          }
+
+          .expand-bar.open i.arrow {
+            transform: rotate(180deg);
+          }
+
+          .expand-content {
+            display: none;
+            border-top: 1px solid #dee2e6;
+            padding: 16px 18px;
+            background: #fff;
+          }
+
+          .expand-content.open {
+            display: block;
+          }
+
+          .preview-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px 14px;
+          }
+
+          .preview-item i {
+            font-size: 20px;
+            color: #BA7517;
+            display: block;
+            margin-bottom: 6px;
+          }
+
+          .preview-item strong {
+            font-size: 13px;
+            font-weight: 600;
+            color: #212529;
+            display: block;
+            margin-bottom: 4px;
+          }
+
+          .preview-item p {
+            font-size: 12px;
+            color: #6c757d;
+            margin: 0;
+            line-height: 1.4;
+          }
+
+          .btn-ejemplo {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 14px;
+            padding: 7px 16px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #185FA5;
+            text-decoration: none;
+            background: #fff;
+            transition: background 0.15s;
+          }
+
+          .btn-ejemplo:hover {
+            background: #E6F1FB;
+            color: #185FA5;
+            text-decoration: none;
+          }
+
+          .update-note {
+            margin-top: 10px;
+            background: #fff8ed;
+            border: 1px solid #f5c842;
+            border-radius: 8px;
+            padding: 11px 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: #6c757d;
+            line-height: 1.5;
+          }
+
+          .update-note i {
+            font-size: 16px;
+            color: #BA7517;
+            margin-top: 1px;
+            flex-shrink: 0;
+          }
+
+          @media (max-width: 576px) {
+            .plan-left {
+              min-width: 100px;
+              padding: 14px 12px;
+            }
+
+            .plan-price {
+              font-size: 22px;
+            }
+
+            .plan-right {
+              padding: 12px 14px;
+              gap: 6px 12px;
+            }
+
+            .feat {
+              font-size: 12px;
+            }
+
+            .sep {
+              display: none;
+            }
+
+            .expand-bar {
+              font-size: 11px;
+            }
+          }
+        </style>
+
+        <div class="py-3" style="max-width:860px;">
+          <div class="d-flex flex-column gap-3">
+
+            <div class="plan">
+              <div class="d-flex">
+                <div class="plan-left">
+                  <div class="plan-tier">Básico</div>
+                  <div class="plan-price">S/ 39</div>
+                  <div class="plan-usd">≈ $11.38 USD</div>
+                  <div class="plan-pago"><i class="bi bi-check2"></i> Pago único</div>
+                </div>
+                <div class="plan-right">
+                  <div class="feat"><i class="bi bi-patch-check-fill ic-yes"></i> Certificado PDF</div>
+                  <div class="sep"></div>
+                  <div class="feat"><i class="bi bi-globe2 ic-yes"></i> Verificación online</div>
+                  <div class="sep"></div>
+                  <div class="feat"><i class="bi bi-qr-code ic-yes"></i> Código QR</div>
+                  <div class="sep"></div>
+                  <div class="feat"><i class="bi bi-shield-check ic-yes"></i> Página de Verificación permanente</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="plan featured">
+              <div class="d-flex">
+                <div class="plan-left">
+                  <div class="plan-tier">Estándar</div>
+                  <div class="plan-price">S/ 59</div>
+                  <div class="plan-usd">≈ $17.21 USD</div>
+                  <div class="plan-pago"><i class="bi bi-check2"></i> Pago único</div>
+                </div>
+                <div class="plan-right">
+                  <div class="feat"><i class="bi bi-patch-check-fill ic-yes"></i> Certificado PDF</div>
+                  <div class="sep"></div>
+                  <div class="feat"><i class="bi bi-globe2 ic-yes"></i> Verificación online</div>
+                  <div class="sep"></div>
+                  <div class="feat"><i class="bi bi-qr-code ic-yes"></i> Código QR</div>
+                  <div class="sep"></div>
+                  <div class="feat"><i class="bi bi-shield-check ic-yes"></i> Página de Verificación permanente</div>
+                  <div class="sep"></div>
+                  <div class="feat gold"><i class="bi bi-file-earmark-text-fill ic-gold"></i> Carta de Reconocimiento
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="plan">
+              <div class="d-flex">
+                <div class="plan-left">
+                  <div class="plan-tier">Premium</div>
+                  <div class="plan-price">S/ 69</div>
+                  <div class="plan-usd">≈ $20.13 USD</div>
+                  <div class="plan-pago"><i class="bi bi-check2"></i> Pago único</div>
+                </div>
+                <div class="plan-right">
+                  <div class="feat"><i class="bi bi-patch-check-fill ic-yes"></i> Certificado PDF</div>
+                  <div class="sep"></div>
+                  <div class="feat"><i class="bi bi-globe2 ic-yes"></i> Verificación online</div>
+                  <div class="sep"></div>
+                  <div class="feat"><i class="bi bi-qr-code ic-yes"></i> Código QR</div>
+                  <div class="sep"></div>
+                  <div class="feat"><i class="bi bi-shield-check ic-yes"></i> Página de Verificación permanente</div>
+                  <div class="sep"></div>
+                  <div class="feat gold"><i class="bi bi-file-earmark-text-fill ic-gold"></i> Carta de Reconocimiento
+                  </div>
+                  <div class="sep"></div>
+                  <div class="feat gold"><i class="bi bi-file-person-fill ic-gold"></i> CV en verificación</div>
+                  <div class="sep"></div>
+                  <div class="feat gold"><i class="bi bi-linkedin ic-gold"></i> Enlace LinkedIn</div>
+                </div>
+              </div>
+              <div class="expand-bar" id="toggle-btn" onclick="toggleExpand()">
+                <i class="bi bi-eye" style="font-size:14px; color:#BA7517;"></i>
+                <span>¿Qué incluye el CV y el botón de LinkedIn en tu página de verificación?</span>
+                <i class="bi bi-chevron-down arrow"></i>
+              </div>
+              <div class="expand-content" id="expand-box">
+                <div class="row g-2">
+                  <div class="col-12 col-sm-4">
+                    <div class="preview-item">
+                      <i class="bi bi-file-person-fill"></i>
+                      <strong>Botón "Descargar CV"</strong>
+                      <p>Tu CV en PDF estará disponible en tu página de verificación, accesible para cualquier empleador
+                        que escanee tu QR.</p>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <div class="preview-item">
+                      <i class="bi bi-linkedin"></i>
+                      <strong>Botón "Ver perfil en LinkedIn"</strong>
+                      <p>Un enlace directo a tu perfil de LinkedIn aparece junto a tu certificado, facilitando el
+                        contacto profesional.</p>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-4">
+                    <div class="preview-item">
+                      <i class="bi bi-arrow-repeat"></i>
+                      <strong>Siempre actualizado</strong>
+                      <p>¿Cambiaste tu CV o tu LinkedIn? Puedes actualizarlo en cualquier momento por una pequeña
+                        tarifa.</p>
+                    </div>
+                  </div>
+                </div>
+                <a href="http://infoset.org.pe/certificados/certificado_0002.html" class="btn-ejemplo" target="_blank">
+                  <i class="bi bi-box-arrow-up-right"></i> Ver ejemplo de página de verificación
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+          function toggleExpand() {
+            const btn = document.getElementById('toggle-btn');
+            const box = document.getElementById('expand-box');
+            btn.classList.toggle('open');
+            box.classList.toggle('open');
+          }
+        </script>
+
+
         <h3>Datos para Transferencia Bancaria</h3>
         <p>
           <b>BCP (Cuenta en Soles):</b> 21593679469020
@@ -399,9 +766,8 @@
             </h2>
             <div id="collapse7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
               <div class="accordion-body">
-                Una vez que el administrador reciba tu mensaje por WhatsApp con voucher de pago y el <strong><a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSf7Sf9_mcYseqAUT1R0oaRIiLr9Wvxqewvn2fWJo3hTZCt1cA/viewform"
-                    target="_blank">formulario completado</a></strong>, tu certificado será procesado y enviado a tu
+                Una vez que el administrador reciba tu mensaje por WhatsApp con voucher de pago y el <strong>formulario
+                  completado</strong>, tu certificado será procesado y enviado a tu
                 <strong>WhatsApp</strong> y <strong>correo electrónico</strong> indicado.
                 <br>
                 Esto puede demorar entre <strong>1 hora</strong> y como máximo <strong>24 horas</strong>.

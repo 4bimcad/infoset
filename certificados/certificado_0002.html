@@ -15,7 +15,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -82,10 +84,12 @@
       </div><!-- End Section Title -->
 
       <div style="text-align: center;">
-        <img src="../assets/img/certificado_v.png" alt="Certificate Validity Icon" style="max-width: 100%; height: auto;">
+        <img src="../assets/img/certificado_v.png" alt="Certificate Validity Icon"
+          style="max-width: 100%; height: auto;">
       </div>
       <p style="text-align: center; font-size: 1.1em;">
-        <b>Este certificado está <span class="text-success">verificado</span> y es <span class="text-success">válido.</span></b>
+        <b>Este certificado está <span class="text-success">verificado</span> y es <span
+            class="text-success">válido.</span></b>
       </p>
 
       <div class="container d-flex justify-content-center mt-5">
@@ -93,11 +97,136 @@
           <li class="list-group-item"><b>Nombre:</b> Juan Carlos Martínez López</li>
           <li class="list-group-item"><b>Curso:</b> Seguridad en los Trabajos de Construcción</li>
           <li class="list-group-item"><b>Horas académicas:</b> 10</li>
-          <li class="list-group-item"><b>Fecha:</b> 14 de noviembre de 2024</li>
-          <li class="list-group-item"><a href="pdf/Certificado 0002 - Juan Carlos Martínez López.pdf" class="btn btn-primary" target="_blank">
-            Descargar Certificado <i class="bi bi-filetype-pdf"></i> 
-          </a></li>
+          <li class="list-group-item"><b>Fecha:</b> 21 de diciembre de 2025</li>
+          <li class="list-group-item"><a href="pdf/Certificado 0002 - Juan Carlos Martínez López.pdf"
+              class="btn btn-primary" target="_blank">
+              Descargar Certificado <i class="bi bi-filetype-pdf"></i>
+            </a></li>
         </ul>
+      </div>
+
+
+      <style>
+        .prof-section {
+          max-width: 480px;
+          margin: 2rem auto 0;
+          padding: 0 1rem;
+        }
+
+        .prof-label {
+          font-size: 18px;
+          font-weight: 600;
+          text-transform: uppercase;
+          color: #363637;
+          text-align: center;
+          margin-bottom: 6x;
+        }
+        .prof-label-name {
+          font-size: 18px;
+          font-weight: 600;
+          text-transform: uppercase;
+          color: #363637;
+          text-align: center;
+          margin-bottom: 15px;
+        }
+
+        .prof-card {
+          border: 1px solid #dee2e6;
+          border-radius: 12px;
+          overflow: hidden;
+        }
+
+        .prof-btn {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 16px 20px;
+          background: #fff;
+          text-decoration: none;
+          color: #212529;
+          transition: background 0.15s;
+          border-bottom: 1px solid #dee2e6;
+        }
+
+        .prof-btn:last-child {
+          border-bottom: none;
+        }
+
+        .prof-btn:hover {
+          background: #f8f9fa;
+          text-decoration: none;
+          color: #212529;
+        }
+
+        .prof-btn:hover .btn-arrow {
+          transform: translateX(3px);
+        }
+
+        .btn-icon {
+          width: 42px;
+          height: 42px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          font-size: 20px;
+        }
+
+        .btn-icon.cv {
+          background: #E6F1FB;
+          color: #185FA5;
+        }
+
+        .btn-icon.li {
+          background: #E8F4FD;
+          color: #0A66C2;
+        }
+
+        .btn-text strong {
+          display: block;
+          font-size: 17px;
+          font-weight: 600;
+          color: #212529;
+        }
+
+        .btn-text span {
+          display: block;
+          font-size: 15px;
+          color: #6c757d;
+          margin-top: 1px;
+        }
+
+        .btn-arrow {
+          font-size: 17px;
+          color: #adb5bd;
+          margin-left: auto;
+          transition: transform 0.15s;
+          flex-shrink: 0;
+        }
+      </style>
+      <hr>
+      <div class="prof-section">
+        <div class="prof-label">Perfil profesional</div>
+        <div class="prof-label-name">Juan Carlos Martínez López</div>
+        <div class="prof-card">
+          <a href="../perfil_profesional/0002/CV_Juan Carlos Martínez López.pdf" class="prof-btn" target="_blank">
+            <div class="btn-icon cv"><i class="bi bi-file-person-fill"></i></div>
+            <div class="btn-text">
+              <strong>Descargar CV</strong>
+              <span>Currículum vitae en PDF</span>
+            </div>
+            <i class="bi bi-arrow-right btn-arrow"></i>
+          </a>
+          <a href="https://www.linkedin.com/" class="prof-btn" target="_blank">
+            <div class="btn-icon li"><i class="bi bi-linkedin"></i></div>
+            <div class="btn-text">
+              <strong>Ver perfil en LinkedIn</strong>
+              <span>Conecta o verifica su experiencia</span>
+            </div>
+            <i class="bi bi-arrow-right btn-arrow"></i>
+          </a>
+        </div>
       </div>
 
     </section><!-- /Starter Section Section -->
@@ -107,7 +236,8 @@
   <footer id="footer" class="footer dark-background">
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">INFOSET</strong> |<span> Todos los derechos reservados</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">INFOSET</strong> |<span> Todos los derechos
+          reservados</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
@@ -120,7 +250,8 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
