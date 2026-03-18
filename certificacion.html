@@ -30,6 +30,7 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/certificacion.css" rel="stylesheet">
 
 
   <!-- =======================================================
@@ -140,7 +141,7 @@
                 <div>
                   <div class="cert-info-title">Formato del Certificado</div>
                   <div class="cert-info-text">Una vez aprobada la evaluación, se otorgará un <strong>Certificado en
-                      formato digital (PDF)</strong>, reconocimiento oficial de las habilidades adquiridas.</div>
+                      formato digital (PDF, A5)</strong>, reconocimiento oficial de las habilidades adquiridas.</div>
                 </div>
               </div>
             </div>
@@ -206,398 +207,16 @@
         <br>
         <br>
 
-        <style>
-          .cert-info-card {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            background: #fff;
-            border: 1px solid #dee2e6;
-            border-radius: 12px;
-            padding: 16px;
-            height: 100%;
-            transition: box-shadow 0.2s, transform 0.2s;
-          }
-
-          .cert-info-card:hover {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            transform: translateY(-2px);
-          }
-
-          .cert-info-card--highlight {
-            border-color: #86efac;
-            background: #f0fdf4;
-          }
-
-          .cert-info-icon {
-            font-size: 1.6rem;
-            color: #185FA5;
-            flex-shrink: 0;
-            margin-top: 2px;
-          }
-
-          .cert-info-icon--green {
-            color: #16a34a;
-          }
-
-          .cert-info-title {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #212529;
-            margin-bottom: 4px;
-          }
-
-          .cert-info-text {
-            font-size: 0.875rem;
-            color: #555;
-            line-height: 1.5;
-          }
-
-          .cert-benefits {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 8px;
-          }
-
-          .cert-benefits-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #212529;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-          }
-
-          .cert-benefits-title i {
-            color: #BA7517;
-            font-size: 1.1rem;
-          }
-
-          .cert-benefits-intro {
-            font-size: 0.875rem;
-            color: #555;
-          }
-
-          .cert-benefit-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 7px;
-            font-size: 0.875rem;
-            color: #212529;
-            background: #fff;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 8px 12px;
-          }
-
-          .cert-benefit-item i {
-            color: #1D9E75;
-            font-size: 1rem;
-            flex-shrink: 0;
-            margin-top: 1px;
-          }
-
-          .cert-benefits-footer {
-            font-size: 0.8rem;
-            color: #6c757d;
-            margin-top: 14px;
-            padding-top: 12px;
-            border-top: 1px solid #dee2e6;
-          }
-        </style>
-
         <h3 class="pago-title">Precio</h3>
 
-        <style>
-          body {
-            background: transparent;
-          }
-
-          .plan {
-            border: 1px solid #dee2e6;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: box-shadow 0.2s;
-          }
-
-          .plan:hover {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
-            border-color: #378ADD;
-            transform: translateY(-2px);
-            transition: all 0.2s;
-            cursor: pointer;
-          }
-
-          .plan.featured:hover {
-            border-color: #185FA5;
-            box-shadow: 0 4px 20px rgba(24, 95, 165, 0.18);
-            transform: translateY(-2px);
-            cursor: pointer;
-          }
-
-          .plan-left {
-            background: #f8f9fa;
-            padding: 20px 16px;
-            border-right: 1px solid #dee2e6;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-width: 120px;
-          }
-
-          .plan.featured .plan-left {
-            background: #E6F1FB;
-            border-right-color: #B5D4F4;
-          }
-
-          .plan-tier {
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: .07em;
-            color: #6c757d;
-            margin-bottom: 4px;
-          }
-
-          .plan.featured .plan-tier {
-            color: #185FA5;
-          }
-
-          .plan-price {
-            font-size: 26px;
-            font-weight: 600;
-            color: #212529;
-            line-height: 1;
-          }
-
-          .plan.featured .plan-price {
-            color: #185FA5;
-          }
-
-          .plan-usd {
-            font-size: 10px;
-            color: #adb5bd;
-            margin-top: 2px;
-          }
-
-          .plan-pago {
-            font-size: 11px;
-            color: #6c757d;
-            margin-top: 5px;
-          }
-
-          .plan-right {
-            padding: 14px 18px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px 16px;
-          }
-
-          .feat {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: #212529;
-            white-space: nowrap;
-          }
-
-          .feat i {
-            font-size: 15px;
-          }
-
-          .ic-yes {
-            color: #1D9E75;
-          }
-
-          .ic-gold {
-            color: #BA7517;
-          }
-
-          .feat.gold {
-            color: #BA7517;
-            font-weight: 600;
-          }
-
-          .sep {
-            width: 1px;
-            height: 16px;
-            background: #dee2e6;
-          }
-
-          .expand-bar {
-            border-top: 1px solid #dee2e6;
-            padding: 9px 18px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            background: #f8f9fa;
-            font-size: 12px;
-            color: #6c757d;
-            user-select: none;
-            transition: background 0.15s;
-          }
-
-          .expand-bar:hover {
-            background: #e9ecef;
-          }
-
-          .expand-bar i.arrow {
-            font-size: 13px;
-            transition: transform 0.2s;
-            margin-left: auto;
-          }
-
-          .expand-bar.open i.arrow {
-            transform: rotate(180deg);
-          }
-
-          .expand-content {
-            display: none;
-            border-top: 1px solid #dee2e6;
-            padding: 16px 18px;
-            background: #fff;
-          }
-
-          .expand-content.open {
-            display: block;
-          }
-
-          .preview-item {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 12px 14px;
-          }
-
-          .preview-item i {
-            font-size: 20px;
-            color: #BA7517;
-            display: block;
-            margin-bottom: 6px;
-          }
-
-          .preview-item strong {
-            font-size: 13px;
-            font-weight: 600;
-            color: #212529;
-            display: block;
-            margin-bottom: 4px;
-          }
-
-          .preview-item p {
-            font-size: 12px;
-            color: #6c757d;
-            margin: 0;
-            line-height: 1.4;
-          }
-
-          .btn-ejemplo {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            margin-top: 14px;
-            padding: 7px 16px;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            font-size: 13px;
-            color: #185FA5;
-            text-decoration: none;
-            background: #fff;
-            transition: background 0.15s;
-          }
-
-          .btn-ejemplo:hover {
-            background: #E6F1FB;
-            color: #185FA5;
-            text-decoration: none;
-          }
-
-          .update-note {
-            margin-top: 10px;
-            background: #fff8ed;
-            border: 1px solid #f5c842;
-            border-radius: 8px;
-            padding: 11px 16px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            font-size: 13px;
-            color: #6c757d;
-            line-height: 1.5;
-          }
-
-          .update-note i {
-            font-size: 16px;
-            color: #BA7517;
-            margin-top: 1px;
-            flex-shrink: 0;
-          }
-
-          .pago-yape-body {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-            flex-wrap: wrap;
-          }
-
-          .pago-qr {
-            width: 200px;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-          }
-
-          @media (max-width: 576px) {
-            .plan-right {
-              flex-direction: column;
-              gap: 6px;
-            }
-
-            .sep {
-              display: none;
-            }
-
-            .plan-left {
-              min-width: 100px;
-              padding: 14px 12px;
-            }
-
-            .plan-price {
-              font-size: 22px;
-            }
-
-            .feat {
-              font-size: 12px;
-            }
-
-            .expand-bar {
-              font-size: 11px;
-            }
-
-            .pago-yape-body {
-              flex-direction: column;
-              align-items: flex-start;
-            }
-
-            .pago-qr {
-              width: 100%;
-              max-width: 200px;
-            }
-          }
-        </style>
-
         <div class="py-3">
+          <div class="py-3">Selecciona tu certificación según tus objetivos:</div>
           <div class="d-flex flex-column gap-3">
 
             <div class="plan">
               <div class="d-flex">
                 <div class="plan-left">
-                  <div class="plan-tier">Básico</div>
+                  <div class="plan-tier">Inicial</div>
                   <div class="plan-price">S/ 39</div>
                   <div class="plan-usd">≈ $11.38 USD</div>
                   <div class="plan-pago"><i class="bi bi-check2"></i> Pago único</div>
@@ -617,7 +236,7 @@
             <div class="plan featured">
               <div class="d-flex">
                 <div class="plan-left">
-                  <div class="plan-tier">Estándar</div>
+                  <div class="plan-tier">Profesional</div>
                   <div class="plan-price">S/ 59</div>
                   <div class="plan-usd">≈ $17.21 USD</div>
                   <div class="plan-pago"><i class="bi bi-check2"></i> Pago único</div>
@@ -657,9 +276,9 @@
                   <div class="feat gold"><i class="bi bi-file-earmark-text-fill ic-gold"></i> Carta de Reconocimiento
                   </div>
                   <div class="sep"></div>
-                  <div class="feat gold"><i class="bi bi-linkedin ic-gold"></i> Enlace LinkedIn</div>
+                  <div class="feat gold"><i class="bi bi-linkedin ic-gold"></i> Perfil LinkedIn</div>
                   <div class="sep"></div>
-                  <div class="feat gold"><i class="bi bi-file-person-fill ic-gold"></i> CV en verificación</div>
+                  <div class="feat gold"><i class="bi bi-file-person-fill ic-gold"></i> CV Descargable en PDF</div>
                 </div>
               </div>
               <div class="expand-bar" id="toggle-btn" onclick="toggleExpand()">
@@ -728,8 +347,8 @@
                 <span>Mercado Pago</span>
               </div>
               <div class="pago-card-body">
-                <p class="pago-desc">Disponible para el <strong>Certificado Básico</strong>. Para Certificado
-                  <strong>Estándar</strong> y <strong>Premium</strong>, contáctenos directamente.
+                <p class="pago-desc">Disponible para el <strong>Certificado Inicial</strong>. Para Certificado
+                  <strong>Profesional</strong> y <strong>Premium</strong>, contáctenos directamente.
                 </p>
                 <div class="mb-3">
                   <script src="https://www.mercadopago.com.pe/integrations/v1/web-payment-checkout.js"
@@ -818,130 +437,6 @@
 
         </div>
 
-        <style>
-          .pago-wrapper {
-            padding: 1rem 0;
-          }
-
-          .pago-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
-            color: var(--bs-body-color);
-          }
-
-          .pago-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.25rem;
-          }
-
-          .pago-card {
-            border: 1px solid #dee2e6;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #fff;
-          }
-
-          .pago-card-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 0.75rem 1rem;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #fff;
-          }
-
-          .pago-mp {
-            background: #009ee3;
-          }
-
-          .pago-bcp {
-            background: #002e6d;
-          }
-
-          .pago-yape {
-            background: #6c2d8e;
-          }
-
-          .pago-card-body {
-            padding: 1rem;
-          }
-
-          .pago-desc {
-            font-size: 0.875rem;
-            color: #555;
-            margin-bottom: 0.75rem;
-          }
-
-          .pago-table {
-            width: 100%;
-            font-size: 0.875rem;
-            border-collapse: collapse;
-          }
-
-          .pago-table tr td {
-            padding: 5px 4px;
-            vertical-align: top;
-          }
-
-          .pago-table tr td:first-child {
-            color: #777;
-            width: 45%;
-          }
-
-          .pago-card-footer {
-            background: #fff8e1;
-            border-top: 1px solid #ffe082;
-            padding: 0.6rem 1rem;
-            font-size: 0.8rem;
-            color: #7a5900;
-          }
-
-          .pago-yape-body {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-          }
-
-          .pago-qr {
-            width: 100px;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-          }
-
-          .pago-whatsapp {
-            background: #f0fdf4;
-            border: 1px solid #86efac;
-            border-radius: 12px;
-            padding: 1rem 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            flex-wrap: wrap;
-          }
-
-          .pago-whatsapp-text {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            font-size: 0.9rem;
-            color: #166534;
-            flex: 1;
-          }
-
-          .pago-whatsapp-icon {
-            font-size: 1.4rem;
-            color: #16a34a;
-            flex-shrink: 0;
-            margin-top: 2px;
-          }
-        </style>
-
-
         <p>
 
 
@@ -949,8 +444,8 @@
 
         <div class="cert-example-block">
           <div class="cert-example-text">
-            Este es un ejemplo de certificado que demuestra la finalización exitosa de un curso, destacando
-            las habilidades y conocimientos adquiridos por el participante.
+            Este es un ejemplo de Certificado (Archivo PDF en formato A5) que demuestra la finalización exitosa de un curso, destacando
+            las habilidades y conocimientos adquiridos por el participante. 
           </div>
           <div class="cert-example-img-wrap">
             <img src="assets/img/Certificado 0002 - Juan Carlos Martínez López.jpg" alt="Ejemplo de certificado"
@@ -1029,155 +524,6 @@
           </div>
 
         </div>
-
-        <style>
-          .cert-example-block {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-items: center;
-          }
-
-          .cert-example-text {
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.6;
-            text-align: center;
-            max-width: 600px;
-          }
-
-          .cert-example-img {
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            max-width: 600px;
-            width: 100%;
-          }
-
-          .cert-lista-block {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            align-items: center;
-            justify-content: space-between;
-          }
-
-          .cert-lista-text {
-            flex: 1;
-            min-width: 240px;
-          }
-
-          .cert-lista-text p {
-            font-size: 0.875rem;
-            color: #555;
-            margin-bottom: 12px;
-          }
-
-          .cert-lista-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-          }
-
-          .cert-lista-feat {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.8rem;
-            color: #212529;
-            background: #fff;
-            border: 1px solid #dee2e6;
-            border-radius: 20px;
-            padding: 4px 12px;
-          }
-
-          .cert-lista-feat i {
-            color: #1D9E75;
-          }
-
-          .cert-lista-btn-wrap {
-            flex-shrink: 0;
-          }
-
-          .cert-obtener-block {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 12px;
-            padding: 24px;
-          }
-
-          .cert-obtener-steps {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-          }
-
-          .cert-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            background: #fff;
-            border: 1px solid #dee2e6;
-            border-radius: 12px;
-            padding: 14px 16px;
-            text-align: center;
-            max-width: 140px;
-            flex: 1;
-            min-width: 110px;
-          }
-
-          .cert-step-num {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #185FA5;
-            color: #fff;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-          }
-
-          .cert-step-text {
-            font-size: 0.8rem;
-            color: #555;
-            line-height: 1.4;
-          }
-
-          .cert-step-arrow {
-            color: #adb5bd;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-          }
-
-          @media (max-width: 576px) {
-            .cert-step-arrow {
-              display: none;
-            }
-
-            .cert-obtener-steps {
-              gap: 10px;
-            }
-
-            .cert-lista-btn-wrap {
-              width: 100%;
-              text-align: center;
-            }
-          }
-        </style>
 
         <hr>
 
