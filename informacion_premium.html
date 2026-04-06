@@ -43,6 +43,47 @@
 
 <body class="index-page">
 
+<!-- ADSENSE START -->
+
+<style>
+.ad-tip { position: relative; display: inline-flex; align-items: center; gap: 3px; }
+</style>
+
+<div id="top-banner" style="background: #f4d976; color: #3a2800; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; font-family: sans-serif; font-size: 15px; font-weight: 500; border-bottom: 1px solid #d4a900; position: relative;">
+
+  <div style="flex: 1; text-align: center;">
+  <strong><i class="bi bi-currency-exchange"></i> ¿Busca una concesión minera para invertir?</strong> &nbsp;Tenemos oportunidades abiertas.
+  <a href="https://incajata.org.pe/projects.html" target="_blank" style="color: #3a2800; text-decoration: none; white-space: nowrap;">
+    <span style="text-decoration: underline;">Más info</span>&nbsp;<i class="bi bi-box-arrow-up-right"></i>
+  </a>
+</div>
+
+  <button onclick="closeBanner()" style="background: rgba(0,0,0,0.12); border: none; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; margin-left: 12px; color: #3a2800; padding: 0;">
+    <i class="bi bi-x" style="font-size: 18px; line-height: 1;"></i>
+  </button>
+
+  <div class="ad-tip" style="position: absolute; bottom: 3px; left: 6px; cursor: default; color: rgba(58,40,0,0.35); font-size: 10px; line-height: 1; user-select: none;">
+    <i class="bi bi-megaphone" style="font-size: 10px;"></i>
+    <span style="letter-spacing: 0.04em;">ANUNCIO</span>
+  </div>
+
+</div>
+
+<script>
+function closeBanner() {
+  document.getElementById('top-banner').style.display = 'none';
+  const exp = new Date(); exp.setHours(23,59,59,999);
+  document.cookie = 'banner_closed=1; expires=' + exp.toUTCString() + '; path=/';
+}
+(function() {
+  if (document.cookie.includes('banner_closed=1'))
+    document.getElementById('top-banner').style.display = 'none';
+})();
+</script>
+
+<!-- ADSENSE END -->
+
+
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
