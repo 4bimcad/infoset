@@ -1,0 +1,280 @@
+
+
+            <br>
+            <h2 class="fw-bold mb-4">
+              <i class="bi bi-mortarboard-fill text-primary me-2"></i>
+              Programas Profesionales:
+            </h2>
+
+            <!-- Programa 1 -->
+            <div class="card curso mb-3 shadow-sm" data-categoria="mineria">
+              <div class="row g-0 align-items-center">
+
+                <div class="col-auto ps-3">
+                  <img src="assets/img/img_cursos_mini/programas.png" style="width:80px;height:45px;object-fit:cover;"
+                    class="rounded">
+                </div>
+
+                <div class="col">
+                  <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h5 class="card-title mb-1">
+                        <a href="programa_seguridad_y_salud_ocupacional_en_mineria.html" class="text-decoration-none">
+                          Programa Profesional: Seguridad y Salud Ocupacional en Minería
+                        </a>
+                      </h5>
+
+                      <div class="badge-descuento">-30%</div>
+
+                    </div>
+
+                    <small class="text-muted">
+                      <i class="bi bi-clock"></i> 76 horas ·
+                      <i class="bi bi-journal-bookmark"></i> 6 cursos ·
+                      <i class="bi bi-tag"></i> Minería
+                    </small>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <!-- Programa 2 -->
+            <div class="card curso mb-3 shadow-sm" data-categoria="mineria">
+              <div class="row g-0 align-items-center">
+
+                <div class="col-auto ps-3">
+                  <img src="assets/img/img_cursos_mini/programas.png" style="width:80px;height:45px;object-fit:cover;"
+                    class="rounded">
+                </div>
+
+                <div class="col">
+                  <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h5 class="card-title mb-1">
+                        <a href="programa_operaciones_y_gestion_minera.html" class="text-decoration-none">
+                          Programa Profesional: Operaciones y Gestión Minera
+                        </a>
+                      </h5>
+
+                      <div class="badge-descuento">-30%</div>
+
+                    </div>
+
+                    <small class="text-muted">
+                      <i class="bi bi-clock"></i> 63 horas ·
+                      <i class="bi bi-journal-bookmark"></i> 5 cursos ·
+                      <i class="bi bi-tag"></i> Minería
+                    </small>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <!-- Programa 3 -->
+            <div class="card curso mb-3 shadow-sm" data-categoria="industrial">
+              <div class="row g-0 align-items-center">
+
+                <div class="col-auto ps-3">
+                  <img src="assets/img/img_cursos_mini/programas.png" style="width:80px;height:45px;object-fit:cover;"
+                    class="rounded">
+                </div>
+
+                <div class="col">
+                  <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h5 class="card-title mb-1">
+                        <a href="programa_seguridad_en_trabajos_de_alto_riesgo.html" class="text-decoration-none">
+                          Programa Profesional: Seguridad en Trabajos de Alto Riesgo
+                        </a>
+                      </h5>
+
+                      <div class="badge-descuento">-30%</div>
+
+                    </div>
+
+                    <small class="text-muted">
+                      <i class="bi bi-clock"></i> 56 horas ·
+                      <i class="bi bi-journal-bookmark"></i> 4 cursos ·
+                      <i class="bi bi-tag"></i> Industrial
+                    </small>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <!-- Programa 4 -->
+            <div class="card curso mb-3 shadow-sm" data-categoria="mineria">
+              <div class="row g-0 align-items-center">
+
+                <div class="col-auto ps-3">
+                  <img src="assets/img/img_cursos_mini/programas.png" style="width:80px;height:45px;object-fit:cover;"
+                    class="rounded">
+                </div>
+
+                <div class="col">
+                  <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h5 class="card-title mb-1">
+                        <a href="programa_medio_ambiente_y_mineria_sostenible.html" class="text-decoration-none">
+                          Programa Profesional: Medio Ambiente y Minería Sostenible
+                        </a>
+                      </h5>
+
+                      <div class="badge-descuento">-30%</div>
+
+                    </div>
+
+                    <small class="text-muted">
+                      <i class="bi bi-clock"></i> 51 horas ·
+                      <i class="bi bi-journal-bookmark"></i> 4 cursos ·
+                      <i class="bi bi-tag"></i> Minería
+                    </small>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <!-- Programa 5 -->
+            <div class="card curso mb-3 shadow-sm" data-categoria="administracion">
+              <div class="row g-0 align-items-center">
+
+                <div class="col-auto ps-3">
+                  <img src="assets/img/img_cursos_mini/programas.png" style="width:80px;height:45px;object-fit:cover;"
+                    class="rounded">
+                </div>
+
+                <div class="col">
+                  <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h5 class="card-title mb-1">
+                        <a href="programa_administracion_y_gestion_empresarial.html" class="text-decoration-none">
+                          Programa Profesional: Administración y Gestión Empresarial
+                        </a>
+                      </h5>
+
+                      <div class="badge-descuento">-30%</div>
+
+                    </div>
+
+                    <small class="text-muted">
+                      <i class="bi bi-clock"></i> 55 horas ·
+                      <i class="bi bi-journal-bookmark"></i> 5 cursos ·
+                      <i class="bi bi-tag"></i> Administración
+                    </small>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <!-- Programa 6 -->
+            <div class="card curso mb-3 shadow-sm" data-categoria="mineria">
+              <div class="row g-0 align-items-center">
+
+                <div class="col-auto ps-3">
+                  <img src="assets/img/img_cursos_mini/programas.png" style="width:80px;height:45px;object-fit:cover;"
+                    class="rounded">
+                </div>
+
+                <div class="col">
+                  <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h5 class="card-title mb-1">
+                        <a href="programa_gestion_y_liderazgo_profesional.html" class="text-decoration-none">
+                          Programa Profesional: Gestión y Liderazgo Profesional
+                        </a>
+                      </h5>
+
+                      <div class="badge-descuento">-30%</div>
+
+                    </div>
+
+                    <small class="text-muted">
+                      <i class="bi bi-clock"></i> 70 horas ·
+                      <i class="bi bi-journal-bookmark"></i> 4 cursos ·
+                      <i class="bi bi-tag"></i> Minería
+                    </small>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+            <!-- Programa 7 -->
+            <div class="card curso mb-3 shadow-sm" data-categoria="mineria">
+              <div class="row g-0 align-items-center">
+
+                <div class="col-auto ps-3">
+                  <img src="assets/img/img_cursos_mini/programas.png" style="width:80px;height:45px;object-fit:cover;"
+                    class="rounded">
+                </div>
+
+                <div class="col">
+                  <div class="card-body py-3">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                      <h5 class="card-title mb-1">
+                        <a href="programa_marco_legal_y_normativo_en_mineria.html" class="text-decoration-none">
+                          Programa Profesional: Marco Legal y Normativo en Minería
+                        </a>
+                      </h5>
+
+                      <div class="badge-descuento">-30%</div>
+
+                    </div>
+
+                    <small class="text-muted">
+                      <i class="bi bi-clock"></i> 36 horas ·
+                      <i class="bi bi-journal-bookmark"></i> 3 cursos ·
+                      <i class="bi bi-tag"></i> Minería
+                    </small>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <style>
+              .badge-descuento {
+                width: 52px;
+                height: 52px;
+                border-radius: 50%;
+                background: #198754;
+                color: #fff;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+              }
+            </style>
