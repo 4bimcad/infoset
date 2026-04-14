@@ -334,6 +334,161 @@
         </script>
 
 
+        <style>
+          .pago-wrapper {
+            max-width: 1100px;
+            margin: auto;
+          }
+
+          .pago-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+          }
+
+          /* GRID */
+          .pago-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+          }
+
+          /* CARD */
+          .pago-card,
+          .card {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            background: #fff;
+            transition: 0.2s;
+          }
+
+          .pago-card:hover,
+          .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+          }
+
+          /* HEADER */
+          .pago-header {
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 16px;
+            font-weight: 600;
+            color: #fff;
+          }
+
+          .pago-header i {
+            font-size: 18px;
+          }
+
+          /* COLORS */
+          .pago-mp {
+            background: #079cd2;
+          }
+
+          .pago-bcp {
+            background: #043f92;
+          }
+
+          .pago-yape {
+            background: #720E97;
+          }
+
+          /* BODY */
+          .pago-card-body {
+            padding: 16px;
+          }
+
+          /* LOGO */
+          .pago-logo {
+            max-height: 40px;
+            width: auto;
+            object-fit: contain;
+          }
+
+          /* DIVIDER */
+          .pago-divider {
+            height: 1px;
+            background: #eee;
+            margin: 12px 0;
+          }
+
+          /* TABLE */
+          .pago-table {
+            width: 100%;
+            font-size: 14px;
+          }
+
+          .pago-table td {
+            padding: 6px 0;
+          }
+
+          /* OPTIONS */
+          .pago-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 12px;
+            text-decoration: none;
+            color: #000;
+            transition: 0.2s;
+          }
+
+          .pago-option:hover {
+            background: #f9f9f9;
+          }
+
+          .pago-btn {
+            background: #107ead;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+          }
+
+          /* QR */
+          .pago-qr {
+            width: 160px;
+            max-width: 100%;
+            border-radius: 8px;
+          }
+
+          /* FOOTER */
+          .card-footer {
+            font-size: 12px;
+            background: #fafafa;
+            padding: 10px 16px;
+          }
+
+          /* WHATSAPP */
+          .pago-whatsapp {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f6fffa;
+            border: 1px solid #d9f7e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+          }
+
+          .pago-whatsapp-text {
+            display: flex;
+            gap: 10px;
+          }
+
+          .pago-whatsapp-icon {
+            color: #52c41a;
+            font-size: 18px;
+          }
+        </style>
+
+
         <div class="pago-wrapper">
 
           <h3 class="pago-title">Métodos de Pago</h3>
@@ -341,42 +496,78 @@
           <div class="pago-grid">
 
             <!-- Mercado Pago -->
-            <div class="pago-card">
-              <div class="pago-card-header pago-mp">
+            <div class="card">
+              <div class="pago-header pago-mp">
                 <i class="bi bi-credit-card-fill"></i>
-                <span>Mercado Pago</span>
+                Mercado Pago
               </div>
+
               <div class="pago-card-body">
-                <p class="pago-desc">Disponible para el <strong>Certificado Inicial</strong>. Para Certificado
-                  <strong>Profesional</strong> y <strong>Premium</strong>, contáctenos directamente.
-                </p>
-                <div class="mb-3">
-                  <script src="https://www.mercadopago.com.pe/integrations/v1/web-payment-checkout.js"
-                    data-preference-id="155438193-55c092d9-9856-4f44-bb2a-b4148f61423d" data-source="button">
-                    </script>
+
+                <div class="text-center">
+                  <img src="assets/img/mercado pago1.png" class="pago-logo">
                 </div>
-                <a href="https://youtu.be/-clpHE86FCs"
-                  class="btn btn-danger btn-sm d-inline-flex align-items-center gap-2 fw-semibold" target="_blank">
+
+                <div class="pago-divider"></div>
+
+                <p class="text-muted small">
+                  Selecciona el certificado y paga de forma segura.
+                </p>
+
+                <a href="https://mpago.la/2M76sfS" target="_blank" class="pago-option">
+                  <div>
+                    <div class="fw-medium">Certificado Inicial</div>
+                    <div class="text-muted small">S/ 39.00</div>
+                  </div>
+                  <span class="pago-btn">Pagar</span>
+                </a>
+
+                <a href="https://mpago.la/31j5P5q" target="_blank" class="pago-option">
+                  <div>
+                    <div class="fw-medium">Certificado Profesional</div>
+                    <div class="text-muted small">S/ 59.00</div>
+                  </div>
+                  <span class="pago-btn">Pagar</span>
+                </a>
+
+                <a href="https://mpago.la/19cUzER" target="_blank" class="pago-option">
+                  <div>
+                    <div class="fw-medium">Certificado Premium</div>
+                    <div class="text-muted small">S/ 69.00</div>
+                  </div>
+                  <span class="pago-btn">Pagar</span>
+                </a>
+
+                <a href="https://youtu.be/-clpHE86FCs" target="_blank" class="btn btn-danger btn-sm mt-2">
                   <i class="bi bi-youtube"></i> ¿Cómo pagar?
                 </a>
+
               </div>
-              <div class="pago-card-footer">
-                <i class="bi bi-info-circle me-1"></i>
-                Revise el medio de pago y el tiempo de acreditación antes de confirmar. El certificado se enviará una
-                vez verificado el pago.
+
+              <div class="card-footer">
+                El certificado se envía una vez validado el pago.
               </div>
             </div>
 
-            <!-- Transferencia BCP -->
+
+            <!-- BCP -->
             <div class="pago-card">
-              <div class="pago-card-header pago-bcp">
+              <div class="pago-header pago-bcp">
                 <i class="bi bi-bank"></i>
-                <span>Transferencia BCP</span>
+                Transferencia BCP
               </div>
+
               <div class="pago-card-body">
+
+                <div class="text-center">
+                  <img src="assets/img/bcp logo.png" class="pago-logo">
+                </div>
+
+                <div class="pago-divider"></div>
+
                 <table class="pago-table">
                   <tr>
-                    <td>Cuenta en Soles</td>
+                    <td>Cuenta</td>
                     <td><strong>21593679469020</strong></td>
                   </tr>
                   <tr>
@@ -388,50 +579,59 @@
                     <td><strong>Stanislav Tsvitkov</strong></td>
                   </tr>
                 </table>
+
               </div>
             </div>
 
+
             <!-- Yape -->
             <div class="pago-card">
-              <div class="pago-card-header pago-yape">
+              <div class="pago-header pago-yape">
                 <i class="bi bi-phone-fill"></i>
-                <span>Yape</span>
+                Yape
               </div>
-              <div class="pago-card-body pago-yape-body">
-                <div>
-                  <table class="pago-table">
-                    <tr>
-                      <td>Número</td>
-                      <td><strong>963 299 237</strong></td>
-                    </tr>
-                    <tr>
-                      <td>Titular</td>
-                      <td><strong>Stanislav Tsvitkov</strong></td>
-                    </tr>
-                  </table>
+
+              <div class="pago-card-body">
+
+                <div class="text-center">
+                  <img src="assets/img/logo yape 1.jpg" class="pago-logo">
                 </div>
-                <div>
-                  <img src="assets/img/yape.jpg" alt="QR Yape" class="pago-qr img-fluid" style="width: 200px;">
+
+                <div class="pago-divider"></div>
+
+                <table class="pago-table">
+                  <tr>
+                    <td>Número</td>
+                    <td><strong>963 299 237</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Titular</td>
+                    <td><strong>Stanislav Tsvitkov</strong></td>
+                  </tr>
+                </table>
+
+                <div class="text-center mt-3">
+                  <img src="assets/img/yape.jpg" class="pago-qr" style="width:250px;">
                 </div>
+
               </div>
             </div>
 
           </div>
 
-          <!-- Alerta WhatsApp -->
+
+          <!-- WhatsApp -->
           <div class="pago-whatsapp">
             <div class="pago-whatsapp-text">
               <i class="bi bi-exclamation-circle-fill pago-whatsapp-icon"></i>
               <div>
                 <strong>¿Ya realizaste el pago?</strong><br>
-                Adjunte su comprobante en el formulario y envíelo también por WhatsApp al canal oficial de
-                <strong>INFOSET</strong> para una atención más rápida.
+                Envía tu comprobante por WhatsApp para validación rápida.
               </div>
             </div>
-            <a href="https://wa.me/+51913090906" target="_blank"
-              class="btn btn-success d-inline-flex align-items-center gap-2 fw-semibold">
-              <i class="bi bi-whatsapp"></i>
-              +51 913 090 906
+
+            <a href="https://wa.me/+51913090906" target="_blank" class="btn btn-success">
+              <i class="bi bi-whatsapp"></i> +51 913 090 906
             </a>
           </div>
 
@@ -444,8 +644,9 @@
 
         <div class="cert-example-block">
           <div class="cert-example-text">
-            Este es un ejemplo de Certificado (Archivo PDF en formato A5) que demuestra la finalización exitosa de un curso, destacando
-            las habilidades y conocimientos adquiridos por el participante. 
+            Este es un ejemplo de Certificado (Archivo PDF en formato A5) que demuestra la finalización exitosa de un
+            curso, destacando
+            las habilidades y conocimientos adquiridos por el participante.
           </div>
           <div class="cert-example-img-wrap">
             <img src="assets/img/Certificado 0002 - Juan Carlos Martínez López.jpg" alt="Ejemplo de certificado"
@@ -538,7 +739,7 @@
             <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
               <div class="accordion-body">
                 Sí, pero solo si <strong>apruebas el examen final</strong> con minimum <strong>18 respuestas correctas
-                  de 20</strong> y realizas el <strong>pago del certificado (S/ 69, 59 o 39)</strong>.
+                  de 20</strong> y realizas el <strong>pago del certificado (S/ 39)</strong>.
               </div>
             </div>
           </div>
