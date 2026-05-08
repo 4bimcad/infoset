@@ -118,6 +118,12 @@
           <!-- CURSOS (справа на больших экранах, снизу на мобильных) -->
           <div class="col-lg-9 col-md-8" data-aos="fade-up">
 
+            <!-- INPUT DE BÚSQUEDA -->
+            <div class="col-12 mb-3" data-aos="fade-up">
+              <input type="text" id="buscarCurso" class="form-control form-control-lg"
+                placeholder="Buscar curso por nombre...">
+            </div>
+
             <!-- Curso 1 -->
             <div class="card curso mb-3" data-categoria="construccion" style="max-width: 100%;">
               <div class="row g-0">
@@ -207,7 +213,7 @@
                   <div class="card-body py-3">
                     <h5 class="card-title mb-0">
                       <a href="curso_alfabetizacion_digital_en_la_mineria_peruana.html" class="text-decoration-none">
-                        Alfabetización Digital en la Minería Peruana      
+                        Alfabetización Digital en la Minería Peruana
                       </a>
                     </h5>
                     <small class="text-muted">
@@ -1045,7 +1051,7 @@
               </div>
             </div>
 
-             <!-- Curso 38 -->
+            <!-- Curso 38 -->
             <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
@@ -1070,7 +1076,7 @@
             </div>
 
 
-             <!-- Curso 39 -->
+            <!-- Curso 39 -->
             <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
@@ -1094,7 +1100,7 @@
               </div>
             </div>
 
-             <!-- Curso 40 -->
+            <!-- Curso 40 -->
             <div class="card curso mb-3" data-categoria="administracion" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
@@ -1118,7 +1124,7 @@
               </div>
             </div>
 
-             <!-- Curso 40 -->
+            <!-- Curso 40 -->
             <div class="card curso mb-3" data-categoria="administracion" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
@@ -1142,6 +1148,30 @@
               </div>
             </div>
 
+            <!-- Curso 41 -->
+            <div class="card curso mb-3" data-categoria="mineria" style="max-width: 100%;">
+              <div class="row g-0">
+                <div class="col-auto d-flex align-items-center ps-3">
+                  <img src="assets/img/img_cursos_mini/Liderazgo en Minería.png"
+                    style="width: 80px; height: 40px; object-fit: cover;" class="rounded" alt="Curso">
+                </div>
+                <div class="col">
+                  <div class="card-body py-3">
+                    <h5 class="card-title mb-0">
+                      <a href="curso_liderazgo_en_mineria.html" class="text-decoration-none">
+                        Liderazgo en Minería
+                      </a>
+                    </h5>
+                    <small class="text-muted">
+                      <i class="bi bi-clock"></i> 18 h.a. ·
+                      <i class="bi bi-journal-bookmark"></i> 5 módulos ·
+                      <i class="bi bi-tag"></i> Minería
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <!-- END COURSES -->
 
@@ -1153,7 +1183,30 @@
       </div><!-- End container -->
 
 
-      <!-- SCRIPT DE FILTRO -->
+      <!-- BUSCAR CURSO POR NOMBRE -->
+      <script>
+        const filtro = document.getElementById('filtroCursos');
+        const buscar = document.getElementById('buscarCurso');
+
+        function aplicarFiltros() {
+          const categoria = filtro.value;
+          const texto = buscar.value.toLowerCase().trim();
+
+          document.querySelectorAll('.card.curso').forEach(card => {
+            const categoriaCard = card.dataset.categoria;
+            const nombreCurso = card.querySelector('.card-title').textContent.toLowerCase();
+
+            const coincideCategoria = categoria === 'todos' || categoriaCard === categoria;
+            const coincideTexto = nombreCurso.includes(texto);
+
+            card.style.display = (coincideCategoria && coincideTexto) ? '' : 'none';
+          });
+        }
+
+        filtro.addEventListener('change', aplicarFiltros);
+        buscar.addEventListener('input', aplicarFiltros);
+      </script>
+
       <!-- SCRIPT DE FILTRO -->
       <script>
         const filtro = document.getElementById("filtroCursos");
