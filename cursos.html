@@ -1184,33 +1184,11 @@
 
 
       <!-- BUSCAR CURSO POR NOMBRE -->
+
       <script>
         const filtro = document.getElementById('filtroCursos');
         const buscar = document.getElementById('buscarCurso');
-
-        function aplicarFiltros() {
-          const categoria = filtro.value;
-          const texto = buscar.value.toLowerCase().trim();
-
-          document.querySelectorAll('.card.curso').forEach(card => {
-            const categoriaCard = card.dataset.categoria;
-            const nombreCurso = card.querySelector('.card-title').textContent.toLowerCase();
-
-            const coincideCategoria = categoria === 'todos' || categoriaCard === categoria;
-            const coincideTexto = nombreCurso.includes(texto);
-
-            card.style.display = (coincideCategoria && coincideTexto) ? '' : 'none';
-          });
-        }
-
-        filtro.addEventListener('change', aplicarFiltros);
-        buscar.addEventListener('input', aplicarFiltros);
-      </script>
-
-      <!-- SCRIPT DE FILTRO -->
-      <script>
-        const filtro = document.getElementById("filtroCursos");
-        const cursos = document.querySelectorAll(".curso");
+        const cursos = document.querySelectorAll('.curso');
 
         function contarCategorias() {
           const conteo = {
@@ -1218,64 +1196,54 @@
             industrial: 0,
             administracion: 0,
             construccion: 0,
-            "sst-ssoma": 0
+            'sst-ssoma': 0
           };
 
           cursos.forEach(curso => {
             const categoria = curso.dataset.categoria;
-            if (conteo[categoria] !== undefined) {
-              conteo[categoria]++;
-            }
+            if (conteo[categoria] !== undefined) conteo[categoria]++;
           });
 
-          filtro.querySelector('option[value="todos"]').textContent =
-            "Mostrar Todos (" + cursos.length + ")";
-
-          filtro.querySelector('option[value="mineria"]').textContent =
-            "Minería (" + conteo.mineria + ")";
-
-          filtro.querySelector('option[value="industrial"]').textContent =
-            "Industrial (" + conteo.industrial + ")";
-
-          filtro.querySelector('option[value="administracion"]').textContent =
-            "Administración (" + conteo.administracion + ")";
-
-          filtro.querySelector('option[value="construccion"]').textContent =
-            "Construcción (" + conteo.construccion + ")";
-
-          filtro.querySelector('option[value="sst-ssoma"]').textContent =
-            "SST/SSOMA (" + conteo["sst-ssoma"] + ")";
+          filtro.querySelector('option[value="todos"]').textContent = 'Mostrar Todos (' + cursos.length + ')';
+          filtro.querySelector('option[value="mineria"]').textContent = 'Minería (' + conteo.mineria + ')';
+          filtro.querySelector('option[value="industrial"]').textContent = 'Industrial (' + conteo.industrial + ')';
+          filtro.querySelector('option[value="administracion"]').textContent = 'Administración (' + conteo.administracion + ')';
+          filtro.querySelector('option[value="construccion"]').textContent = 'Construcción (' + conteo.construccion + ')';
+          filtro.querySelector('option[value="sst-ssoma"]').textContent = 'SST/SSOMA (' + conteo['sst-ssoma'] + ')';
         }
 
-        window.addEventListener("DOMContentLoaded", () => {
+        function aplicarFiltros() {
+          const categoria = filtro.value;
+          const texto = buscar.value.toLowerCase().trim();
+
+          cursos.forEach(curso => {
+            const categoriaCard = curso.dataset.categoria;
+            const nombreCurso = curso.querySelector('.card-title').textContent.toLowerCase();
+
+            const coincideCategoria = categoria === 'todos' || categoriaCard === categoria;
+            const coincideTexto = nombreCurso.includes(texto);
+
+            curso.style.display = (coincideCategoria && coincideTexto) ? '' : 'none';
+          });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
           contarCategorias();
 
-          const savedCategoria = localStorage.getItem("categoriaSeleccionada");
-
+          const savedCategoria = localStorage.getItem('categoriaSeleccionada');
           if (savedCategoria) {
             filtro.value = savedCategoria;
-            aplicarFiltro(savedCategoria);
-          } else {
-            aplicarFiltro("todos");
           }
+
+          aplicarFiltros();
         });
 
-        filtro.addEventListener("change", () => {
-          const categoria = filtro.value;
-          localStorage.setItem("categoriaSeleccionada", categoria);
-          aplicarFiltro(categoria);
+        filtro.addEventListener('change', () => {
+          localStorage.setItem('categoriaSeleccionada', filtro.value);
+          aplicarFiltros();
         });
 
-        function aplicarFiltro(categoria) {
-          cursos.forEach(curso => {
-            const cursoCategoria = curso.dataset.categoria;
-
-            curso.style.display =
-              (categoria === "todos" || cursoCategoria === categoria)
-                ? "block"
-                : "none";
-          });
-        }
+        buscar.addEventListener('input', aplicarFiltros);
       </script>
 
     </section><!-- /Starter Section Section -->
