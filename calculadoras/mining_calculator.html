@@ -3,371 +3,521 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INFOSET — Calculadora de Probabilidad de Éxito Minero</title>
+<title>Calculadora de Probabilidad de Éxito Minero — INFOSET</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <style>
   :root {
-    --bg: #f8fafc;
+    --bg: #f1f5f9;
     --card: #ffffff;
-    --text: #1e293b;
+    --text: #0f172a;
     --text-light: #64748b;
-    --border: #e2e8f0;
-    --accent: #0ea5e9;
-    --accent-light: #e0f2fe;
-    --success: #22c55e;
+    --border: #cbd5e1;
+    --accent: #0f172a;
+    --accent-light: #e2e8f0;
+    --success: #16a34a;
     --success-bg: #dcfce7;
-    --warning: #f59e0b;
+    --warning: #d97706;
     --warning-bg: #fef3c7;
-    --danger: #ef4444;
+    --danger: #dc2626;
     --danger-bg: #fee2e2;
-    --orange: #f97316;
+    --orange: #ea580c;
     --orange-bg: #ffedd5;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
-    --shadow-lg: 0 10px 40px rgba(0,0,0,0.08);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Roboto', sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.6;
+    line-height: 1.65;
+    font-size: 16px;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
-  .container { max-width: 960px; margin: 0 auto; padding: 40px 20px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
 
   /* Header */
   .header {
     text-align: center;
-    margin-bottom: 40px;
-    padding-bottom: 30px;
-    border-bottom: 1px solid var(--border);
-  }
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .brand-icon {
-    width: 44px; height: 44px;
-    background: linear-gradient(135deg, #0ea5e9, #0284c7);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-  }
-  .brand-name {
-    font-size: 28px; font-weight: 900;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, #0ea5e9, #0284c7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--border);
   }
   .header h1 {
-    font-size: 22px; font-weight: 700;
+    font-size: 28px;
+    font-weight: 900;
     color: var(--text);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
   }
   .header p {
-    font-size: 14px; color: var(--text-light);
-    max-width: 520px; margin: 0 auto;
+    font-size: 16px;
+    color: var(--text-light);
+    max-width: 560px;
+    margin: 0 auto;
   }
 
   /* Layout */
   .main-grid {
     display: grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: 1fr 380px;
     gap: 28px;
+    align-items: start;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     .main-grid { grid-template-columns: 1fr; }
+    .right-col { order: -1; }
   }
 
   /* Cards */
   .card {
     background: var(--card);
     border-radius: 16px;
-    padding: 24px;
+    padding: 28px;
     box-shadow: var(--shadow);
     margin-bottom: 20px;
     border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
   }
+  .card:hover { box-shadow: var(--shadow-lg); }
   .card-title {
-    font-size: 12px; font-weight: 700;
+    font-size: 14px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--accent);
-    margin-bottom: 18px;
-    display: flex; align-items: center; gap: 8px;
+    letter-spacing: 1.2px;
+    color: var(--text);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title i {
+    font-size: 18px;
+    color: var(--text-light);
   }
 
   /* Budget */
   .budget-row {
-    display: flex; align-items: center; gap: 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
     flex-wrap: wrap;
   }
   .budget-row label {
-    font-size: 14px; font-weight: 500; color: var(--text);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
   }
   .budget-row input[type="number"] {
     font-family: 'Roboto', sans-serif;
-    font-size: 15px; font-weight: 600;
-    padding: 10px 14px;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 12px 16px;
     border: 2px solid var(--border);
-    border-radius: 10px;
-    width: 180px;
+    border-radius: 12px;
+    width: 200px;
     color: var(--text);
-    transition: border-color 0.2s;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
   .budget-row input[type="number"]:focus {
-    outline: none; border-color: var(--accent);
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(15,23,42,0.08);
   }
   .budget-hint {
-    font-size: 12px; color: var(--text-light);
-    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
   /* Factor rows */
   .factor {
-    margin-bottom: 18px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
   }
   .factor:last-child { margin-bottom: 0; }
   .factor-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    gap: 12px;
   }
   .factor-name {
-    font-size: 14px; font-weight: 500; color: var(--text);
-    display: flex; align-items: center; gap: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    line-height: 1.4;
   }
   .factor-value {
-    font-size: 12px; font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     color: var(--accent);
     background: var(--accent-light);
-    padding: 3px 10px;
+    padding: 5px 14px;
     border-radius: 20px;
-    min-width: 90px;
+    min-width: 100px;
     text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
-  .factor-track {
+
+  /* Slider — large clickable area */
+  .slider-wrap {
     position: relative;
-    height: 6px;
-    background: #e2e8f0;
-    border-radius: 3px;
-    overflow: visible;
+    padding: 14px 0;
+    margin: 0 -4px;
   }
-  .factor-track input[type="range"] {
+  .slider-wrap input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
-    width: 100%; height: 6px;
-    background: transparent;
-    position: relative; z-index: 2;
+    width: 100%;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 5px;
+    outline: none;
     cursor: pointer;
+    position: relative;
+    z-index: 2;
   }
-  .factor-track input[type="range"]::-webkit-slider-thumb {
+  .slider-wrap input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 20px; height: 20px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: var(--accent);
-    border: 3px solid #fff;
-    box-shadow: 0 2px 8px rgba(14,165,233,0.35);
-    cursor: pointer;
-    margin-top: -7px;
-    transition: transform 0.15s;
+    border: 4px solid #fff;
+    box-shadow: 0 2px 12px rgba(15,23,42,0.25), 0 0 0 1px rgba(15,23,42,0.1);
+    cursor: grab;
+    margin-top: -11px;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
-  .factor-track input[type="range"]::-webkit-slider-thumb:hover {
+  .slider-wrap input[type="range"]::-webkit-slider-thumb:hover {
     transform: scale(1.15);
+    box-shadow: 0 4px 20px rgba(15,23,42,0.35), 0 0 0 1px rgba(15,23,42,0.1);
   }
-  .factor-track input[type="range"]::-moz-range-thumb {
-    width: 20px; height: 20px;
+  .slider-wrap input[type="range"]::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.25);
+  }
+  .slider-wrap input[type="range"]::-moz-range-thumb {
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: var(--accent);
-    border: 3px solid #fff;
-    box-shadow: 0 2px 8px rgba(14,165,233,0.35);
+    border: 4px solid #fff;
+    box-shadow: 0 2px 12px rgba(15,23,42,0.25);
     cursor: pointer;
   }
-  .factor-labels {
-    display: flex; justify-content: space-between;
-    margin-top: 6px;
-    font-size: 10px; color: var(--text-light);
+  .slider-wrap input[type="range"]::-moz-range-track {
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 5px;
   }
-  .tooltip {
+
+  .factor-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 12px;
     color: var(--text-light);
-    font-size: 13px;
+    font-weight: 500;
+  }
+  .tooltip-icon {
+    color: var(--text-light);
+    font-size: 15px;
     cursor: help;
     opacity: 0.5;
     transition: opacity 0.2s;
+    flex-shrink: 0;
+    margin-top: 2px;
   }
-  .tooltip:hover { opacity: 1; }
+  .tooltip-icon:hover { opacity: 1; }
 
   /* Result panel */
   .result-card {
     background: var(--card);
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: var(--shadow-lg);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: var(--shadow-xl);
     border: 1px solid var(--border);
     position: sticky;
     top: 24px;
     text-align: center;
   }
+  @media (max-width: 900px) {
+    .result-card { position: static; }
+  }
   .result-label {
-    font-size: 12px; font-weight: 700;
+    font-size: 13px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     color: var(--text-light);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
   .result-number {
-    font-size: 64px; font-weight: 900;
+    font-size: 72px;
+    font-weight: 900;
     line-height: 1;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
     transition: color 0.3s;
+    letter-spacing: -2px;
   }
   .result-gauge {
-    width: 100%; height: 10px;
+    width: 100%;
+    height: 14px;
     background: #e2e8f0;
-    border-radius: 5px;
+    border-radius: 7px;
     overflow: hidden;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
   .result-gauge-fill {
     height: 100%;
-    border-radius: 5px;
+    border-radius: 7px;
     transition: width 0.5s ease, background 0.5s ease;
   }
   .result-badge {
-    display: inline-block;
-    font-size: 13px; font-weight: 700;
-    padding: 8px 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 10px;
+    margin-bottom: 24px;
     transition: all 0.3s;
+    line-height: 1.3;
   }
   .result-rec {
-    font-size: 13px; line-height: 1.7;
+    font-size: 15px;
+    line-height: 1.75;
     color: var(--text-light);
     text-align: left;
-    padding: 16px;
+    padding: 20px;
     background: var(--bg);
-    border-radius: 12px;
-    margin-bottom: 20px;
+    border-radius: 14px;
+    margin-bottom: 24px;
   }
 
   /* Breakdown */
   .breakdown-title {
-    font-size: 11px; font-weight: 700;
+    font-size: 12px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     color: var(--text-light);
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     text-align: left;
   }
   .bd-row {
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
   }
   .bd-label {
-    font-size: 12px; color: var(--text);
-    display: flex; align-items: center; gap: 6px;
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
   }
+  .bd-label i { font-size: 15px; color: var(--text-light); }
   .bd-score {
-    font-size: 11px; font-weight: 600;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--text-light);
   }
   .bd-bar-wrap {
-    width: 100%; height: 5px;
+    width: 100%;
+    height: 7px;
     background: #e2e8f0;
-    border-radius: 3px;
-    margin-bottom: 14px;
+    border-radius: 4px;
+    margin-bottom: 16px;
     overflow: hidden;
   }
   .bd-bar {
     height: 100%;
-    border-radius: 3px;
+    border-radius: 4px;
     transition: width 0.4s ease;
   }
 
-  /* Reset */
-  .reset-btn {
+  /* Buttons */
+  .btn-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 4px;
+  }
+  .btn {
     font-family: 'Roboto', sans-serif;
-    font-size: 12px; font-weight: 600;
-    color: var(--text-light);
-    background: var(--bg);
-    border: 1px solid var(--border);
-    padding: 10px 20px;
-    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s;
-    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    text-decoration: none;
   }
-  .reset-btn:hover {
-    background: var(--border);
+  .btn-secondary {
+    background: var(--bg);
     color: var(--text);
+    border: 2px solid var(--border);
   }
+  .btn-secondary:hover {
+    background: var(--border);
+    border-color: #94a3b8;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(15,23,42,0.2);
+  }
+  .btn-primary:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15,23,42,0.3);
+  }
+  .btn-primary:active { transform: translateY(0); }
 
   /* Legend */
   .legend {
-    display: flex; gap: 12px; justify-content: center;
-    margin-top: 16px; flex-wrap: wrap;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 18px;
+    flex-wrap: wrap;
   }
   .legend-item {
-    font-size: 11px; color: var(--text-light);
-    display: flex; align-items: center; gap: 5px;
+    font-size: 12px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
   }
   .legend-dot {
-    width: 8px; height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
   }
 
   /* Guide section */
   .guide {
-    margin-top: 40px;
-    padding-top: 30px;
-    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    padding-top: 36px;
+    border-top: 2px solid var(--border);
   }
   .guide h2 {
-    font-size: 20px; font-weight: 700;
-    margin-bottom: 20px;
-    display: flex; align-items: center; gap: 10px;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text);
   }
+  .guide h2 i { color: var(--text-light); font-size: 24px; }
   .guide-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
   }
   .guide-card {
     background: var(--card);
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 16px;
+    padding: 24px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .guide-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
   }
   .guide-card h3 {
-    font-size: 14px; font-weight: 700;
-    margin-bottom: 10px;
-    display: flex; align-items: center; gap: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
   }
+  .guide-card h3 i { color: var(--text-light); font-size: 18px; }
   .guide-card p, .guide-card li {
-    font-size: 13px; color: var(--text-light);
-    line-height: 1.7;
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.75;
   }
-  .guide-card ul { padding-left: 18px; }
-  .guide-card li { margin-bottom: 4px; }
+  .guide-card ul { padding-left: 20px; }
+  .guide-card li { margin-bottom: 6px; }
 
   /* Footer */
   .footer {
     text-align: center;
-    margin-top: 40px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    font-size: 12px; color: var(--text-light);
+    margin-top: 48px;
+    padding: 28px 20px;
+    border-top: 2px solid var(--border);
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
   }
-  .footer strong { color: var(--accent); }
+  .footer-brand {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .footer-url {
+    font-size: 15px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-text {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+  .footer-divider {
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: 12px auto;
+  }
 
   /* Block overlay */
   #block-overlay {
-    position: fixed; inset: 0;
-    background: #0f172a;
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     z-index: 9999;
     display: none;
     flex-direction: column;
@@ -377,24 +527,81 @@
     text-align: center;
     padding: 40px;
   }
+  #block-overlay i {
+    font-size: 56px;
+    margin-bottom: 24px;
+    color: #ef4444;
+  }
   #block-overlay h2 {
-    font-size: 28px; font-weight: 900;
-    margin-bottom: 12px;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 14px;
   }
   #block-overlay p {
-    font-size: 15px; color: #94a3b8;
-    max-width: 400px;
+    font-size: 16px;
+    color: #94a3b8;
+    max-width: 440px;
+    line-height: 1.7;
+  }
+  #block-overlay strong {
+    color: #38bdf8;
+  }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff !important; font-size: 12pt; }
+    .card, .result-card, .guide-card, .footer {
+      box-shadow: none !important;
+      border: 1px solid #ccc !important;
+      break-inside: avoid;
+    }
+    .btn-group, .reset-btn { display: none !important; }
+    .right-col { position: static !important; }
+    .main-grid { grid-template-columns: 1fr !important; }
+    .result-card { order: -1; page-break-after: avoid; }
+    .footer { page-break-inside: avoid; margin-top: 20px; }
+    .guide { page-break-before: always; }
+    #block-overlay { display: none !important; }
+    .header { border-bottom: 2px solid #333 !important; }
+    .factor { background: #f8fafc !important; border: 1px solid #ddd !important; }
+    .result-gauge-fill { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .bd-bar { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .result-badge { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .legend-dot { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 600px) {
+    body { font-size: 15px; }
+    .container { padding: 16px 14px; }
+    .header h1 { font-size: 22px; }
+    .header p { font-size: 14px; }
+    .card { padding: 20px; border-radius: 14px; }
+    .card-title { font-size: 13px; }
+    .factor { padding: 14px; }
+    .factor-name { font-size: 14px; }
+    .factor-value { font-size: 12px; min-width: 85px; padding: 4px 10px; }
+    .result-number { font-size: 56px; }
+    .result-card { padding: 24px; }
+    .budget-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .budget-row input[type="number"] { width: 100%; }
+    .guide h2 { font-size: 18px; }
+    .guide-card { padding: 18px; }
+    .btn { padding: 10px 16px; font-size: 13px; }
+    .legend { gap: 10px; }
+    .legend-item { font-size: 11px; }
+    .footer { padding: 20px 16px; }
+    .footer-brand { font-size: 18px; }
   }
 </style>
-<base target="_blank">
 </head>
 <body>
 
 <!-- Domain check overlay -->
 <div id="block-overlay">
-  <div style="font-size: 48px; margin-bottom: 20px;">🔒</div>
+  <i class="bi bi-shield-lock-fill"></i>
   <h2>Acceso restringido</h2>
-  <p>Esta herramienta está diseñada para funcionar exclusivamente en el dominio autorizado de INFOSET. Por favor, accede desde <strong>infoset.org.pe</strong>.</p>
+  <p>Esta herramienta está diseñada para funcionar exclusivamente en el dominio autorizado de <strong>INFOSET</strong>. Por favor, accede desde <strong>infoset.org.pe</strong>.</p>
 </div>
 
 <div class="container">
@@ -409,24 +616,27 @@
 
       <!-- Budget -->
       <div class="card">
-        <div class="card-title">💰 Parámetros del Proyecto</div>
+        <div class="card-title"><i class="bi bi-cash-coin"></i> Parámetros del Proyecto</div>
         <div class="budget-row">
           <label>Presupuesto del proyecto (USD):</label>
           <input type="number" id="budget" value="2500000" min="100000" max="5000000" step="100000" oninput="calculate()">
         </div>
-        <div class="budget-hint">Rango recomendado: $100,000 — $5,000,000 USD</div>
+        <div class="budget-hint"><i class="bi bi-info-circle"></i> Rango recomendado: $100,000 — $5,000,000 USD</div>
       </div>
 
       <!-- Geological -->
       <div class="card">
-        <div class="card-title">⛏️ Factores Geológicos — Peso 25%</div>
+        <div class="card-title"><i class="bi bi-layers"></i> Factores Geológicos — Peso 25%</div>
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Grado de exploración del yacimiento<span class="tooltip" title="Nivel de trabajo geológico: desde trabajos de prueba hasta exploración detallada">ⓘ</span></span>
+            <span class="factor-name">
+              Grado de exploración del yacimiento
+              <i class="bi bi-question-circle tooltip-icon" title="Nivel de trabajo geológico: desde trabajos de prueba hasta exploración detallada"></i>
+            </span>
             <span class="factor-value" id="geo1-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="geo1" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -434,10 +644,13 @@
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Estabilidad de rocas y taludes<span class="tooltip" title="Estabilidad de taludes, ausencia de deslizamientos, condiciones geomecánicas">ⓘ</span></span>
+            <span class="factor-name">
+              Estabilidad de rocas y taludes
+              <i class="bi bi-question-circle tooltip-icon" title="Estabilidad de taludes, ausencia de deslizamientos, condiciones geomecánicas"></i>
+            </span>
             <span class="factor-value" id="geo2-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="geo2" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -445,10 +658,13 @@
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Calidad del mineral / ley<span class="tooltip" title="Contenido del componente útil, homogeneidad del yacimiento">ⓘ</span></span>
+            <span class="factor-name">
+              Calidad del mineral / ley
+              <i class="bi bi-question-circle tooltip-icon" title="Contenido del componente útil, homogeneidad del yacimiento"></i>
+            </span>
             <span class="factor-value" id="geo3-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="geo3" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -457,14 +673,17 @@
 
       <!-- Technological -->
       <div class="card">
-        <div class="card-title">⚙️ Factores Tecnológicos — Peso 20%</div>
+        <div class="card-title"><i class="bi bi-gear-wide-connected"></i> Factores Tecnológicos — Peso 20%</div>
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Tecnología probada y validada<span class="tooltip" title="Tecnología de extracción nueva vs. probada y documentada">ⓘ</span></span>
+            <span class="factor-name">
+              Tecnología probada y validada
+              <i class="bi bi-question-circle tooltip-icon" title="Tecnología de extracción nueva vs. probada y documentada"></i>
+            </span>
             <span class="factor-value" id="tech1-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="tech1" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -472,10 +691,13 @@
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Disponibilidad de equipos<span class="tooltip" title="Equipos propios, alquiler o compra de maquinaria nueva">ⓘ</span></span>
+            <span class="factor-name">
+              Disponibilidad de equipos
+              <i class="bi bi-question-circle tooltip-icon" title="Equipos propios, alquiler o compra de maquinaria nueva"></i>
+            </span>
             <span class="factor-value" id="tech2-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="tech2" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -484,14 +706,17 @@
 
       <!-- Financial -->
       <div class="card">
-        <div class="card-title">💵 Factores Financieros — Peso 20%</div>
+        <div class="card-title"><i class="bi bi-graph-up-arrow"></i> Factores Financieros — Peso 20%</div>
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Acceso a financiamiento<span class="tooltip" title="Recursos propios, crédito bancario, inversores externos">ⓘ</span></span>
+            <span class="factor-name">
+              Acceso a financiamiento
+              <i class="bi bi-question-circle tooltip-icon" title="Recursos propios, crédito bancario, inversores externos"></i>
+            </span>
             <span class="factor-value" id="fin1-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="fin1" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -499,10 +724,13 @@
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Estabilidad de precios de materias primas<span class="tooltip" title="Volatilidad del mercado en los últimos 2-3 años">ⓘ</span></span>
+            <span class="factor-name">
+              Estabilidad de precios de materias primas
+              <i class="bi bi-question-circle tooltip-icon" title="Volatilidad del mercado en los últimos 2-3 años"></i>
+            </span>
             <span class="factor-value" id="fin2-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="fin2" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -511,14 +739,17 @@
 
       <!-- Organizational -->
       <div class="card">
-        <div class="card-title">📋 Factores Organizacionales — Peso 15%</div>
+        <div class="card-title"><i class="bi bi-clipboard-check"></i> Factores Organizacionales — Peso 15%</div>
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Experiencia del equipo directivo<span class="tooltip" title="Experiencia en gestión de proyectos mineros similares">ⓘ</span></span>
+            <span class="factor-name">
+              Experiencia del equipo directivo
+              <i class="bi bi-question-circle tooltip-icon" title="Experiencia en gestión de proyectos mineros similares"></i>
+            </span>
             <span class="factor-value" id="org1-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="org1" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -526,10 +757,13 @@
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Documentación y permisos legales<span class="tooltip" title="Licencias, permisos ambientales, concesiones mineras">ⓘ</span></span>
+            <span class="factor-name">
+              Documentación y permisos legales
+              <i class="bi bi-question-circle tooltip-icon" title="Licencias, permisos ambientales, concesiones mineras"></i>
+            </span>
             <span class="factor-value" id="org2-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="org2" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -538,14 +772,17 @@
 
       <!-- External -->
       <div class="card">
-        <div class="card-title">🌿 Factores Externos — Peso 10%</div>
+        <div class="card-title"><i class="bi bi-globe-americas"></i> Factores Externos — Peso 10%</div>
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Riesgos ambientales<span class="tooltip" title="Requisitos de remediación, protección del medio ambiente, impacto social">ⓘ</span></span>
+            <span class="factor-name">
+              Riesgos ambientales
+              <i class="bi bi-question-circle tooltip-icon" title="Requisitos de remediación, protección del medio ambiente, impacto social"></i>
+            </span>
             <span class="factor-value" id="ext1-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="ext1" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -553,10 +790,13 @@
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Estabilidad política y regulatoria<span class="tooltip" title="Cambios legislativos, impuestos, políticas mineras">ⓘ</span></span>
+            <span class="factor-name">
+              Estabilidad política y regulatoria
+              <i class="bi bi-question-circle tooltip-icon" title="Cambios legislativos, impuestos, políticas mineras"></i>
+            </span>
             <span class="factor-value" id="ext2-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="ext2" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -565,14 +805,17 @@
 
       <!-- Safety -->
       <div class="card">
-        <div class="card-title">🛡️ Factores de Seguridad — Peso 10%</div>
+        <div class="card-title"><i class="bi bi-shield-check"></i> Factores de Seguridad — Peso 10%</div>
 
         <div class="factor">
           <div class="factor-header">
-            <span class="factor-name">Nivel de seguridad industrial<span class="tooltip" title="Sistemas de control, capacitación del personal, historial de accidentes">ⓘ</span></span>
+            <span class="factor-name">
+              Nivel de seguridad industrial
+              <i class="bi bi-question-circle tooltip-icon" title="Sistemas de control, capacitación del personal, historial de accidentes"></i>
+            </span>
             <span class="factor-value" id="safe1-val">Medio</span>
           </div>
-          <div class="factor-track">
+          <div class="slider-wrap">
             <input type="range" id="safe1" min="1" max="5" value="3" oninput="calculate()">
           </div>
           <div class="factor-labels"><span>Muy bajo</span><span>Bajo</span><span>Medio</span><span>Alto</span><span>Muy alto</span></div>
@@ -592,6 +835,7 @@
         </div>
 
         <div class="result-badge" id="risk-level" style="background: var(--warning-bg); color: #92400e;">
+          <i class="bi bi-exclamation-triangle-fill"></i>
           RIESGO MEDIO
         </div>
 
@@ -602,42 +846,49 @@
         <div class="breakdown-title">Desglose por Factores</div>
 
         <div class="bd-row">
-          <span class="bd-label">🪨 Geológicos</span>
+          <span class="bd-label"><i class="bi bi-layers"></i> Geológicos</span>
           <span class="bd-score" id="geo-score">15.0 / 25</span>
         </div>
         <div class="bd-bar-wrap"><div class="bd-bar" id="geo-bar" style="width: 60%; background: var(--accent);"></div></div>
 
         <div class="bd-row">
-          <span class="bd-label">⚙️ Tecnológicos</span>
+          <span class="bd-label"><i class="bi bi-gear-wide-connected"></i> Tecnológicos</span>
           <span class="bd-score" id="tech-score">12.0 / 20</span>
         </div>
-        <div class="bd-bar-wrap"><div class="bd-bar" id="tech-bar" style="width: 60%; background: #8b5cf6;"></div></div>
+        <div class="bd-bar-wrap"><div class="bd-bar" id="tech-bar" style="width: 60%; background: #7c3aed;"></div></div>
 
         <div class="bd-row">
-          <span class="bd-label">💵 Financieros</span>
+          <span class="bd-label"><i class="bi bi-graph-up-arrow"></i> Financieros</span>
           <span class="bd-score" id="fin-score">12.0 / 20</span>
         </div>
         <div class="bd-bar-wrap"><div class="bd-bar" id="fin-bar" style="width: 60%; background: var(--success);"></div></div>
 
         <div class="bd-row">
-          <span class="bd-label">📋 Organizacionales</span>
+          <span class="bd-label"><i class="bi bi-clipboard-check"></i> Organizacionales</span>
           <span class="bd-score" id="org-score">9.0 / 15</span>
         </div>
         <div class="bd-bar-wrap"><div class="bd-bar" id="org-bar" style="width: 60%; background: var(--warning);"></div></div>
 
         <div class="bd-row">
-          <span class="bd-label">🌿 Externos</span>
+          <span class="bd-label"><i class="bi bi-globe-americas"></i> Externos</span>
           <span class="bd-score" id="ext-score">6.0 / 10</span>
         </div>
         <div class="bd-bar-wrap"><div class="bd-bar" id="ext-bar" style="width: 60%; background: var(--orange);"></div></div>
 
         <div class="bd-row">
-          <span class="bd-label">🛡️ Seguridad</span>
+          <span class="bd-label"><i class="bi bi-shield-check"></i> Seguridad</span>
           <span class="bd-score" id="safe-score">6.0 / 10</span>
         </div>
         <div class="bd-bar-wrap"><div class="bd-bar" id="safe-bar" style="width: 60%; background: var(--danger);"></div></div>
 
-        <button class="reset-btn" onclick="resetAll()">↺ Restablecer valores</button>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="resetAll()">
+            <i class="bi bi-arrow-counterclockwise"></i> Restablecer
+          </button>
+          <button class="btn btn-primary" onclick="savePDF()">
+            <i class="bi bi-file-earmark-pdf"></i> Guardar PDF
+          </button>
+        </div>
 
         <div class="legend">
           <span class="legend-item"><span class="legend-dot" style="background: var(--danger);"></span>Crítico (&lt;40%)</span>
@@ -651,18 +902,18 @@
 
   <!-- Guide -->
   <div class="guide">
-    <h2>📖 Guía de Uso</h2>
+    <h2><i class="bi bi-book"></i> Guía de Uso — INFOSET</h2>
     <div class="guide-grid">
       <div class="guide-card">
-        <h3>1️⃣ Ingresa el presupuesto</h3>
+        <h3><i class="bi bi-1-circle"></i> Ingresa el presupuesto</h3>
         <p>Introduce el monto total del proyecto en dólares estadounidenses. La calculadora está calibrada para proyectos de <strong>$100,000 a $5,000,000 USD</strong>. Los proyectos muy pequeños reciben una ligera penalización por limitación de recursos.</p>
       </div>
       <div class="guide-card">
-        <h3>2️⃣ Evalúa cada factor</h3>
-        <p>Desliza cada barra de <strong>1 (muy bajo/riesgoso)</strong> a <strong>5 (muy alto/favorable)</strong>. Para cada factor hay un icono ⓘ con una descripción detallada al pasar el cursor.</p>
+        <h3><i class="bi bi-2-circle"></i> Evalúa cada factor</h3>
+        <p>Desliza cada barra de <strong>1 (muy bajo / riesgoso)</strong> a <strong>5 (muy alto / favorable)</strong>. Para cada factor hay un icono <i class="bi bi-question-circle" style="font-size:13px;"></i> con una descripción detallada al pasar el cursor.</p>
       </div>
       <div class="guide-card">
-        <h3>3️⃣ Interpreta el resultado</h3>
+        <h3><i class="bi bi-3-circle"></i> Interpreta el resultado</h3>
         <ul>
           <li><strong style="color: var(--success);">Bajo riesgo (&gt;75%)</strong> — Proyecto viable, proceder con monitoreo estándar</li>
           <li><strong style="color: var(--warning);">Riesgo medio (50-75%)</strong> — Requiere plan de mitigación antes de iniciar</li>
@@ -671,30 +922,36 @@
         </ul>
       </div>
       <div class="guide-card">
-        <h3>4️⃣ Analiza el desglose</h3>
+        <h3><i class="bi bi-4-circle"></i> Analiza el desglose</h3>
         <p>El panel derecho muestra el <strong>peso de cada categoría de factores</strong>. Identifica las áreas más débiles (barras más cortas) y enfócate en mejorarlas para aumentar la probabilidad total de éxito.</p>
       </div>
       <div class="guide-card">
-        <h3>5️⃣ Ponderaciones del modelo</h3>
+        <h3><i class="bi bi-sliders"></i> Ponderaciones del modelo</h3>
         <ul>
-          <li>⛏️ Geológicos — <strong>25%</strong> (el factor más determinante)</li>
-          <li>⚙️ Tecnológicos — <strong>20%</strong></li>
-          <li>💵 Financieros — <strong>20%</strong></li>
-          <li>📋 Organizacionales — <strong>15%</strong></li>
-          <li>🌿 Externos — <strong>10%</strong></li>
-          <li>🛡️ Seguridad — <strong>10%</strong></li>
+          <li><i class="bi bi-layers"></i> Geológicos — <strong>25%</strong> (el factor más determinante)</li>
+          <li><i class="bi bi-gear-wide-connected"></i> Tecnológicos — <strong>20%</strong></li>
+          <li><i class="bi bi-graph-up-arrow"></i> Financieros — <strong>20%</strong></li>
+          <li><i class="bi bi-clipboard-check"></i> Organizacionales — <strong>15%</strong></li>
+          <li><i class="bi bi-globe-americas"></i> Externos — <strong>10%</strong></li>
+          <li><i class="bi bi-shield-check"></i> Seguridad — <strong>10%</strong></li>
         </ul>
       </div>
       <div class="guide-card">
-        <h3>💡 Recomendación</h3>
+        <h3><i class="bi bi-lightbulb"></i> Recomendación</h3>
         <p>Utiliza esta herramienta al inicio de la fase de evaluación y repite el análisis periódicamente a medida que avanza la exploración y se obtienen datos más precisos. La probabilidad debe revisarse en cada hito del proyecto.</p>
       </div>
     </div>
   </div>
 
   <div class="footer">
-    <strong>INFOSET</strong> — Herramienta de evaluación de riesgos mineros<br>
-    Desarrollado para proyectos de pequeña y mediana escala en Perú y Latinoamérica
+    <div class="footer-brand">INFOSET</div>
+    <div class="footer-url"><i class="bi bi-globe"></i> infoset.org.pe</div>
+    <div class="footer-divider"></div>
+    <div class="footer-text">
+      <strong>Marca INFOSET</strong> — Todos los derechos reservados.<br>
+      Propiedad intelectual protegida. Queda prohibida la reproducción,<br>
+      distribución o uso no autorizado de esta herramienta sin consentimiento expreso por escrito.
+    </div>
   </div>
 
 </div>
@@ -770,30 +1027,34 @@
     probDisplay.textContent = probability + '%';
     gauge.style.width = probability + '%';
 
-    let color, bgColor, textColor, levelText, recText;
+    let color, bgColor, textColor, levelText, recText, iconClass;
     if (probability >= 75) {
       color = 'var(--success)';
       bgColor = 'var(--success-bg)';
       textColor = '#166534';
       levelText = 'RIESGO BAJO — PROYECTO VIABLE';
+      iconClass = 'bi bi-check-circle-fill';
       recText = '✅ El proyecto tiene alta probabilidad de éxito. Los riesgos principales están controlados. Se recomienda iniciar la ejecución con monitoreo estándar de riesgos y revisiones trimestrales.';
     } else if (probability >= 50) {
       color = 'var(--warning)';
       bgColor = 'var(--warning-bg)';
       textColor = '#92400e';
       levelText = 'RIESGO MEDIO — REQUIERE ATENCIÓN';
+      iconClass = 'bi bi-exclamation-triangle-fill';
       recText = '⚠️ El proyecto es factible, pero requiere control reforzado de los factores clave. Se recomienda elaborar un plan de mitigación de riesgos antes del inicio de operaciones.';
     } else if (probability >= 40) {
       color = 'var(--orange)';
       bgColor = 'var(--orange-bg)';
       textColor = '#9a3412';
       levelText = 'RIESGO ALTO — REQUIERE MEJORAS';
+      iconClass = 'bi bi-exclamation-diamond-fill';
       recText = '🔶 El proyecto presenta riesgos significativos. Antes de iniciar, es necesario eliminar las debilidades críticas, especialmente en geología y financiamiento.';
     } else {
       color = 'var(--danger)';
       bgColor = 'var(--danger-bg)';
       textColor = '#991b1b';
       levelText = 'RIESGO CRÍTICO — NO RECOMENDADO';
+      iconClass = 'bi bi-x-octagon-fill';
       recText = '❌ La probabilidad de fracaso es demasiado alta. El proyecto requiere una reestructuración radical: mejorar sustancialmente las condiciones o considerar el abandono de la iniciativa.';
     }
 
@@ -801,7 +1062,7 @@
     gauge.style.background = color;
     riskLevel.style.background = bgColor;
     riskLevel.style.color = textColor;
-    riskLevel.textContent = levelText;
+    riskLevel.innerHTML = '<i class="' + iconClass + '"></i> ' + levelText;
     document.getElementById('recommendations').innerHTML = recText;
 
     // Breakdown
@@ -828,6 +1089,10 @@
     document.getElementById('budget').value = 2500000;
     document.querySelectorAll('input[type="range"]').forEach(inp => inp.value = 3);
     calculate();
+  }
+
+  function savePDF() {
+    window.print();
   }
 
   calculate();
