@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario KYC — INFOSET</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f172a;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --accent: #0f172a;
+    --accent-light: #f1f5f9;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --info: #0ea5e9;
+    --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  .header p {
+    font-size: 15px;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Type selector */
+  .type-selector {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .type-btn {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid var(--border);
+    background: var(--card);
+    color: var(--text-light);
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .type-btn:hover {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+  .type-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 4px 14px rgba(15,23,42,0.25);
+  }
+  .type-btn i { font-size: 18px; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    page-break-inside: avoid;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .card-title i { font-size: 18px; color: var(--text-light); }
+  .card-title .num {
+    background: var(--accent);
+    color: #fff;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Form fields */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .form-group label .req {
+    color: var(--danger);
+    font-size: 12px;
+  }
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="tel"],
+  .form-group input[type="number"],
+  .form-group input[type="date"],
+  .form-group select,
+  .form-group textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    padding: 12px 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(15,23,42,0.06);
+  }
+  .form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+  .form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  /* Hint text */
+  .hint {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+
+  /* Radio / Checkbox groups */
+  .radio-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    transition: all 0.2s;
+  }
+  .radio-item:hover { border-color: var(--accent); }
+  .radio-item input { cursor: pointer; width: 18px; height: 18px; }
+  .radio-item.checked {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+
+  /* Table style for owners/signatories */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .data-table th {
+    background: var(--accent-light);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text);
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+  }
+  .data-table td {
+    padding: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table input {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    width: 100%;
+    color: var(--text);
+  }
+  .data-table input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  /* Section visibility */
+  .section-productor,
+  .section-vendedor { display: none; }
+  .section-productor.active,
+  .section-vendedor.active { display: block; }
+
+  /* Declaration */
+  .declaration {
+    background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+    border: 2px solid #facc15;
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 8px;
+  }
+  .declaration-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #713f12;
+  }
+  .declaration-text strong { color: #422006; }
+  .signature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  @media (max-width: 600px) {
+    .signature-row { grid-template-columns: 1fr; }
+  }
+
+  /* Buttons */
+  .btn-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(15,23,42,0.25);
+  }
+  .btn-primary:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(15,23,42,0.3);
+  }
+  .btn-secondary {
+    background: var(--card);
+    color: var(--text);
+    border: 2px solid var(--border);
+  }
+  .btn-secondary:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    padding: 28px 20px;
+    border-top: 2px solid var(--border);
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+  .footer-brand {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--accent);
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  .footer-url {
+    font-size: 15px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-divider {
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: 12px auto;
+  }
+  .footer-text {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff !important; font-size: 11pt; }
+    .card, .footer {
+      box-shadow: none !important;
+      border: 1px solid #ccc !important;
+      break-inside: avoid;
+    }
+    .type-selector, .btn-group { display: none !important; }
+    .section-productor, .section-vendedor { display: block !important; }
+    .card-title { border-bottom: 2px solid #333 !important; }
+    .declaration { border: 2px solid #ca8a04 !important; background: #fefce8 !important; }
+    input, select, textarea {
+      border: 1px solid #999 !important;
+      background: #fafafa !important;
+    }
+    .footer { page-break-inside: avoid; margin-top: 20px; }
+    .container { padding: 20px; }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    body { font-size: 14px; }
+    .container { padding: 16px 14px; }
+    .header h1 { font-size: 20px; }
+    .header p { font-size: 14px; }
+    .card { padding: 20px; }
+    .card-title { font-size: 13px; }
+    .type-btn { padding: 12px 18px; font-size: 14px; }
+    .form-group input, .form-group select, .form-group textarea { font-size: 16px; padding: 14px 12px; }
+    .data-table { font-size: 12px; }
+    .data-table input { font-size: 13px; padding: 10px; }
+    .declaration { padding: 18px; }
+    .btn { padding: 14px 20px; font-size: 14px; }
+  }
+
+  /* Block overlay */
+  #block-overlay {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    padding: 40px;
+  }
+  #block-overlay i { font-size: 56px; margin-bottom: 20px; color: #ef4444; }
+  #block-overlay h2 { font-size: 30px; font-weight: 900; margin-bottom: 12px; }
+  #block-overlay p { font-size: 16px; color: #94a3b8; max-width: 440px; line-height: 1.7; }
+  #block-overlay strong { color: #38bdf8; }
+</style>
+</head>
+<body>
+
+<!-- Domain check -->
+<div id="block-overlay">
+  <i class="bi bi-shield-lock-fill"></i>
+  <h2>Acceso restringido</h2>
+  <p>Esta herramienta está diseñada para funcionar exclusivamente en el dominio autorizado de <strong>INFOSET</strong>. Por favor, accede desde <strong>infoset.org.pe</strong>.</p>
+</div>
+
+<div class="container">
+
+  <div class="header">
+    <h1>Formulario KYC — Conozca a su Contraparte</h1>
+    <p>Debida diligencia para la cadena de suministro de minerales en el Perú. Cumplimiento con normativa internacional contra el lavado de activos y el financiamiento del terrorismo.</p>
+  </div>
+
+  <!-- Type selector -->
+  <div class="type-selector">
+    <button class="type-btn active" id="btn-productor" onclick="setType('productor')">
+      <i class="bi bi-mine-loaded"></i> Productor Minero
+    </button>
+    <button class="type-btn" id="btn-vendedor" onclick="setType('vendedor')">
+      <i class="bi bi-shop"></i> Comerciante / Vendedor
+    </button>
+  </div>
+
+  <!-- ==================== SECTION 1: COMPANY DETAILS ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">1</span><i class="bi bi-building"></i> Datos de la Empresa</div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Razón Social <span class="req">*</span></label>
+        <input type="text" placeholder="Ej: Minera Aurora S.A.C.">
+        <div class="hint">Nombre completo registrado en SUNARP / SUNAT.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>RUC N° <span class="req">*</span></label>
+        <input type="text" placeholder="20123456789" maxlength="11">
+        <div class="hint">Registro Único de Contribuyente — 11 dígitos.</div>
+      </div>
+      <div class="form-group">
+        <label>Partida Registral N°</label>
+        <input type="text" placeholder="Ej: 11012345">
+        <div class="hint">Número de inscripción en Registros Públicos (SUNARP).</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Dirección fiscal completa <span class="req">*</span></label>
+        <input type="text" placeholder="Av. Prolongación Javier Prado Este 123, San Borja, Lima 15036, Perú">
+        <div class="hint">Incluya distrito, provincia, departamento y código postal.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Teléfono <span class="req">*</span></label>
+        <input type="tel" placeholder="+51 1 234 5678">
+      </div>
+      <div class="form-group">
+        <label>Correo electrónico <span class="req">*</span></label>
+        <input type="email" placeholder="contacto@empresa.pe">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Fecha de constitución</label>
+        <input type="date">
+        <div class="hint">Fecha de inscripción en SUNARP.</div>
+      </div>
+      <div class="form-group">
+        <label>Oficina registral</label>
+        <input type="text" placeholder="Ej: Lima">
+        <div class="hint">Sede de Registros Públicos donde está inscrita.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 2: OWNERS ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">2</span><i class="bi bi-people-fill"></i> Propietarios / Accionistas (Beneficiarios Finales)</div>
+    <div class="hint" style="margin-bottom:14px;">Indique todas las personas naturales que poseen el 10% o más del capital social, o que ejercen control efectivo sobre la empresa.</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Nombre y Apellidos</th>
+          <th>% Participación</th>
+          <th>Nacionalidad</th>
+          <th>DNI / CE / Pasaporte</th>
+          <th>País de residencia</th>
+          <th>Teléfono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><input type="text" placeholder=""></td><td><input type="text" placeholder="%"></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td></tr>
+        <tr><td><input type="text" placeholder=""></td><td><input type="text" placeholder="%"></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td></tr>
+        <tr><td><input type="text" placeholder=""></td><td><input type="text" placeholder="%"></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td></tr>
+        <tr><td><input type="text" placeholder=""></td><td><input type="text" placeholder="%"></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ==================== SECTION 3: AUTHORIZED SIGNATORIES ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">3</span><i class="bi bi-pen-fill"></i> Firmantes Autorizados</div>
+    <div class="hint" style="margin-bottom:14px;">Personas con poder para firmar contratos, facturas y documentos legales en nombre de la empresa.</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Nombre y Apellidos</th>
+          <th>Cargo</th>
+          <th>DNI / CE</th>
+          <th>Firma (muestra)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><input type="text" placeholder=""></td><td><input type="text" placeholder="Ej: Gerente General"></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder="________________"></td></tr>
+        <tr><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder="________________"></td></tr>
+        <tr><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder=""></td><td><input type="text" placeholder="________________"></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ==================== SECTION 4: MANAGEMENT ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">4</span><i class="bi bi-diagram-3-fill"></i> Estructura Administrativa</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Gerente General</label>
+        <input type="text" placeholder="Nombre completo">
+      </div>
+      <div class="form-group">
+        <label>DNI / CE</label>
+        <input type="text" placeholder="">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Administrador / Contador</label>
+        <input type="text" placeholder="Nombre completo">
+      </div>
+      <div class="form-group">
+        <label>DNI / CE</label>
+        <input type="text" placeholder="">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Responsable de Seguridad</label>
+        <input type="text" placeholder="Nombre completo">
+      </div>
+      <div class="form-group">
+        <label>DNI / CE</label>
+        <input type="text" placeholder="">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>N° total de empleados</label>
+        <input type="number" placeholder="Ej: 45">
+      </div>
+      <div class="form-group">
+        <label>N° empleados subcontratados</label>
+        <input type="number" placeholder="Ej: 12">
+        <div class="hint">Si aplica. Dejar en blanco si no hay subcontratistas.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 5: FINANCIAL ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">5</span><i class="bi bi-bank"></i> Información Financiera</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Capital social (S/)</label>
+        <input type="text" placeholder="Ej: 500,000">
+      </div>
+      <div class="form-group">
+        <label>Facturación anual estimada (USD)</label>
+        <input type="text" placeholder="Ej: 2,500,000">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Métodos de pago habituales con proveedores</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="checkbox" name="pago"> Transferencia bancaria</label>
+          <label class="radio-item"><input type="checkbox" name="pago"> Cheque</label>
+          <label class="radio-item"><input type="checkbox" name="pago"> Efectivo</label>
+          <label class="radio-item"><input type="checkbox" name="pago"> Letra de cambio</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Fuente de fondos para operaciones mineras</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="checkbox" name="fondos"> Capital propio</label>
+          <label class="radio-item"><input type="checkbox" name="fondos"> Préstamo bancario</label>
+          <label class="radio-item"><input type="checkbox" name="fondos"> Inversores privados</label>
+          <label class="radio-item"><input type="checkbox" name="fondos"> Entidad estatal</label>
+          <label class="radio-item"><input type="checkbox" name="fondos"> Préstamo de terceros</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 6: BANK DETAILS ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">6</span><i class="bi bi-credit-card-2-front-fill"></i> Cuentas Bancarias (para pagos)</div>
+    <div class="hint" style="margin-bottom:14px;">Los pagos se realizarán únicamente a las cuentas indicadas en este formulario. Adjunte copia del CCI.</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Banco (1)</label>
+        <input type="text" placeholder="Ej: BCP, Interbank, BBVA">
+      </div>
+      <div class="form-group">
+        <label>N° de cuenta</label>
+        <input type="text" placeholder="">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Moneda</label>
+        <select><option value="">Seleccione...</option><option value="PEN">PEN (Soles)</option><option value="USD">USD (Dólares)</option><option value="EUR">EUR (Euros)</option></select>
+      </div>
+      <div class="form-group">
+        <label>CCI</label>
+        <input type="text" placeholder="Código de Cuenta Interbancario — 20 dígitos" maxlength="20">
+      </div>
+    </div>
+    <div style="border-top: 1px dashed var(--border); margin: 16px 0;"></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Banco (2) — opcional</label>
+        <input type="text" placeholder="Ej: Scotiabank">
+      </div>
+      <div class="form-group">
+        <label>N° de cuenta</label>
+        <input type="text" placeholder="">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Moneda</label>
+        <select><option value="">Seleccione...</option><option value="PEN">PEN (Soles)</option><option value="USD">USD (Dólares)</option><option value="EUR">EUR (Euros)</option></select>
+      </div>
+      <div class="form-group">
+        <label>CCI</label>
+        <input type="text" placeholder="" maxlength="20">
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 7: MINING ACTIVITY ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">7</span><i class="bi bi-activity"></i> Actividad de Negocios</div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Tipo de operación minera <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="tipo_operacion" value="gran"> Mina a gran escala (&gt;100 kg/año)</label>
+          <label class="radio-item"><input type="radio" name="tipo_operacion" value="mediana"> Mina mediana (25-100 kg/año)</label>
+          <label class="radio-item"><input type="radio" name="tipo_operacion" value="pequena"> Mina pequeña (&lt;25 kg/año)</label>
+          <label class="radio-item"><input type="radio" name="tipo_operacion" value="artesanal"> Minería artesanal</label>
+          <label class="radio-item"><input type="radio" name="tipo_operacion" value="comerciante"> Comerciante de metales</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Descripción principal de la actividad</label>
+        <textarea placeholder="Describa brevemente su actividad principal: extracción, procesamiento, comercialización, etc."></textarea>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Minerales que comercializa <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="checkbox" name="mineral"> Oro</label>
+          <label class="radio-item"><input type="checkbox" name="mineral"> Plata</label>
+          <label class="radio-item"><input type="checkbox" name="mineral"> Cobre</label>
+          <label class="radio-item"><input type="checkbox" name="mineral"> Zinc</label>
+          <label class="radio-item"><input type="checkbox" name="mineral"> Plomo</label>
+          <label class="radio-item"><input type="checkbox" name="mineral"> Estaño</label>
+          <label class="radio-item"><input type="checkbox" name="mineral"> Otros</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 8: PRODUCTOR SPECIFIC ==================== -->
+  <div class="card section-productor active" id="sec-productor-origen">
+    <div class="card-title"><span class="num">8</span><i class="bi bi-geo-alt-fill"></i> Origen y Operaciones Mineras (Productor)</div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Ubicación exacta de la mina / minas</label>
+        <textarea placeholder="País, departamento, provincia, distrito, coordenadas GPS (lat, long), referencias cercanas."></textarea>
+        <div class="hint">Incluya coordenadas GPS si dispone de ellas. Ej: -13.1631, -72.5450 (Machu Picchu).</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>N° de yacimientos / frentes mineros</label>
+        <input type="number" placeholder="Ej: 3">
+      </div>
+      <div class="form-group">
+        <label>Distancia a centro de acopio (km)</label>
+        <input type="number" placeholder="Ej: 45">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Reservas estimadas (toneladas)</label>
+        <input type="text" placeholder="Ej: 50,000">
+      </div>
+      <div class="form-group">
+        <label>Producción mensual promedio</label>
+        <input type="text" placeholder="Ej: 15 kg de oro fino">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Método de extracción</label>
+        <select>
+          <option value="">Seleccione...</option>
+          <option value="cielo_abierto">Cielo abierto</option>
+          <option value="subterranea">Subterránea</option>
+          <option value="aluvial">Aluvial / Placer</option>
+          <option value="mixto">Mixto</option>
+          <option value="artesanal">Artesanal (manual)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Método de procesamiento</label>
+        <select>
+          <option value="">Seleccione...</option>
+          <option value="gravimetria">Gravimetría</option>
+          <option value="flotacion">Flotación</option>
+          <option value="lixiviacion">Lixiviación con cianuro</option>
+          <option value="mercurio">Amalgamación con mercurio</option>
+          <option value="fundicion">Fundición directa</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Cuenta con licencia de operación / explotación? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="licencia" value="si"> Sí</label>
+          <label class="radio-item"><input type="radio" name="licencia" value="no"> No</label>
+          <label class="radio-item"><input type="radio" name="licencia" value="tramite"> En trámite</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>N° de Resolución de Inicio de Operaciones</label>
+        <input type="text" placeholder="Ej: DGM-123-2024">
+        <div class="hint">Emitida por la DGM del MINEM.</div>
+      </div>
+      <div class="form-group">
+        <label>Fecha de emisión</label>
+        <input type="date">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Título de concesión minera / contrato de explotación</label>
+        <input type="text" placeholder="Ej: Concesión Minera "La Esperanza" — Código 010101010">
+        <div class="hint">Incluya código de concesión y fecha de inscripción en SUNARP.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Instrumento de Gestión Ambiental (IGA)</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="iga" value="dia"> DIA</label>
+          <label class="radio-item"><input type="radio" name="iga" value="eiasd"> EIAsd</label>
+          <label class="radio-item"><input type="radio" name="iga" value="igac"> IGAC</label>
+          <label class="radio-item"><input type="radio" name="iga" value="ninguno"> Ninguno</label>
+        </div>
+        <div class="hint">DIA = Declaración de Impacto Ambiental | EIAsd = Estudio de Impacto Ambiental Semidetallado | IGAC = Instrumento de Gestión Ambiental para la Pequeña Minería y Minería Artesanal.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Pertenece al Registro Especial de Comercializadores de Oro (RECO)?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="reco" value="si"> Sí</label>
+          <label class="radio-item"><input type="radio" name="reco" value="no"> No</label>
+        </div>
+        <div class="hint">Obligatorio según Decreto Supremo N° 012-2012-EM para comercializar oro en el Perú.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Cuenta con Certificado de Operación Minera (COM)?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="com" value="si"> Sí</label>
+          <label class="radio-item"><input type="radio" name="com" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 8B: VENDEDOR SPECIFIC ==================== -->
+  <div class="card section-vendedor" id="sec-vendedor-origen">
+    <div class="card-title"><span class="num">8</span><i class="bi bi-box-seam-fill"></i> Cadena de Suministro (Comerciante / Vendedor)</div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿De dónde adquiere los minerales? <span class="req">*</span></label>
+        <textarea placeholder="Nombre de los productores mineros, cooperativas, o intermediarios de los cuales compra. Incluya ubicación."></textarea>
+        <div class="hint">Liste todos sus proveedores directos. INFOSET requiere trazabilidad hasta la mina de origen.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>N° de proveedores directos</label>
+        <input type="number" placeholder="Ej: 8">
+      </div>
+      <div class="form-group">
+        <label>Volumen mensual comercializado</label>
+        <input type="text" placeholder="Ej: 50 kg de concentrado">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Realiza debida diligencia (KYC) sobre sus proveedores?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="dd_proveedores" value="si"> Sí, sistemáticamente</label>
+          <label class="radio-item"><input type="radio" name="dd_proveedores" value="parcial"> Parcialmente</label>
+          <label class="radio-item"><input type="radio" name="dd_proveedores" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Mantiene registros de compras con trazabilidad completa?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="trazabilidad" value="si"> Sí</label>
+          <label class="radio-item"><input type="radio" name="trazabilidad" value="no"> No</label>
+        </div>
+        <div class="hint">Registros que incluyan: origen, peso, ley, fecha, vendedor, método de pago.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Pertenece al Registro Especial de Comercializadores de Oro (RECO)?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="reco_v" value="si"> Sí</label>
+          <label class="radio-item"><input type="radio" name="reco_v" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Cuenta con autorización de funcionamiento de planta de procesamiento?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="aut_planta" value="si"> Sí</label>
+          <label class="radio-item"><input type="radio" name="aut_planta" value="no"> No</label>
+          <label class="radio-item"><input type="radio" name="aut_planta" value="na"> No aplica</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Medio de transporte del mineral</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="transporte" value="propio"> Transporte propio</label>
+          <label class="radio-item"><input type="radio" name="transporte" value="tercero"> Tercero (empresa externa)</label>
+          <label class="radio-item"><input type="radio" name="transporte" value="ambos"> Ambos</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Nombre de la empresa de transporte (si aplica)</label>
+        <input type="text" placeholder="">
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 9: DUE DILIGENCE / AML ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">9</span><i class="bi bi-shield-check"></i> Debida Diligencia — Lavado de Activos y Cadena de Suministro</div>
+
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Cuenta con una política contra el lavado de activos (AML)?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="aml_policy" value="si"> Sí (adjuntar copia)</label>
+          <label class="radio-item"><input type="radio" name="aml_policy" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Cuenta con una política de gestión de cadena de suministro?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="supply_policy" value="si"> Sí (adjuntar copia)</label>
+          <label class="radio-item"><input type="radio" name="supply_policy" value="no"> No</label>
+        </div>
+        <div class="hint">Debe estar alineada con la Guía de Debida Diligencia de la OCDE para cadenas responsables de minerales.</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Conoce y aplica los 5 pasos de la Guía OCDE para cadenas de suministro responsables?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="oecd" value="si"> Sí, implementados</label>
+          <label class="radio-item"><input type="radio" name="oecd" value="conocimiento"> Conozco, pero no implemento</label>
+          <label class="radio-item"><input type="radio" name="oecd" value="no"> No conozco</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Ha sido auditado por una entidad independiente sobre su cadena de suministro?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="audit" value="si"> Sí</label>
+          <label class="radio-item"><input type="radio" name="audit" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nombre del auditor (si aplica)</label>
+        <input type="text" placeholder="">
+      </div>
+      <div class="form-group">
+        <label>Fecha de la última auditoría</label>
+        <input type="date">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Su cadena de suministro ha sido verificada por una entidad nacional?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="verif_nac" value="si"> Sí (MINEM, OEFA, SUNAT, etc.)</label>
+          <label class="radio-item"><input type="radio" name="verif_nac" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Tiene un plan de mitigación de riesgos documentado?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="plan_riesgo" value="si"> Sí</label>
+          <label class="radio-item"><input type="radio" name="plan_riesgo" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 10: RISK QUESTIONS ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">10</span><i class="bi bi-exclamation-triangle-fill"></i> Cuestionario de Riesgo — Señales de Alarma</div>
+    <div class="hint" style="margin-bottom:16px;">Responda con total honestidad. La información es confidencial y se utiliza exclusivamente para evaluación de riesgos.</div>
+
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Existen grupos armados o fuerzas de seguridad no estatales cerca de sus operaciones?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="grupo_armado" value="no"> No</label>
+          <label class="radio-item"><input type="radio" name="grupo_armado" value="estatal"> Fuerzas del Estado</label>
+          <label class="radio-item"><input type="radio" name="grupo_armado" value="no_estatal"> Grupo armado no estatal</label>
+          <label class="radio-item"><input type="radio" name="grupo_armado" value="seguridad"> Seguridad privada</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Ha recibido alguna sanción, investigación o denuncia relacionada con minería ilegal?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="sancion" value="no"> No</label>
+          <label class="radio-item"><input type="radio" name="sancion" value="si"> Sí (especificar)</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Toma medidas para evitar el trabajo infantil en sus operaciones?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="trab_infantil" value="si"> Sí, protocolos establecidos</label>
+          <label class="radio-item"><input type="radio" name="trab_infantil" value="parcial"> Parcialmente</label>
+          <label class="radio-item"><input type="radio" name="trab_infantil" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Cuenta con procedimientos de seguridad integral para el personal (EPP, capacitaciones, primeros auxilios)?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="seg_personal" value="si"> Sí, documentados</label>
+          <label class="radio-item"><input type="radio" name="seg_personal" value="parcial"> Parcialmente</label>
+          <label class="radio-item"><input type="radio" name="seg_personal" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Cuenta con sistemas para minimizar el impacto ambiental (contención, remediación, reforestación)?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="ambiente" value="si"> Sí</label>
+          <label class="radio-item"><input type="radio" name="ambiente" value="parcial"> Parcialmente</label>
+          <label class="radio-item"><input type="radio" name="ambiente" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Apoya el desarrollo de la comunidad local (infraestructura, salud, educación)?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="comunidad" value="si"> Sí (describir)</label>
+          <label class="radio-item"><input type="radio" name="comunidad" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>¿Ha tenido incidentes de violaciones a derechos humanos en su cadena de suministro?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="ddhh" value="no"> No</label>
+          <label class="radio-item"><input type="radio" name="ddhh" value="si"> Sí (especificar)</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 11: DOCUMENTS CHECKLIST ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">11</span><i class="bi bi-folder-check"></i> Documentación Requerida — Checklist</div>
+    <div class="hint" style="margin-bottom:16px;">Marque los documentos que adjunta junto con este formulario. Los originales o copias legalizadas pueden ser solicitados posteriormente.</div>
+
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Documentos de la empresa</label>
+        <div class="radio-group" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Constitución de la empresa (copia legalizada)</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Ficha RUC actualizada (SUNAT)</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Vigencia de poder del representante legal</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Copia del DNI del representante legal</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Licencia de funcionamiento municipal</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Documentos mineros y sectoriales</label>
+        <div class="radio-group" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Título de concesión minera / contrato de explotación</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Inscripción del título en SUNARP</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Instrumento de Gestión Ambiental (DIA / EIAsd / IGAC)</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Certificado de Operación Minera (COM)</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Resolución de Inicio de Operaciones (MINEM)</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Permiso de uso de agua (ANA)</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Permiso de uso de terreno superficial</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Inscripción en RECO (si aplica)</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Documentos contables y tributarios</label>
+        <div class="radio-group" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Declaración Jurada del Impuesto a la Renta (último ejercicio)</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Registros de compras (últimos 3 meses)</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Registros de ventas (últimos 3 meses)</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Balance General y Estado de Resultados</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> PDT 621 (IGV — Renta) últimos 3 meses</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Planilla electrónica PLAME (últimos 3 meses)</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group full">
+        <label>Declaraciones juradas</label>
+        <div class="radio-group" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Declaración jurada de no participación en lavado de activos</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Declaración jurada de no participación en financiamiento del terrorismo</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Declaración jurada de no trabajo infantil ni trata de personas</label>
+          <label class="radio-item" style="width:100%;"><input type="checkbox"> Declaración jurada de no participación en minería ilegal</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 12: DECLARATION ==================== -->
+  <div class="card">
+    <div class="card-title"><span class="num">12</span><i class="bi bi-file-text-fill"></i> Declaración Jurada</div>
+    <div class="declaration">
+      <div class="declaration-text">
+        Yo, <strong>______________________________________________</strong>, identificado(a) con DNI / CE / Pasaporte N° <strong>________________________</strong>, en mi calidad de <strong>________________________</strong> de la empresa <strong>________________________</strong>, con RUC N° <strong>________________________</strong>, declaro bajo juramento que:
+        <br><br>
+        <strong>1.</strong> Toda la información proporcionada en el presente formulario es verdadera, exacta y completa.<br>
+        <strong>2.</strong> Conozco y acepto que INFOSET realizará la verificación de la información y documentación presentada.<br>
+        <strong>3.</strong> Me comprometo a informar por escrito cualquier cambio sustancial en los datos proporcionados dentro de los 30 días calendario siguientes a su ocurrencia.<br>
+        <strong>4.</strong> Entiendo que la omisión o falsedad de información puede resultar en la suspensión o terminación de la relación comercial.<br>
+        <strong>5.</strong> La empresa cumple con la normativa peruana e internacional sobre debida diligencia en cadenas de suministro de minerales, incluyendo la Guía de la OCDE.
+      </div>
+      <div class="signature-row">
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" placeholder="">
+        </div>
+        <div class="form-group">
+          <label>DNI / CE / Pasaporte</label>
+          <input type="text" placeholder="">
+        </div>
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date">
+        </div>
+      </div>
+      <div class="signature-row" style="margin-top:12px;">
+        <div class="form-group">
+          <label>Cargo</label>
+          <input type="text" placeholder="Ej: Gerente General">
+        </div>
+        <div class="form-group">
+          <label>Firma</label>
+          <input type="text" placeholder="________________________">
+        </div>
+        <div class="form-group">
+          <label>Sello de la empresa</label>
+          <input type="text" placeholder="________________________">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="btn-group">
+    <button class="btn btn-secondary" onclick="window.print()">
+      <i class="bi bi-printer"></i> Imprimir
+    </button>
+    <button class="btn btn-primary" onclick="savePDF()">
+      <i class="bi bi-file-earmark-pdf-fill"></i> Guardar como PDF
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-brand">INFOSET</div>
+    <div class="footer-url"><i class="bi bi-globe"></i> infoset.org.pe</div>
+    <div class="footer-divider"></div>
+    <div class="footer-text">
+      <strong>Marca INFOSET</strong> — Todos los derechos reservados.<br>
+      Propiedad intelectual protegida. Queda prohibida la reproducción, distribución<br>
+      o uso no autorizado de esta herramienta sin consentimiento expreso por escrito.<br>
+      Formulario KYC elaborado conforme a la normativa peruana y estándares internacionales<br>
+      de debida diligencia (OCDE, GAFI, Decreto Supremo N° 012-2012-EM).
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // === DOMAIN CHECK ===
+  (function() {
+    var allowed = ['infoset.org.pe', 'www.infoset.org.pe'];
+    var current = window.location.hostname;
+    if (allowed.indexOf(current) === -1) {
+      document.getElementById('block-overlay').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+  })();
+
+  function setType(type) {
+    document.getElementById('btn-productor').classList.toggle('active', type === 'productor');
+    document.getElementById('btn-vendedor').classList.toggle('active', type === 'vendedor');
+
+    document.querySelectorAll('.section-productor').forEach(el => {
+      el.classList.toggle('active', type === 'productor');
+    });
+    document.querySelectorAll('.section-vendedor').forEach(el => {
+      el.classList.toggle('active', type === 'vendedor');
+    });
+  }
+
+  function savePDF() {
+    window.print();
+  }
+
+  // Radio visual feedback
+  document.querySelectorAll('.radio-item input').forEach(input => {
+    input.addEventListener('change', function() {
+      const name = this.name;
+      document.querySelectorAll('input[name="' + name + '"]').forEach(r => {
+        r.closest('.radio-item').classList.toggle('checked', r.checked);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
