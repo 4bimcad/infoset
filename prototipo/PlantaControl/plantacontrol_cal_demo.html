@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlantaControl — Prototipo (Cal)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EDEEEC;
+    --surface:#F7F8F6;
+    --surface-2:#FFFFFF;
+    --border:#D8DBD7;
+    --text:#1B211F;
+    --text-dim:#5C6663;
+    --text-faint:#8D9591;
+    --copper:#AD6A34;
+    --copper-dim:#D9A876;
+    --copper-wash:rgba(173,106,52,0.08);
+    --teal:#217567;
+    --amber:#A4700F;
+    --red:#B5493B;
+    --grid-line:rgba(0,0,0,0.035);
+    --seg-text:#101414;
+    --mono:'JetBrains Mono', monospace;
+    --cond:'Barlow Condensed', sans-serif;
+    --sans:'Inter', sans-serif;
+  }
+  html[data-theme="dark"]{
+    --bg:#12161A;
+    --surface:#191F24;
+    --surface-2:#212930;
+    --border:#2C363D;
+    --text:#E8EAEC;
+    --text-dim:#8B96A0;
+    --text-faint:#5B6670;
+    --copper:#C17A42;
+    --copper-dim:#8C5D34;
+    --copper-wash:rgba(193,122,66,0.08);
+    --teal:#4FB8AC;
+    --amber:#E0A458;
+    --red:#D96257;
+    --grid-line:rgba(255,255,255,0.015);
+    --seg-text:#0D0F11;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html, body{height:100%;}
+  body{
+    background:
+      linear-gradient(var(--bg),var(--bg)),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, var(--grid-line) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, var(--grid-line) 40px);
+    color:var(--text);
+    font-family:var(--sans);
+    min-height:100vh;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .app{display:flex; min-height:100vh;}
+
+  /* Sidebar */
+  .sidebar{
+    width:220px; flex-shrink:0;
+    background:var(--surface);
+    border-right:1px solid var(--border);
+    padding:24px 0;
+    display:flex; flex-direction:column;
+  }
+  .brand{padding:0 20px 24px; border-bottom:1px solid var(--border); margin-bottom:16px;}
+  .brand-mark{font-family:var(--cond); font-weight:700; font-size:22px; letter-spacing:0.5px; color:var(--text);}
+  .brand-mark span{color:var(--copper);}
+  .brand-sub{font-size:11px; color:var(--text-faint); margin-top:2px; letter-spacing:0.5px; text-transform:uppercase;}
+  .nav-item{display:flex; align-items:center; gap:10px; padding:10px 20px; font-size:13.5px; color:var(--text-dim); cursor:pointer; border-left:2px solid transparent;}
+  .nav-item .dot{width:5px; height:5px; border-radius:1px; background:var(--text-faint);}
+  .nav-item.active{color:var(--text); border-left-color:var(--copper); background:var(--copper-wash);}
+  .nav-item.active .dot{background:var(--copper);}
+  .nav-item:hover:not(.active){color:var(--text);}
+  .sidebar-foot{margin-top:auto; padding:16px 20px 0; border-top:1px solid var(--border); font-size:10.5px; color:var(--text-faint); letter-spacing:0.3px; line-height:1.6;}
+
+  /* Main */
+  .main{flex:1; min-width:0; display:flex; flex-direction:column;}
+  .topbar{display:flex; align-items:center; justify-content:space-between; padding:18px 32px; border-bottom:1px solid var(--border); background:var(--surface);}
+  .topbar-title{font-family:var(--cond); font-weight:600; font-size:20px; letter-spacing:0.3px;}
+  .topbar-sub{font-size:12px; color:var(--text-faint); margin-top:2px;}
+  .topbar-right{display:flex; align-items:center; gap:12px;}
+  .badge-live{display:flex; align-items:center; gap:6px; font-size:11px; color:var(--teal); font-family:var(--mono); border:1px solid var(--teal); background:var(--copper-wash); padding:5px 10px; letter-spacing:0.4px; opacity:0.85;}
+  .badge-live::before{content:''; width:6px; height:6px; background:var(--teal); border-radius:50%;}
+  .tag-demo{font-size:10.5px; color:var(--amber); border:1px solid var(--amber); padding:4px 9px; letter-spacing:0.5px; text-transform:uppercase; opacity:0.85;}
+  .theme-toggle{
+    display:flex; align-items:center; gap:6px; border:1px solid var(--border);
+    background:var(--surface-2); padding:5px 6px; cursor:pointer;
+  }
+  .theme-toggle svg{width:15px; height:15px; display:block;}
+  .theme-toggle .ic-sun{fill:none; stroke:var(--text-dim);}
+  .theme-toggle .ic-moon{fill:var(--text-dim);}
+  html[data-theme="light"] .theme-toggle .ic-sun{stroke:var(--copper);}
+  html[data-theme="dark"] .theme-toggle .ic-moon{fill:var(--copper);}
+  .theme-toggle-label{font-family:var(--mono); font-size:10.5px; color:var(--text-faint); padding:0 4px;}
+
+  .content{padding:28px 32px 48px; max-width:1140px;}
+
+  /* KPI cards */
+  .kpi-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:28px;}
+  .kpi-card{background:var(--surface); border:1px solid var(--border); padding:16px 18px; position:relative; overflow:hidden;}
+  .kpi-card::before{content:''; position:absolute; top:0; left:0; width:2px; height:100%; background:var(--copper-dim);}
+  .kpi-label{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.6px;}
+  .kpi-value{font-family:var(--mono); font-size:26px; font-weight:500; margin-top:8px; color:var(--text);}
+  .kpi-value small{font-size:14px; color:var(--text-dim); font-weight:400;}
+  .kpi-delta{font-family:var(--mono); font-size:11.5px; margin-top:6px;}
+  .kpi-delta.up{color:var(--teal);}
+  .kpi-delta.down{color:var(--red);}
+
+  /* Section */
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; margin:34px 0 14px;}
+  .section-title{font-family:var(--cond); font-size:17px; font-weight:600; letter-spacing:0.3px;}
+  .section-note{font-size:11.5px; color:var(--text-faint); font-family:var(--mono);}
+
+  /* Generic list table (lotes / reportes / clientes) */
+  .list-head{display:grid; gap:12px; padding:0 16px 8px; font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.5px; border-top:1px solid var(--border); padding-top:12px;}
+  .list-row{display:grid; gap:12px; align-items:center; padding:13px 16px; background:var(--surface); border:1px solid var(--border); border-top:none; font-size:13px;}
+  .list-row:hover{background:var(--surface-2);}
+  .col-mono{font-family:var(--mono); color:var(--text-dim);}
+  .col-strong{color:var(--text);}
+  .col-right{text-align:right;}
+  .col-center{text-align:center;}
+
+  .status-pill{font-family:var(--mono); font-size:11px; padding:3px 8px; text-align:center; letter-spacing:0.3px; border-radius:2px;}
+  .status-good{color:var(--teal); background:var(--copper-wash); border:1px solid var(--teal);}
+  .status-mid{color:var(--amber); background:var(--copper-wash); border:1px solid var(--amber);}
+  .status-low{color:var(--red); background:var(--copper-wash); border:1px solid var(--red);}
+
+  .lot-view{color:var(--copper); font-family:var(--mono); font-size:11.5px; cursor:pointer;}
+  .lot-view:hover{text-decoration:underline;}
+
+  .action-btn{
+    font-family:var(--mono); font-size:11px; color:var(--text-dim); border:1px solid var(--border);
+    background:var(--surface-2); padding:5px 9px; cursor:pointer; margin-right:6px; letter-spacing:0.2px;
+  }
+  .action-btn:hover{color:var(--copper); border-color:var(--copper-dim);}
+  .action-btn.primary{color:var(--copper); border-color:var(--copper-dim);}
+
+  /* Balance bar (signature element, reused in report + gastos) */
+  .balance-block{background:var(--surface); border:1px solid var(--border); padding:18px 20px; margin-bottom:12px;}
+  .balance-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;}
+  .balance-metal{font-family:var(--cond); font-size:15px; font-weight:600; color:var(--text);}
+  .balance-recovery{font-family:var(--mono); font-size:15px; color:var(--teal);}
+  .balance-bar{display:flex; height:22px; width:100%; border:1px solid var(--border);}
+  .balance-seg{display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:10px; color:var(--seg-text); white-space:nowrap; overflow:hidden;}
+  .seg-recovered{background:var(--teal);}
+  .seg-loss{background:var(--red);}
+  .seg-gasto{background:var(--red);}
+  .seg-margen{background:var(--teal);}
+  .balance-legend{display:flex; gap:18px; margin-top:8px; font-size:11px; color:var(--text-dim); font-family:var(--mono); flex-wrap:wrap;}
+  .legend-dot{display:inline-block; width:8px; height:8px; margin-right:5px; vertical-align:-1px;}
+
+  /* Report screen */
+  .report-wrap{max-width:760px; margin:0 auto;}
+  .report-sheet{background:var(--surface); border:1px solid var(--border); padding:0;}
+  .report-head{display:flex; justify-content:space-between; align-items:flex-start; padding:26px 30px; border-bottom:1px solid var(--border);}
+  .report-brand{font-family:var(--cond); font-weight:700; font-size:19px;}
+  .report-brand span{color:var(--copper);}
+  .report-brand-sub{font-size:11px; color:var(--text-faint); margin-top:2px;}
+  .report-meta{text-align:right; font-size:12px; color:var(--text-dim); font-family:var(--mono); line-height:1.7;}
+  .report-meta b{color:var(--text); font-weight:500;}
+  .report-body{padding:24px 30px;}
+  .compare-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:26px;}
+  .compare-col{border:1px solid var(--border); padding:16px 18px;}
+  .compare-col h4{font-family:var(--cond); font-size:13px; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-dim); font-weight:600; margin-bottom:12px;}
+  .compare-col.client{border-left:2px solid var(--text-faint);}
+  .compare-col.plant{border-left:2px solid var(--copper);}
+  .data-row{display:flex; justify-content:space-between; padding:6px 0; font-size:13px; border-bottom:1px dashed var(--border);}
+  .data-row:last-child{border-bottom:none;}
+  .data-row span:first-child{color:var(--text-dim);}
+  .data-row span:last-child{font-family:var(--mono); color:var(--text);}
+
+  .report-total{display:flex; justify-content:space-between; align-items:center; padding:18px 20px; background:var(--copper-wash); border:1px solid var(--copper-dim); margin-top:22px;}
+  .report-total-label{font-size:12.5px; color:var(--text-dim);}
+  .report-total-label small{display:block; font-size:11px; color:var(--text-faint); margin-top:2px;}
+  .report-total-value{font-family:var(--mono); font-size:24px; color:var(--copper); font-weight:500;}
+
+  .report-foot{padding:14px 30px; border-top:1px solid var(--border); font-size:10.5px; color:var(--text-faint); display:flex; justify-content:space-between; font-family:var(--mono);}
+
+  /* Gastos screen */
+  .money-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:28px;}
+  .money-card{background:var(--surface); border:1px solid var(--border); padding:18px 20px;}
+  .money-card.ingreso{border-left:2px solid var(--teal);}
+  .money-card.gasto{border-left:2px solid var(--red);}
+  .money-card.neto{border-left:2px solid var(--copper);}
+  .money-label{font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.6px;}
+  .money-value{font-family:var(--mono); font-size:24px; font-weight:500; margin-top:8px;}
+  .money-sub{font-size:11.5px; color:var(--text-dim); margin-top:6px; font-family:var(--mono);}
+
+  .gasto-cat-row{display:grid; grid-template-columns:1fr 90px 60px; align-items:center; gap:14px; padding:11px 16px; background:var(--surface); border:1px solid var(--border); border-top:none;}
+  .gasto-cat-row:first-of-type{border-top:1px solid var(--border);}
+  .gasto-cat-name{font-size:13px; color:var(--text);}
+  .gasto-cat-bar-wrap{height:6px; background:var(--border); position:relative;}
+  .gasto-cat-bar{height:100%; background:var(--copper);}
+  .gasto-cat-amount{font-family:var(--mono); font-size:12.5px; text-align:right; color:var(--text-dim);}
+
+  .screen{display:none;}
+  .screen.active{display:block;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">Planta<span>Control</span></div>
+      <div class="brand-sub">de INFOSET · perfil cal</div>
+    </div>
+    <div class="nav-item active" data-screen="dashboard"><span class="dot"></span>Panel principal</div>
+    <div class="nav-item" data-screen="report"><span class="dot"></span>Lotes</div>
+    <div class="nav-item" data-screen="reportes"><span class="dot"></span>Reportes</div>
+    <div class="nav-item" data-screen="gastos"><span class="dot"></span>Gastos</div>
+    <div class="nav-item" data-screen="clientes"><span class="dot"></span>Clientes</div>
+    <div class="sidebar-foot">PROTOTIPO — DATOS DE DEMOSTRACIÓN<br>Planta calera · Palpa, Ica</div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title" id="topTitle">Panel principal</div>
+        <div class="topbar-sub" id="topSub">Planta Calera San Cristóbal — hoy, 16 jul 2026</div>
+      </div>
+      <div class="topbar-right">
+        <span class="tag-demo">Prototipo</span>
+        <span class="badge-live">turno activo</span>
+        <div class="theme-toggle" id="themeToggle">
+          <svg class="ic-sun" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.2" y1="4.2" x2="6.3" y2="6.3"/><line x1="17.7" y1="17.7" x2="19.8" y2="19.8"/><line x1="4.2" y1="19.8" x2="6.3" y2="17.7"/><line x1="17.7" y1="6.3" x2="19.8" y2="4.2"/></svg>
+          <span class="theme-toggle-label" id="themeLabel">día</span>
+          <svg class="ic-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="screen active" id="screen-dashboard">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Caliza procesada</div>
+            <div class="kpi-value">88<small> t</small></div>
+            <div class="kpi-delta up">▲ 4.8% vs. ayer</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Rendimiento cal/caliza</div>
+            <div class="kpi-value">61.2<small> %</small></div>
+            <div class="kpi-delta down">▼ 0.9% vs. ayer</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Costo por tonelada</div>
+            <div class="kpi-value">S/ 42<small>.50</small></div>
+            <div class="kpi-delta up">▼ 2.1% vs. ayer</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Utilidad del día</div>
+            <div class="kpi-value">S/ 1,860</div>
+            <div class="kpi-delta up">▲ 8.4% vs. ayer</div>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <div class="section-title">Rendimiento de calcinación — turno actual</div>
+          <div class="section-note">CAL VIVA (CAO)</div>
+        </div>
+        <div class="balance-block">
+          <div class="balance-top">
+            <div class="balance-metal">Cal viva</div>
+            <div class="balance-recovery">Rendimiento 61.2%</div>
+          </div>
+          <div class="balance-bar">
+            <div class="balance-seg seg-recovered" style="width:61.2%">CAL PRODUCIDA</div>
+            <div class="balance-seg seg-loss" style="width:38.8%"></div>
+          </div>
+          <div class="balance-legend">
+            <span><span class="legend-dot" style="background:var(--teal)"></span>Cal producida 61.2%</span>
+            <span><span class="legend-dot" style="background:var(--red)"></span>Merma de calcinación e impurezas 38.8%</span>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <div class="section-title">Lotes recientes</div>
+          <div class="section-note">4 DE 4</div>
+        </div>
+        <div class="list-head" style="grid-template-columns:70px 1fr 110px 110px 90px 90px;">
+          <span>Lote</span><span>Cliente</span><span class="col-right">Tonelaje</span><span class="col-right">Rendimiento</span><span class="col-center">Estado</span><span></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 110px 110px 90px 90px;">
+          <span class="col-mono">#032</span><span class="col-strong">Constructora Palpa Sur</span>
+          <span class="col-mono col-right">24.0 t</span><span class="col-mono col-right">63.1%</span>
+          <span class="col-center"><span class="status-pill status-good">bueno</span></span>
+          <span class="col-right lot-view" onclick="showScreen('report')">ver reporte →</span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 110px 110px 90px 90px;">
+          <span class="col-mono">#031</span><span class="col-strong">Agroinsumos Ica Sur</span>
+          <span class="col-mono col-right">18.5 t</span><span class="col-mono col-right">58.4%</span>
+          <span class="col-center"><span class="status-pill status-mid">medio</span></span>
+          <span class="col-right lot-view" onclick="showScreen('report')">ver reporte →</span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 110px 110px 90px 90px;">
+          <span class="col-mono">#030</span><span class="col-strong">Ladrillera San Martín</span>
+          <span class="col-mono col-right">22.0 t</span><span class="col-mono col-right">55.2%</span>
+          <span class="col-center"><span class="status-pill status-low">bajo</span></span>
+          <span class="col-right lot-view" onclick="showScreen('report')">ver reporte →</span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 110px 110px 90px 90px;">
+          <span class="col-mono">#029</span><span class="col-strong">Constructora Palpa Sur</span>
+          <span class="col-mono col-right">23.5 t</span><span class="col-mono col-right">62.7%</span>
+          <span class="col-center"><span class="status-pill status-good">bueno</span></span>
+          <span class="col-right lot-view" onclick="showScreen('report')">ver reporte →</span>
+        </div>
+      </div>
+
+      <!-- LOTE INDIVIDUAL / REPORTE CLIENTE -->
+      <div class="screen" id="screen-report">
+        <div class="report-wrap">
+          <div class="report-sheet">
+            <div class="report-head">
+              <div>
+                <div class="report-brand">Planta<span>Control</span></div>
+                <div class="report-brand-sub">Reporte de procesamiento por lote</div>
+              </div>
+              <div class="report-meta">
+                Lote <b>#031</b><br>
+                Ingreso: <b>10 jul 2026</b><br>
+                Cierre: <b>13 jul 2026</b>
+              </div>
+            </div>
+
+            <div class="report-body">
+              <div class="compare-grid">
+                <div class="compare-col client">
+                  <h4>Datos declarados por el cliente</h4>
+                  <div class="data-row"><span>Cliente</span><span>Agroinsumos Ica Sur</span></div>
+                  <div class="data-row"><span>Tonelaje entregado</span><span>18.50 t</span></div>
+                  <div class="data-row"><span>Ley CaCO3 declarada</span><span>92.0 %</span></div>
+                  <div class="data-row"><span>Humedad declarada</span><span>3.5 %</span></div>
+                </div>
+                <div class="compare-col plant">
+                  <h4>Datos medidos en planta</h4>
+                  <div class="data-row"><span>Tonelaje procesado</span><span>18.50 t</span></div>
+                  <div class="data-row"><span>Ley CaCO3 (ensayo)</span><span>89.4 %</span></div>
+                  <div class="data-row"><span>Humedad medida</span><span>4.8 %</span></div>
+                  <div class="data-row"><span>Cal viva producida</span><span>10.8 t</span></div>
+                </div>
+              </div>
+
+              <div class="section-head" style="margin-top:0">
+                <div class="section-title" style="font-size:14px">Rendimiento del lote</div>
+                <div class="section-note">CAL VIVA</div>
+              </div>
+              <div class="balance-block" style="margin-bottom:0">
+                <div class="balance-top">
+                  <div class="balance-metal" style="font-size:13px">Cal viva</div>
+                  <div class="balance-recovery" style="font-size:13px">Rendimiento 58.4%</div>
+                </div>
+                <div class="balance-bar">
+                  <div class="balance-seg seg-recovered" style="width:58.4%">58.4%</div>
+                  <div class="balance-seg seg-loss" style="width:41.6%"></div>
+                </div>
+                <div class="balance-legend">
+                  <span><span class="legend-dot" style="background:var(--teal)"></span>Cal producida 10.8 t</span>
+                  <span><span class="legend-dot" style="background:var(--red)"></span>Merma de calcinación 7.7 t</span>
+                </div>
+              </div>
+
+              <div class="report-total">
+                <div class="report-total-label">
+                  Servicio de procesamiento — 18.50 t × S/ 45.00
+                  <small>Tarifa según contrato vigente. Incluye combustible de horno y mano de obra.</small>
+                </div>
+                <div class="report-total-value">S/ 832.50</div>
+              </div>
+            </div>
+
+            <div class="report-foot">
+              <span>Generado automáticamente por PlantaControl</span>
+              <span>Lote #031 · Horno de calcinación 2 · 3 días de proceso</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORTES: lista descargable -->
+      <div class="screen" id="screen-reportes">
+        <div class="section-head" style="margin-top:0">
+          <div class="section-title">Reportes generados</div>
+          <div class="section-note">JULIO 2026 · 6 LOTES</div>
+        </div>
+        <div class="list-head" style="grid-template-columns:70px 1fr 90px 90px 90px 100px 190px;">
+          <span>Lote</span><span>Cliente</span><span class="col-right">Fecha</span><span class="col-right">Tonelaje</span><span class="col-right">Rendimiento</span><span class="col-right">Monto</span><span class="col-right">Acciones</span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 90px 90px 90px 100px 190px;">
+          <span class="col-mono">#032</span><span class="col-strong">Constructora Palpa Sur</span>
+          <span class="col-mono col-right">16 jul</span><span class="col-mono col-right">24.0 t</span><span class="col-mono col-right">63.1%</span><span class="col-mono col-right">S/ 1,080</span>
+          <span class="col-right"><button class="action-btn primary">descargar PDF</button><button class="action-btn">enviar correo</button></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 90px 90px 90px 100px 190px;">
+          <span class="col-mono">#031</span><span class="col-strong">Agroinsumos Ica Sur</span>
+          <span class="col-mono col-right">13 jul</span><span class="col-mono col-right">18.5 t</span><span class="col-mono col-right">58.4%</span><span class="col-mono col-right">S/ 833</span>
+          <span class="col-right"><button class="action-btn primary" onclick="showScreen('report')">descargar PDF</button><button class="action-btn">enviar correo</button></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 90px 90px 90px 100px 190px;">
+          <span class="col-mono">#030</span><span class="col-strong">Ladrillera San Martín</span>
+          <span class="col-mono col-right">12 jul</span><span class="col-mono col-right">22.0 t</span><span class="col-mono col-right">55.2%</span><span class="col-mono col-right">S/ 990</span>
+          <span class="col-right"><button class="action-btn primary">descargar PDF</button><button class="action-btn">enviar correo</button></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 90px 90px 90px 100px 190px;">
+          <span class="col-mono">#029</span><span class="col-strong">Constructora Palpa Sur</span>
+          <span class="col-mono col-right">10 jul</span><span class="col-mono col-right">23.5 t</span><span class="col-mono col-right">62.7%</span><span class="col-mono col-right">S/ 1,058</span>
+          <span class="col-right"><button class="action-btn primary">descargar PDF</button><button class="action-btn">enviar correo</button></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 90px 90px 90px 100px 190px;">
+          <span class="col-mono">#028</span><span class="col-strong">Agrícola Los Molinos</span>
+          <span class="col-mono col-right">8 jul</span><span class="col-mono col-right">19.8 t</span><span class="col-mono col-right">59.8%</span><span class="col-mono col-right">S/ 891</span>
+          <span class="col-right"><button class="action-btn primary">descargar PDF</button><button class="action-btn">enviar correo</button></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:70px 1fr 90px 90px 90px 100px 190px;">
+          <span class="col-mono">#027</span><span class="col-strong">Ladrillera San Martín</span>
+          <span class="col-mono col-right">6 jul</span><span class="col-mono col-right">21.2 t</span><span class="col-mono col-right">56.4%</span><span class="col-mono col-right">S/ 954</span>
+          <span class="col-right"><button class="action-btn primary">descargar PDF</button><button class="action-btn">enviar correo</button></span>
+        </div>
+      </div>
+
+      <!-- GASTOS: debe / haber de la planta -->
+      <div class="screen" id="screen-gastos">
+        <div class="section-head" style="margin-top:0">
+          <div class="section-title">Resumen de caja — julio 2026</div>
+          <div class="section-note">DEL 1 AL 16 DE JULIO</div>
+        </div>
+
+        <div class="money-grid">
+          <div class="money-card ingreso">
+            <div class="money-label">Ingresos (servicio)</div>
+            <div class="money-value">S/ 46,850</div>
+            <div class="money-sub">14 lotes · 312.6 t procesadas</div>
+          </div>
+          <div class="money-card gasto">
+            <div class="money-label">Gastos operativos</div>
+            <div class="money-value">S/ 41,200</div>
+            <div class="money-sub">7 categorías de gasto</div>
+          </div>
+          <div class="money-card neto">
+            <div class="money-label">Utilidad neta</div>
+            <div class="money-value">S/ 5,650</div>
+            <div class="money-sub">margen 12.1% sobre ingresos</div>
+          </div>
+        </div>
+
+        <div class="balance-block">
+          <div class="balance-top">
+            <div class="balance-metal">Ingresos vs. gastos</div>
+            <div class="balance-recovery" style="color:var(--copper)">margen 12.1%</div>
+          </div>
+          <div class="balance-bar">
+            <div class="balance-seg seg-margen" style="width:87.9%">GASTOS 87.9%</div>
+            <div class="balance-seg seg-gasto" style="width:12.1%; background:var(--copper)"></div>
+          </div>
+          <div class="balance-legend">
+            <span><span class="legend-dot" style="background:var(--teal)"></span>Cubierto por ingresos</span>
+            <span><span class="legend-dot" style="background:var(--copper)"></span>Utilidad neta 12.1%</span>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <div class="section-title">Gastos por categoría</div>
+          <div class="section-note">S/ 41,200 TOTAL</div>
+        </div>
+        <div class="gasto-cat-row">
+          <span class="gasto-cat-name">Combustible del horno (leña / carbón)</span>
+          <div class="gasto-cat-bar-wrap"><div class="gasto-cat-bar" style="width:40.0%"></div></div>
+          <span class="gasto-cat-amount">S/ 16,480</span>
+        </div>
+        <div class="gasto-cat-row">
+          <span class="gasto-cat-name">Planilla — sueldos y jornales</span>
+          <div class="gasto-cat-bar-wrap"><div class="gasto-cat-bar" style="width:27.2%"></div></div>
+          <span class="gasto-cat-amount">S/ 11,200</span>
+        </div>
+        <div class="gasto-cat-row">
+          <span class="gasto-cat-name">Perforación y voladura (cantera)</span>
+          <div class="gasto-cat-bar-wrap"><div class="gasto-cat-bar" style="width:13.1%"></div></div>
+          <span class="gasto-cat-amount">S/ 5,400</span>
+        </div>
+        <div class="gasto-cat-row">
+          <span class="gasto-cat-name">Energía eléctrica</span>
+          <div class="gasto-cat-bar-wrap"><div class="gasto-cat-bar" style="width:9.3%"></div></div>
+          <span class="gasto-cat-amount">S/ 3,850</span>
+        </div>
+        <div class="gasto-cat-row">
+          <span class="gasto-cat-name">Transporte de caliza y cal</span>
+          <div class="gasto-cat-bar-wrap"><div class="gasto-cat-bar" style="width:6.3%"></div></div>
+          <span class="gasto-cat-amount">S/ 2,600</span>
+        </div>
+        <div class="gasto-cat-row">
+          <span class="gasto-cat-name">Mantenimiento de horno y equipos</span>
+          <div class="gasto-cat-bar-wrap"><div class="gasto-cat-bar" style="width:3.1%"></div></div>
+          <span class="gasto-cat-amount">S/ 1,270</span>
+        </div>
+        <div class="gasto-cat-row">
+          <span class="gasto-cat-name">Otros gastos</span>
+          <div class="gasto-cat-bar-wrap"><div class="gasto-cat-bar" style="width:1.0%"></div></div>
+          <span class="gasto-cat-amount">S/ 400</span>
+        </div>
+      </div>
+
+      <!-- CLIENTES: tabla ancho completo -->
+      <div class="screen" id="screen-clientes">
+        <div class="section-head" style="margin-top:0">
+          <div class="section-title">Clientes activos</div>
+          <div class="section-note">5 DE 5</div>
+        </div>
+        <div class="list-head" style="grid-template-columns:1.4fr 1fr 70px 100px 100px 100px 120px;">
+          <span>Cliente</span><span>Ubicación</span><span class="col-right">Lotes</span><span class="col-right">Tonelaje total</span><span class="col-right">Rendimiento prom.</span><span class="col-right">Último lote</span><span class="col-center">Estado</span>
+        </div>
+        <div class="list-row" style="grid-template-columns:1.4fr 1fr 70px 100px 100px 100px 120px;">
+          <span class="col-strong">Constructora Palpa Sur</span><span class="col-mono">Palpa, Ica</span>
+          <span class="col-mono col-right">9</span><span class="col-mono col-right">214.3 t</span><span class="col-mono col-right">62.4%</span><span class="col-mono col-right">16 jul</span>
+          <span class="col-center"><span class="status-pill status-good">al día</span></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:1.4fr 1fr 70px 100px 100px 100px 120px;">
+          <span class="col-strong">Agroinsumos Ica Sur</span><span class="col-mono">Ica</span>
+          <span class="col-mono col-right">6</span><span class="col-mono col-right">138.9 t</span><span class="col-mono col-right">58.1%</span><span class="col-mono col-right">13 jul</span>
+          <span class="col-center"><span class="status-pill status-mid">pendiente</span></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:1.4fr 1fr 70px 100px 100px 100px 120px;">
+          <span class="col-strong">Ladrillera San Martín</span><span class="col-mono">Nasca, Ica</span>
+          <span class="col-mono col-right">4</span><span class="col-mono col-right">89.6 t</span><span class="col-mono col-right">55.7%</span><span class="col-mono col-right">12 jul</span>
+          <span class="col-center"><span class="status-pill status-good">al día</span></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:1.4fr 1fr 70px 100px 100px 100px 120px;">
+          <span class="col-strong">Agrícola Los Molinos</span><span class="col-mono">Palpa, Ica</span>
+          <span class="col-mono col-right">3</span><span class="col-mono col-right">64.2 t</span><span class="col-mono col-right">59.8%</span><span class="col-mono col-right">8 jul</span>
+          <span class="col-center"><span class="status-pill status-low">1 factura vencida</span></span>
+        </div>
+        <div class="list-row" style="grid-template-columns:1.4fr 1fr 70px 100px 100px 100px 120px;">
+          <span class="col-strong">Constructora Vizcachas EIRL</span><span class="col-mono">Ica</span>
+          <span class="col-mono col-right">2</span><span class="col-mono col-right">41.0 t</span><span class="col-mono col-right">60.3%</span><span class="col-mono col-right">5 jul</span>
+          <span class="col-center"><span class="status-pill status-good">al día</span></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navIndex = {dashboard:0, report:1, reportes:2, gastos:3, clientes:4};
+  document.querySelectorAll('.nav-item[data-screen]')[navIndex[name]].classList.add('active');
+  const titles = {
+    dashboard:['Panel principal','Planta Calera San Cristóbal — hoy, 16 jul 2026'],
+    report:['Reporte de lote — cliente','Lote #031 · Agroinsumos Ica Sur'],
+    reportes:['Reportes','Julio 2026 · descarga y envío de reportes por lote'],
+    gastos:['Gastos','Resumen de caja de la planta — julio 2026'],
+    clientes:['Clientes','Planta Calera San Cristóbal — 5 clientes activos']
+  };
+  document.getElementById('topTitle').textContent = titles[name][0];
+  document.getElementById('topSub').textContent = titles[name][1];
+}
+document.querySelectorAll('.nav-item[data-screen]').forEach(el=>{
+  el.addEventListener('click', ()=> showScreen(el.dataset.screen));
+});
+
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeLabel = document.getElementById('themeLabel');
+themeToggle.addEventListener('click', ()=>{
+  const isDark = root.getAttribute('data-theme') === 'dark';
+  root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  themeLabel.textContent = isDark ? 'día' : 'noche';
+});
+</script>
+</body>
+</html>
