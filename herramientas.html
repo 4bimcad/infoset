@@ -115,10 +115,19 @@
           </div>
 
           <!-- Herramientas (справа на больших экранах, снизу на мобильных) -->
-          <div class="col-lg-9 col-md-8" data-aos="fade-up">
+          <div class="col-lg-9 col-md-8" data-aos="fade-up" id="toolsContainer">
+
+            <!-- Buscador -->
+            <div class="mb-3">
+              <input type="text" id="toolSearchInput" class="form-control"
+                placeholder="Buscar herramienta por nombre...">
+            </div>
+            <p class="text-muted small" id="toolSearchNoResults" style="display:none;">
+              No se encontraron herramientas con ese nombre.
+            </p>
 
             <!-- Tool 1 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/gold.png"
@@ -140,7 +149,7 @@
             </div>
 
             <!-- Tool 2 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/retorta.png"
@@ -162,7 +171,7 @@
             </div>
 
             <!-- Tool 3 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/screenshot-mobile.png"
@@ -184,7 +193,7 @@
             </div>
 
             <!-- Tool 4 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/cv.jpg"
@@ -204,7 +213,7 @@
             </div>
 
             <!-- Tool 5 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/calc-exito-de-proyecto-minero.png"
@@ -213,8 +222,7 @@
                 <div class="col">
                   <div class="card-body py-3">
                     <h5 class="card-title mb-1">
-                      <a href="calculadoras/mining_calculator.html" target="_blank"
-                        class="text-decoration-none">
+                      <a href="calculadoras/mining_calculator.html" target="_blank" class="text-decoration-none">
                         Calculadora de exito de proyecto minero
                       </a>
                     </h5>
@@ -226,7 +234,7 @@
             </div>
 
             <!-- Tool 6 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/lamina.png"
@@ -246,7 +254,7 @@
             </div>
 
             <!-- Tool 7 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/tracker de metales oro gratis.png"
@@ -267,7 +275,7 @@
             </div>
 
             <!-- Tool 8 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/Conversor de divisas.png"
@@ -288,7 +296,7 @@
             </div>
 
             <!-- Tool 9 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/guia_export_oro.png"
@@ -309,7 +317,7 @@
             </div>
 
             <!-- Tool 10 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/cobre.png"
@@ -329,7 +337,7 @@
             </div>
 
             <!-- Tool 11 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/plomo.png"
@@ -349,7 +357,7 @@
             </div>
 
             <!-- Tool 12 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/oro.png"
@@ -369,7 +377,7 @@
             </div>
 
             <!-- Tool 13 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/convertidores.png"
@@ -389,7 +397,7 @@
             </div>
 
             <!-- Tool 14 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/COMERCIALIZACION DE ORO LOCAL VENTA.png"
@@ -410,7 +418,7 @@
             </div>
 
             <!-- Tool 15 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/EXPORTACION DE ORO.png"
@@ -430,7 +438,7 @@
             </div>
 
             <!-- Tool 16 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/EXPORTACION Y COMERCIALIZACION DE ORO.png"
@@ -451,7 +459,7 @@
             </div>
 
             <!-- Tool 17 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/decreto legislativo 1100.png"
@@ -473,7 +481,7 @@
             </div>
 
             <!-- Tool 18 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img
@@ -495,7 +503,7 @@
             </div>
 
             <!-- Tool 19 -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/t_a_m3.png"
@@ -516,7 +524,7 @@
             </div>
 
             <!-- Tool 20 KYC -->
-            <div class="card mb-3" style="max-width: 100%;">
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
               <div class="row g-0">
                 <div class="col-auto d-flex align-items-center ps-3">
                   <img src="assets/img/img_herramientas_mini/kyc_form.png"
@@ -530,6 +538,27 @@
                       </a>
                     </h5>
                     <p class="card-text text-muted small mb-0">En linea</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tool 21 Meta -->
+            <div class="card mb-3 tool-card" style="max-width: 100%;">
+              <div class="row g-0">
+                <div class="col-auto d-flex align-items-center ps-3">
+                  <img src="assets/img/img_herramientas_mini/Meta.png"
+                    style="width: 80px; height: 40px; object-fit: cover;" class="rounded" alt="Formulario KYC">
+                </div>
+                <div class="col">
+                  <div class="card-body py-3">
+                    <h5 class="card-title mb-1">
+                      <a href="cuello_de_botella.html" target="_blank" class="text-decoration-none">
+                        Detector de Cuellos de Botella
+                      </a>
+                    </h5>
+                    <p class="card-text text-muted small mb-0">Identifica en segundos qué etapa de tu proceso frena todo
+                      lo demás — y qué hacer al respecto, paso a paso.</p>
                   </div>
                 </div>
               </div>
@@ -652,6 +681,30 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <!-- Buscador de herramientas -->
+  <script>
+    (function () {
+      const input = document.getElementById('toolSearchInput');
+      const noResults = document.getElementById('toolSearchNoResults');
+      const cards = document.querySelectorAll('#toolsContainer .tool-card');
+
+      input.addEventListener('input', function () {
+        const query = this.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        cards.forEach(function (card) {
+          const titleEl = card.querySelector('.card-title');
+          const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+          const isMatch = title.includes(query);
+          card.style.display = isMatch ? '' : 'none';
+          if (isMatch) visibleCount++;
+        });
+
+        noResults.style.display = visibleCount === 0 ? '' : 'none';
+      });
+    })();
+  </script>
 
 </body>
 
