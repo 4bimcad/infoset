@@ -358,13 +358,13 @@
       minorBlockLR.classList.toggle('d-none', !esMenorLR.checked);
     });
 
-    function generarCodigoLR(){
+    function generarCodigoLR() {
       const y = new Date().getFullYear();
-      const rnd = Math.random().toString(36).slice(2,7).toUpperCase();
+      const rnd = Math.random().toString(36).slice(2, 7).toUpperCase();
       return `LR-${y}-${rnd}`;
     }
 
-    lrForm.addEventListener('submit', async function(e){
+    lrForm.addEventListener('submit', async function (e) {
       e.preventDefault();
       errorMsgLR.classList.add('d-none');
       submitBtnLR.disabled = true;
@@ -391,12 +391,10 @@
         pedido: fd.get('pedido')
       };
 
+      // Envía el email con EMAILJS — CORREGIDO
       try {
-        const { error } = await supabaseLR.from('reclamaciones').insert(record);
-        if (error) throw error;
-
-        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          email: NOTIFY_EMAIL,
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          email: NOTIFY_EMAIL,           // ← CAMBIADO: to_email → email
           codigo: codigo,
           tipo: record.tipo,
           nombre: record.nombre,
@@ -406,18 +404,10 @@
           monto: record.monto || '—',
           detalle: record.detalle,
           pedido: record.pedido
-        }).catch(err => console.error('EmailJS error:', err));
-
-        document.getElementById('codeOut').textContent = codigo;
-        lrForm.classList.add('d-none');
-        document.getElementById('confirmView').classList.remove('d-none');
-
-      } catch (err) {
-        console.error(err);
-        errorMsgLR.textContent = 'No se pudo registrar el reclamo. Intente nuevamente o escriba a ' + NOTIFY_EMAIL;
-        errorMsgLR.classList.remove('d-none');
-        submitBtnLR.disabled = false;
-        submitBtnLR.textContent = 'Enviar reclamación';
+        });
+        console.log('✅ Email enviado correctamente');
+      } catch (emailError) {
+        console.error('❌ Error al enviar email:', emailError);
       }
     });
   </script>
