@@ -396,7 +396,7 @@
         if (error) throw error;
 
         emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          to_email: NOTIFY_EMAIL,
+          email: NOTIFY_EMAIL,
           codigo: codigo,
           tipo: record.tipo,
           nombre: record.nombre,
