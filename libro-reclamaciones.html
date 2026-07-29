@@ -328,14 +328,19 @@
   <!-- Libro de Reclamaciones: Supabase + EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
- <script>
-    // ====== CONFIGURACIÓN SUPABASE ======
+  <script>
+    // ====== ШАГ 1: настрой Supabase ======
+    // Данные из Project Settings → API в твоём проекте Supabase
     const SUPABASE_URL = "https://wnxdpwpankwbagoasioh.supabase.co";
-    // ⚠️ ¡REVOCA ESTE KEY! Está expuesto públicamente
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndueGRwd3Bhbmt3YmFnb2FzaW9oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyOTU0MjMsImV4cCI6MjEwMDg3MTQyM30.Typ2NM1JfkPz6AzYeqWGzmpijqBZc_pyjOePnSgAuvE";
     const supabaseLR = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ====== CONFIGURACIÓN EMAILJS ======
+    // ====== ШАГ 2: настрой EmailJS (emailjs.com, бесплатный тариф) ======
+    // 1. Зарегистрируйся на emailjs.com
+    // 2. Email Services → добавь Gmail (или любой) как отправитель
+    // 3. Email Templates → создай шаблон, куда подставляются переменные ниже
+    //    (to_email, codigo, tipo, nombre, documento, email_cliente, servicio, monto, detalle, pedido)
+    // 4. Account → General → скопируй Public Key
     const EMAILJS_PUBLIC_KEY = "owVOQhW4JqRma_XOY";
     const EMAILJS_SERVICE_ID = "service_0as3gyf";
     const EMAILJS_TEMPLATE_ID = "template_yum3ta6";
@@ -350,101 +355,72 @@
     const errorMsgLR = document.getElementById('errorMsg');
 
     esMenorLR.addEventListener('change', () => {
-        minorBlockLR.classList.toggle('d-none', !esMenorLR.checked);
+      minorBlockLR.classList.toggle('d-none', !esMenorLR.checked);
     });
 
-    function generarCodigoLR() {
-        const y = new Date().getFullYear();
-        const rnd = Math.random().toString(36).slice(2, 7).toUpperCase();
-        return `LR-${y}-${rnd}`;
+    function generarCodigoLR(){
+      const y = new Date().getFullYear();
+      const rnd = Math.random().toString(36).slice(2,7).toUpperCase();
+      return `LR-${y}-${rnd}`;
     }
 
-    lrForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        errorMsgLR.classList.add('d-none');
-        submitBtnLR.disabled = true;
-        submitBtnLR.textContent = 'Enviando...';
+    lrForm.addEventListener('submit', async function(e){
+      e.preventDefault();
+      errorMsgLR.classList.add('d-none');
+      submitBtnLR.disabled = true;
+      submitBtnLR.textContent = 'Enviando...';
 
-        const fd = new FormData(lrForm);
-        const codigo = generarCodigoLR();
+      const fd = new FormData(lrForm);
+      const codigo = generarCodigoLR();
 
-        const record = {
-            codigo,
-            tipo: fd.get('tipo'),
-            nombre: fd.get('nombre'),
-            documento: fd.get('documento'),
-            domicilio: fd.get('domicilio') || null,
-            telefono: fd.get('telefono') || null,
-            email: fd.get('email'),
-            es_menor: esMenorLR.checked,
-            apoderado_nombre: fd.get('apoderadoNombre') || null,
-            apoderado_doc: fd.get('apoderadoDoc') || null,
-            servicio: fd.get('servicio') || null,
-            monto: fd.get('monto') || null,
-            fecha_hecho: fd.get('fechaHecho') || null,
-            detalle: fd.get('detalle'),
-            pedido: fd.get('pedido')
-        };
+      const record = {
+        codigo,
+        tipo: fd.get('tipo'),
+        nombre: fd.get('nombre'),
+        documento: fd.get('documento'),
+        domicilio: fd.get('domicilio') || null,
+        telefono: fd.get('telefono') || null,
+        email: fd.get('email'),
+        es_menor: esMenorLR.checked,
+        apoderado_nombre: fd.get('apoderadoNombre') || null,
+        apoderado_doc: fd.get('apoderadoDoc') || null,
+        servicio: fd.get('servicio') || null,
+        monto: fd.get('monto') || null,
+        fecha_hecho: fd.get('fechaHecho') || null,
+        detalle: fd.get('detalle'),
+        pedido: fd.get('pedido')
+      };
 
-        try {
-            // ====== 1. GUARDAR EN SUPABASE ======
-            console.log('📤 Guardando en Supabase...', record);
-            
-            const { data, error } = await supabaseLR
-                .from('reclamaciones')
-                .insert(record)
-                .select();
+      try {
+        const { error } = await supabaseLR.from('reclamaciones').insert(record);
+        if (error) throw error;
 
-            if (error) {
-                console.error('❌ Error Supabase:', error);
-                throw new Error(`Supabase error: ${error.message}`);
-            }
-            
-            console.log('✅ Datos guardados en Supabase:', data);
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          email: NOTIFY_EMAIL,
+          codigo: codigo,
+          tipo: record.tipo,
+          nombre: record.nombre,
+          documento: record.documento,
+          email_cliente: record.email,
+          servicio: record.servicio || '—',
+          monto: record.monto || '—',
+          detalle: record.detalle,
+          pedido: record.pedido
+        }).catch(err => console.error('EmailJS error:', err));
 
-            // ====== 2. ENVIAR EMAIL CON EMAILJS ======
-            console.log('📧 Enviando email...');
-            
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                email: NOTIFY_EMAIL,
-                codigo: codigo,
-                tipo: record.tipo,
-                nombre: record.nombre,
-                documento: record.documento,
-                email_cliente: record.email,
-                servicio: record.servicio || '—',
-                monto: record.monto || '—',
-                detalle: record.detalle,
-                pedido: record.pedido
-            });
-            
-            console.log('✅ Email enviado correctamente');
+        document.getElementById('codeOut').textContent = codigo;
+        lrForm.classList.add('d-none');
+        document.getElementById('confirmView').classList.remove('d-none');
 
-            // ====== 3. MOSTRAR CONFIRMACIÓN ======
-            document.getElementById('codeOut').textContent = codigo;
-            lrForm.classList.add('d-none');
-            document.getElementById('confirmView').classList.remove('d-none');
-
-        } catch (err) {
-            console.error('❌ Error completo:', err);
-            
-            let errorMessage = 'No se pudo registrar el reclamo. ';
-            
-            if (err.message.includes('Supabase')) {
-                errorMessage += 'Error al guardar en la base de datos. ';
-            } else if (err.message.includes('email')) {
-                errorMessage += 'Error al enviar el email. ';
-            }
-            
-            errorMessage += 'Intente nuevamente o escriba a ' + NOTIFY_EMAIL;
-            
-            errorMsgLR.textContent = errorMessage;
-            errorMsgLR.classList.remove('d-none');
-            submitBtnLR.disabled = false;
-            submitBtnLR.textContent = 'Enviar reclamación';
-        }
+      } catch (err) {
+        console.error(err);
+        errorMsgLR.textContent = 'No se pudo registrar el reclamo. Intente nuevamente o escriba a ' + NOTIFY_EMAIL;
+        errorMsgLR.classList.remove('d-none');
+        submitBtnLR.disabled = false;
+        submitBtnLR.textContent = 'Enviar reclamación';
+      }
     });
-</script>
+  </script>
 
 </body>
 
