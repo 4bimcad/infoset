@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exportaciones Mineras por Destino | Perú 2016–2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f8fafc; color: #0f172a; }
+    .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .stat-value { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .filter-select {
+      appearance: none; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right 12px center;
+      padding: 8px 36px 8px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; min-width: 110px;
+    }
+    .filter-select:focus { outline: 2px solid #93c5fd; border-color: #3b82f6; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px;
+      font-size: 13px; font-weight: 500; border: 1.5px solid transparent; cursor: pointer; user-select: none; transition: .15s;
+    }
+    .chip.active { border-color: currentColor; }
+    .chip:not(.active) { opacity: .4; }
+    #mapChart { width: 100%; height: 420px; }
+    .chart-box { position: relative; height: 320px; width: 100%; }
+  </style>
+</head>
+<body class="antialiased">
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h1 class="text-xl sm:text-2xl font-bold text-slate-900">Exportaciones Mineras por Destino</h1>
+        <p class="text-sm text-slate-500 mt-0.5">Perú · Códigos principales · 2016–2026 · Valores FOB (USD) · Fuente SUNAT</p>
+      </div>
+      <div class="flex gap-2 text-xs">
+        <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">Solo minería</span>
+        <span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">2025–26 preliminares</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <!-- Filters -->
+    <section class="card p-5">
+      <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Filtros</h2>
+      <div class="flex flex-wrap gap-6 items-end">
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1.5">Año</label>
+          <div class="flex items-center gap-2">
+            <select id="yearFrom" class="filter-select"></select>
+            <span class="text-slate-400">→</span>
+            <select id="yearTo" class="filter-select"></select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1.5">Acceso rápido</label>
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" class="year-quick px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50" data-y="all">Todos</button>
+            <button type="button" class="year-quick px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50" data-y="2025">2025</button>
+            <button type="button" class="year-quick px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50" data-y="2024">2024</button>
+            <button type="button" class="year-quick px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50" data-y="2020-2025">2020–25</button>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs font-medium text-slate-500">Productos mineros</label>
+          <div class="flex gap-2">
+            <button type="button" id="selAll" class="text-xs text-blue-600 hover:underline">Todos</button>
+            <button type="button" id="selNone" class="text-xs text-slate-500 hover:underline">Ninguno</button>
+          </div>
+        </div>
+        <div id="productChips" class="flex flex-wrap gap-2"></div>
+      </div>
+    </section>
+
+    <!-- KPIs -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="card p-4">
+        <p class="text-xs text-slate-500 mb-1">Total minero (rango)</p>
+        <p class="stat-value text-xl sm:text-2xl" id="kpiTotal">—</p>
+      </div>
+      <div class="card p-4">
+        <p class="text-xs text-slate-500 mb-1">Países destino</p>
+        <p class="stat-value text-xl sm:text-2xl" id="kpiCountries">—</p>
+      </div>
+      <div class="card p-4">
+        <p class="text-xs text-slate-500 mb-1">Principal destino</p>
+        <p class="stat-value text-lg sm:text-xl" id="kpiTopCountry">—</p>
+      </div>
+      <div class="card p-4">
+        <p class="text-xs text-slate-500 mb-1">Producto líder</p>
+        <p class="stat-value text-lg sm:text-xl" id="kpiTopProduct">—</p>
+      </div>
+    </section>
+
+    <!-- Map + ranking -->
+    <div class="grid lg:grid-cols-5 gap-6">
+      <div class="card p-4 lg:col-span-3">
+        <h3 class="font-semibold text-slate-800 mb-1">Mapa mundial de destinos</h3>
+        <p class="text-xs text-slate-500 mb-2">Intensidad = valor FOB del filtro. Solo países con exportaciones mineras.</p>
+        <div id="mapChart"></div>
+      </div>
+      <div class="card p-4 lg:col-span-2">
+        <h3 class="font-semibold text-slate-800 mb-3">Ranking de países</h3>
+        <div id="countryRank" class="space-y-2 max-h-[400px] overflow-y-auto text-sm"></div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="card p-5">
+        <h3 class="font-semibold text-slate-800 mb-1">Composición por producto</h3>
+        <p class="text-xs text-slate-500 mb-3">Suma del rango seleccionado</p>
+        <div class="chart-box"><canvas id="chartPie"></canvas></div>
+      </div>
+      <div class="card p-5">
+        <h3 class="font-semibold text-slate-800 mb-1">Evolución anual (total filtrado)</h3>
+        <p class="text-xs text-slate-500 mb-3">Mil millones USD</p>
+        <div class="chart-box"><canvas id="chartTrend"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card p-5">
+      <h3 class="font-semibold text-slate-800 mb-1">Top destinos por año</h3>
+      <p class="text-xs text-slate-500 mb-3">Barras apiladas por producto (mil millones USD)</p>
+      <div class="chart-box" style="height:380px"><canvas id="chartStack"></canvas></div>
+    </div>
+
+    <!-- Table -->
+    <div class="card p-5 overflow-x-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-semibold text-slate-800">Detalle por país (millones USD)</h3>
+        <button id="btnCsv" class="text-sm px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50">Exportar CSV</button>
+      </div>
+      <table class="w-full text-sm" id="tbl">
+        <thead><tr class="border-b text-left text-xs uppercase text-slate-500 tracking-wider"></tr></thead>
+        <tbody class="divide-y divide-slate-100"></tbody>
+      </table>
+    </div>
+
+    <footer class="text-xs text-slate-500 pb-8 space-y-1">
+      <p><strong>Fuente:</strong> SUNAT — Cuadro G8 (Exportación definitiva según país de destino y principales subpartidas nacionales).</p>
+      <p>Incluye solo códigos mineros principales: concentrados de cobre, hierro, plomo, zinc, oro/plata, molibdeno; cobre y zinc refinados; estaño en bruto. Países sin envíos de estos productos no se muestran.</p>
+      <p>2025 y 2026 son preliminares. 2026 = enero–mayo.</p>
+      <p>
+        © <span>Copyright </span>
+        <strong class="px-1 sitename">
+          <a href="../index.html">INFOSET.ORG.PE</a>
+        </strong>
+        <span>| Todos los derechos reservados</span><br>
+        <small>
+          <strong>INFOSET</strong> es una marca de <strong>INCAJATA S.A.C.</strong> | RUC 20614558491
+        </small>
+      </p>
+    </footer>
+  </main>
+
+  <script>
+  // ===== DATA (compact) =====
+  const DATA = {"2016": {"CHINA": {"iso": "CN", "total": 7399587834.07, "groups": {"COBRE": 6244174158.249999, "HIERRO": 333480864.20000005, "ORO_PLATA": 339919332.92, "PLOMO": 236254565.20999998, "ZINC": 230648918.96000004, "MOLIBDENO": 14397995.83, "OTROS": 711998.7000000001}}, "ESTADOS UNIDOS": {"iso": "US", "total": 516033837.696, "groups": {"COBRE": 146537948.58, "ESTAÑO": 121709046.82, "MOLIBDENO": 102439236.78999999, "ZINC": 145334665.5, "OTROS": 7516.8060000000005, "HIERRO": 5423.2}}, "CANADA": {"iso": "CA", "total": 364066334.9099999, "groups": {"PLOMO": 233451929.83999997, "ORO_PLATA": 66460320.20999999, "ZINC": 39400428.089999996, "ESTAÑO": 24254203.34, "COBRE": 498769.93, "OTROS": 683.5}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 1064172085.7099998, "groups": {"COBRE": 406012309.31, "PLOMO": 348077604.68, "ZINC": 252719997.09999996, "ORO_PLATA": 42864158.15, "MOLIBDENO": 14490577.06, "HIERRO": 7439.41}}, "JAPON": {"iso": "JP", "total": 997150906.3399998, "groups": {"COBRE": 763805334.53, "ZINC": 108622859.09, "PLOMO": 86638421.62, "ESTAÑO": 27150359.990000002, "HIERRO": 8828336.809999999, "ORO_PLATA": 2105594.3000000003}}, "ESPAÑA": {"iso": "ES", "total": 415394084.491, "groups": {"ZINC": 216682656.89999998, "COBRE": 164377804.4, "ESTAÑO": 34333623.191}}, "BRASIL": {"iso": "BR", "total": 607580946.4549999, "groups": {"COBRE": 458521446.48499995, "ZINC": 149059323.96999997, "OTROS": 176.0}}, "CHILE": {"iso": "CL", "total": 318319020.99099994, "groups": {"COBRE": 175596627.67099997, "MOLIBDENO": 109158153.85, "ZINC": 17194587.680000003, "ORO_PLATA": 13503381.32, "ESTAÑO": 2836168.94, "OTROS": 24499.73, "HIERRO": 5601.8}}, "PAISES BAJOS": {"iso": "NL", "total": 118763264.38999997, "groups": {"ESTAÑO": 73971479.74, "MOLIBDENO": 29379597.38, "PLOMO": 8191198.859999999, "COBRE": 5590817.34, "ORO_PLATA": 1630171.07}}, "INDIA": {"iso": "IN", "total": 383044846.6, "groups": {"COBRE": 380789299.55, "ZINC": 2255547.05}}, "ALEMANIA": {"iso": "DE", "total": 399310075.665, "groups": {"COBRE": 325200329.12500006, "PLOMO": 30811739.799999997, "ZINC": 34517672.199999996, "ESTAÑO": 5011516.74, "ORO_PLATA": 3279579.5300000003, "OTROS": 485723.27, "HIERRO": 3515.0}}, "COLOMBIA": {"iso": "CO", "total": 41382781.57999999, "groups": {"ZINC": 38944699.19, "ESTAÑO": 2413472.3899999997, "COBRE": 24610.0}}, "REINO UNIDO": {"iso": "GB", "total": 15847932.64, "groups": {"ESTAÑO": 15536227.08, "COBRE": 272130.3, "ZINC": 39575.26}}, "ECUADOR": {"iso": "EC", "total": 24389544.68, "groups": {"COBRE": 16433708.26, "ZINC": 7806430.17, "ESTAÑO": 143620.05, "OTROS": 5786.2}}, "BELGICA": {"iso": "BE", "total": 401082808.3999999, "groups": {"ZINC": 224271490.22, "PLOMO": 107509776.85999998, "ORO_PLATA": 27351832.66, "COBRE": 35935660.589999996, "ESTAÑO": 4850620.54, "HIERRO": 1163427.53}}, "BOLIVIA": {"iso": null, "total": 236991.84, "groups": {"ZINC": 236991.84}}, "PANAMA": {"iso": null, "total": 4710304.17, "groups": {"COBRE": 4459358.87, "PLOMO": 187064.91, "ZINC": 35024.3, "HIERRO": 28856.09}}}, "2017": {"CHINA": {"iso": "CN", "total": 9916120701.27, "groups": {"COBRE": 8264138366.26, "HIERRO": 423475120.89, "ORO_PLATA": 428561815.43, "ZINC": 555534139.0, "PLOMO": 229255839.32, "MOLIBDENO": 15154770.37, "OTROS": 650.0}}, "ESTADOS UNIDOS": {"iso": "US", "total": 656807778.4899999, "groups": {"MOLIBDENO": 196746254.05999997, "ESTAÑO": 156086687.84, "COBRE": 131774617.85, "ZINC": 171063707.69999996, "HIERRO": 1130430.2, "OTROS": 6080.84}}, "SUIZA": {"iso": "CH", "total": 270964.28, "groups": {"COBRE": 270964.28}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 1804398145.4540002, "groups": {"COBRE": 854322502.7540001, "PLOMO": 443415872.14000005, "ZINC": 425938634.61, "ORO_PLATA": 71037409.64999999, "MOLIBDENO": 9596222.11, "ESTAÑO": 87504.19}}, "INDIA": {"iso": "IN", "total": 502815652.39, "groups": {"COBRE": 502815652.39}}, "JAPON": {"iso": "JP", "total": 1510276289.54, "groups": {"COBRE": 1175146695.42, "ZINC": 248855714.64999998, "PLOMO": 45717145.39, "ESTAÑO": 22389315.729999997, "HIERRO": 9720136.86, "ORO_PLATA": 7849216.02, "MOLIBDENO": 597865.47, "OTROS": 200.0}}, "ESPAÑA": {"iso": "ES", "total": 690927267.79, "groups": {"COBRE": 328706889.95000005, "ZINC": 322013549.78, "ESTAÑO": 40206828.06}}, "BRASIL": {"iso": "BR", "total": 802470550.55, "groups": {"COBRE": 549696749.8700001, "ZINC": 252768445.72, "HIERRO": 5168.96, "OTROS": 186.0}}, "CANADA": {"iso": "CA", "total": 361964834.02000004, "groups": {"PLOMO": 204962897.43000004, "ORO_PLATA": 106631208.03999999, "ESTAÑO": 20860088.299999997, "COBRE": 20695962.46, "ZINC": 8814672.79, "OTROS": 5.0}}, "PAISES BAJOS": {"iso": "NL", "total": 150918518.87, "groups": {"ESTAÑO": 84144754.8, "PLOMO": 32999083.62, "MOLIBDENO": 26574557.729999997, "ORO_PLATA": 5816552.140000001, "ZINC": 1149113.04, "COBRE": 234457.54}}, "CHILE": {"iso": "CL", "total": 263116294.682, "groups": {"COBRE": 124763289.682, "MOLIBDENO": 110563773.91, "ZINC": 23824885.770000003, "ESTAÑO": 2526230.0300000003, "ORO_PLATA": 1392626.6500000001, "OTROS": 22939.9, "HIERRO": 22548.74}}, "ALEMANIA": {"iso": "DE", "total": 550092518.1400001, "groups": {"COBRE": 455790094.34, "ZINC": 73307095.65, "ORO_PLATA": 15365896.58, "ESTAÑO": 5628562.84, "PLOMO": 466.0, "OTROS": 292.73, "HIERRO": 110.0}}, "PANAMA": {"iso": null, "total": 14596.82, "groups": {"HIERRO": 14089.82, "OTROS": 507.0}}, "ECUADOR": {"iso": "EC", "total": 54980058.47999999, "groups": {"COBRE": 34264621.26, "ZINC": 19498910.97, "MOLIBDENO": 975649.12, "ESTAÑO": 240877.13}}, "REINO UNIDO": {"iso": "GB", "total": 17255091.850000005, "groups": {"ESTAÑO": 17068343.580000002, "ZINC": 172470.35, "COBRE": 11212.92, "HIERRO": 3060.0, "OTROS": 5.0}}, "COLOMBIA": {"iso": "CO", "total": 50539544.485, "groups": {"ZINC": 47906462.495, "ESTAÑO": 2633081.99}}, "BOLIVIA": {"iso": null, "total": 179901.51, "groups": {"ZINC": 179901.51}}}, "2018": {"CHINA": {"iso": "CN", "total": 11349690264.439, "groups": {"COBRE": 9549231793.546999, "ZINC": 635238909.112, "HIERRO": 466831454.65, "PLOMO": 360056142.608, "ORO_PLATA": 311097256.07199997, "MOLIBDENO": 19866109.06, "OTROS": 7368599.390000001}}, "ESTADOS UNIDOS": {"iso": "US", "total": 729641212.9940001, "groups": {"MOLIBDENO": 320136182.01, "ESTAÑO": 147550490.20400003, "COBRE": 129224710.03, "ZINC": 130984823.73, "HIERRO": 1743852.92, "OTROS": 1154.1}}, "INDIA": {"iso": "IN", "total": 307958268.06, "groups": {"COBRE": 307863126.66, "ZINC": 95141.4}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 1720788074.4329998, "groups": {"COBRE": 874728044.1399999, "ZINC": 416201927.363, "PLOMO": 358773324.89000005, "ORO_PLATA": 57710067.84, "MOLIBDENO": 13374710.2}}, "JAPON": {"iso": "JP", "total": 1699854121.5399997, "groups": {"COBRE": 1331550613.83, "ZINC": 230353653.78000003, "PLOMO": 45424201.54, "ORO_PLATA": 39900903.07, "ESTAÑO": 36856018.51, "HIERRO": 15768730.809999999}}, "ESPAÑA": {"iso": "ES", "total": 689551819.35, "groups": {"ZINC": 414468825.46, "COBRE": 237204686.57, "ESTAÑO": 37863807.32, "HIERRO": 10480.0, "OTROS": 4020.0}}, "BRASIL": {"iso": "BR", "total": 842487539.53, "groups": {"COBRE": 590574116.5699999, "ZINC": 251913250.96000004, "HIERRO": 172.0}}, "PAISES BAJOS": {"iso": "NL", "total": 149575051.44, "groups": {"ESTAÑO": 73577827.8, "MOLIBDENO": 45469112.18, "PLOMO": 24620622.080000002, "ORO_PLATA": 5907489.380000001}}, "CHILE": {"iso": "CL", "total": 272189870.42999995, "groups": {"MOLIBDENO": 198786501.41000003, "COBRE": 42591712.199999996, "ZINC": 27136973.21, "ESTAÑO": 2278068.08, "ORO_PLATA": 1394716.53, "OTROS": 1254.0, "PLOMO": 645.0}}, "ALEMANIA": {"iso": "DE", "total": 691069246.126, "groups": {"COBRE": 588383680.426, "ZINC": 78241013.22, "ORO_PLATA": 19839543.67, "ESTAÑO": 4599331.5, "HIERRO": 5120.0, "OTROS": 557.3100000000001}}, "CANADA": {"iso": "CA", "total": 278768149.72, "groups": {"PLOMO": 163528607.99, "ORO_PLATA": 36854497.779999994, "ZINC": 32160554.349999998, "COBRE": 29761986.349999998, "ESTAÑO": 16461114.84, "OTROS": 1388.41}}, "ECUADOR": {"iso": "EC", "total": 38941952.75000001, "groups": {"COBRE": 20691769.450000003, "ZINC": 18034064.99, "ESTAÑO": 190141.31, "OTROS": 25977.0}}, "COLOMBIA": {"iso": "CO", "total": 53117616.669999994, "groups": {"ZINC": 51686417.71999999, "ESTAÑO": 1431198.9500000002}}, "REINO UNIDO": {"iso": "GB", "total": 20885311.139999997, "groups": {"ESTAÑO": 19230987.769999996, "ZINC": 1654323.3699999999}}, "BOLIVIA": {"iso": null, "total": 415047.70999999996, "groups": {"ZINC": 412253.08999999997, "COBRE": 2794.62}}, "ITALIA": {"iso": "IT", "total": 348192348.75, "groups": {"COBRE": 298813410.33, "ZINC": 29717937.01, "PLOMO": 17579804.37, "MOLIBDENO": 2081197.04}}, "BELGICA": {"iso": "BE", "total": 355780734.7, "groups": {"ZINC": 280042815.28999996, "ORO_PLATA": 34183517.98, "PLOMO": 20695055.849999998, "COBRE": 20859345.580000002}}}, "2019": {"CHINA": {"iso": "CN", "total": 11691583766.629997, "groups": {"COBRE": 9371315405.851997, "HIERRO": 931749506.94, "ZINC": 501349672.70699996, "ORO_PLATA": 475099839.138, "PLOMO": 373764595.573, "MOLIBDENO": 34940683.58, "ESTAÑO": 3363737.84, "OTROS": 325.0}}, "ESTADOS UNIDOS": {"iso": "US", "total": 700315977.5600001, "groups": {"MOLIBDENO": 322721698.54, "ESTAÑO": 149772158.47000003, "ZINC": 162924535.81, "COBRE": 60523216.87, "HIERRO": 4369302.47, "OTROS": 5064.4, "ORO_PLATA": 1.0}}, "CANADA": {"iso": "CA", "total": 223785441.44999996, "groups": {"PLOMO": 85301876.64, "ZINC": 65867404.70999999, "ORO_PLATA": 35167002.489999995, "COBRE": 23642769.189999998, "ESTAÑO": 13804847.16, "HIERRO": 885.0, "OTROS": 656.26}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 1648091938.38, "groups": {"COBRE": 974175922.76, "PLOMO": 335689552.6, "ZINC": 289241246.52, "ORO_PLATA": 31887304.27, "MOLIBDENO": 16341873.54, "ESTAÑO": 756038.69}}, "SUIZA": {"iso": "CH", "total": 5.0, "groups": {"OTROS": 5.0}}, "JAPON": {"iso": "JP", "total": 1325798784.1100006, "groups": {"COBRE": 983625444.9200002, "ZINC": 201678460.42999998, "HIERRO": 41927245.70999999, "ESTAÑO": 41011347.13999999, "PLOMO": 32339698.91, "ORO_PLATA": 24521427.16, "MOLIBDENO": 695159.84}}, "INDIA": {"iso": "IN", "total": 262460943.49, "groups": {"COBRE": 262386513.96, "ZINC": 74095.05, "OTROS": 334.48}}, "BRASIL": {"iso": "BR", "total": 633018943.72, "groups": {"ZINC": 245149969.81, "COBRE": 387814426.33, "ESTAÑO": 27782.08, "OTROS": 26765.5}}, "PAISES BAJOS": {"iso": "NL", "total": 181934045.17999998, "groups": {"ESTAÑO": 84112908.14, "MOLIBDENO": 42919955.68, "PLOMO": 42609033.91, "ORO_PLATA": 11625714.169999998, "COBRE": 666433.28}}, "CHILE": {"iso": "CL", "total": 254888606.05700004, "groups": {"MOLIBDENO": 208386847.06, "ZINC": 23725410.677000005, "COBRE": 18256896.77, "ESTAÑO": 2619004.5300000003, "ORO_PLATA": 1899923.33, "PLOMO": 474.83, "OTROS": 48.86}}, "ESPAÑA": {"iso": "ES", "total": 399875268.73999995, "groups": {"ZINC": 262361960.27, "COBRE": 100016830.32, "ESTAÑO": 37496478.15}}, "ALEMANIA": {"iso": "DE", "total": 627975812.0899999, "groups": {"COBRE": 529708096.84, "ZINC": 72083581.33, "ORO_PLATA": 22151098.630000003, "ESTAÑO": 4031219.89, "OTROS": 1815.4}}, "ECUADOR": {"iso": "EC", "total": 29288407.069999997, "groups": {"COBRE": 15289016.3, "ZINC": 13425410.790000001, "ESTAÑO": 473379.19, "PLOMO": 99070.02, "OTROS": 1530.77}}, "COLOMBIA": {"iso": "CO", "total": 42234053.66, "groups": {"ZINC": 41329992.29, "ESTAÑO": 904061.3700000001}}, "BOLIVIA": {"iso": null, "total": 226894.21000000002, "groups": {"ZINC": 203639.82, "HIERRO": 12463.0, "COBRE": 10428.89, "OTROS": 362.5}}, "ITALIA": {"iso": "IT", "total": 322083324.74500006, "groups": {"COBRE": 262505124.43500003, "PLOMO": 34004279.28, "ZINC": 25572626.75, "HIERRO": 1192.28, "OTROS": 102.0}}}, "2020": {"CHINA": {"iso": "CN", "total": 11089737590.465, "groups": {"COBRE": 8462414543.108001, "HIERRO": 1096892626.615, "ORO_PLATA": 571486322.402, "ZINC": 481788719.19, "PLOMO": 360445176.44, "MOLIBDENO": 102473581.08, "ESTAÑO": 14016040.57, "OTROS": 220581.06}}, "ESTADOS UNIDOS": {"iso": "US", "total": 492545382.06899995, "groups": {"ESTAÑO": 164960860.29, "MOLIBDENO": 123272919.49999999, "COBRE": 98121535.4, "ZINC": 106021662.27, "ORO_PLATA": 165669.80899999998, "OTROS": 2018.8, "HIERRO": 716.0}}, "CANADA": {"iso": "CA", "total": 152994388.79, "groups": {"ZINC": 77351196.84, "COBRE": 42660023.620000005, "ORO_PLATA": 21707524.990000002, "ESTAÑO": 11275641.45, "OTROS": 1.89}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 1773287887.4199998, "groups": {"COBRE": 1115920218.16, "PLOMO": 353085643.78, "ZINC": 247672332.82, "ORO_PLATA": 50582896.54000001, "MOLIBDENO": 6026796.12}}, "JAPON": {"iso": "JP", "total": 1392002137.97, "groups": {"COBRE": 1140211380.23, "ZINC": 126689886.99, "HIERRO": 49672701.95999999, "ESTAÑO": 35613375.92, "PLOMO": 22906545.63, "ORO_PLATA": 16908247.24}}, "PAISES BAJOS": {"iso": "NL", "total": 110152487.76, "groups": {"ESTAÑO": 46223646.54, "MOLIBDENO": 30661306.11, "PLOMO": 23323609.61, "COBRE": 5410611.5, "ORO_PLATA": 4533314.0}}, "INDIA": {"iso": "IN", "total": 104762972.46000001, "groups": {"COBRE": 104638219.02000001, "ZINC": 115984.08, "ORO_PLATA": 8769.36}}, "CHILE": {"iso": "CL", "total": 276389446.74700004, "groups": {"MOLIBDENO": 197946380.79000002, "COBRE": 54511131.97699999, "ZINC": 20690414.89, "ORO_PLATA": 1584396.49, "ESTAÑO": 1654981.6, "OTROS": 2141.0}}, "ESPAÑA": {"iso": "ES", "total": 403569923.97999996, "groups": {"ZINC": 187732229.39, "COBRE": 172181823.07, "ESTAÑO": 43655871.519999996}}, "ALEMANIA": {"iso": "DE", "total": 525528768.9400001, "groups": {"COBRE": 424690955.68000007, "ZINC": 53819680.71, "ESTAÑO": 16074935.110000001, "ORO_PLATA": 25239091.0, "PLOMO": 5704026.4399999995, "HIERRO": 80.0}}, "BRASIL": {"iso": "BR", "total": 376342235.19, "groups": {"COBRE": 223230234.32, "ZINC": 153111968.47, "OTROS": 32.4}}, "EMIRATOS ARABES UNIDOS": {"iso": "AE", "total": 4732386.91, "groups": {"ZINC": 4732386.91}}, "COLOMBIA": {"iso": "CO", "total": 41761938.245000005, "groups": {"ZINC": 39801133.65, "ESTAÑO": 1945475.05, "COBRE": 13775.205, "OTROS": 1554.34}}, "ECUADOR": {"iso": "EC", "total": 17329191.951999996, "groups": {"ZINC": 9165431.669, "COBRE": 7978609.632999999, "ESTAÑO": 175462.25, "HIERRO": 9688.4}}, "BOLIVIA": {"iso": null, "total": 88388.531, "groups": {"ZINC": 73707.82, "COBRE": 14680.711}}, "ITALIA": {"iso": "IT", "total": 300420472.25200003, "groups": {"COBRE": 266488845.19200003, "PLOMO": 17621246.29, "ZINC": 16310380.77}}, "MEXICO": {"iso": "MX", "total": 113521369.24, "groups": {"ZINC": 59834726.53999999, "COBRE": 44522166.42, "ESTAÑO": 9164476.28}}, "REINO UNIDO": {"iso": "GB", "total": 22752394.36, "groups": {"ESTAÑO": 15438722.519999998, "ZINC": 7313668.840000001, "ORO_PLATA": 3.0}}, "BELGICA": {"iso": "BE", "total": 173381598.42999998, "groups": {"PLOMO": 62425216.07000001, "ZINC": 81004325.31, "ORO_PLATA": 25491081.01, "COBRE": 3542557.2899999996, "ESTAÑO": 918418.75}}, "BULGARIA": {"iso": "BG", "total": 307455114.7, "groups": {"COBRE": 297574389.63, "ORO_PLATA": 6288278.17, "ZINC": 3592446.9}}}, "2021": {"CHINA": {"iso": "CN", "total": 18867482715.65999, "groups": {"COBRE": 14457080324.61, "HIERRO": 2126737200.98, "ZINC": 857428736.1300001, "PLOMO": 636211585.87, "ORO_PLATA": 685984628.0, "MOLIBDENO": 101840296.85, "ESTAÑO": 1413880.85, "OTROS": 786062.37}}, "ESTADOS UNIDOS": {"iso": "US", "total": 1125597622.6399999, "groups": {"ESTAÑO": 421340922.59000003, "MOLIBDENO": 312372555.23, "COBRE": 264218477.81999996, "ZINC": 124771700.0, "HIERRO": 2537172.0, "ORO_PLATA": 353535.0, "OTROS": 3260.0}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 2126918425.7819998, "groups": {"COBRE": 1224796256.652, "PLOMO": 403636889.06999993, "ZINC": 375560501.48999995, "ORO_PLATA": 66992997.21, "MOLIBDENO": 55931781.36000001}}, "JAPON": {"iso": "JP", "total": 1697237624.9799998, "groups": {"COBRE": 1262192375.24, "ZINC": 201381864.92999998, "HIERRO": 119441082.00999999, "ESTAÑO": 82258783.58, "ORO_PLATA": 24591057.770000003, "PLOMO": 7372461.45}}, "CANADA": {"iso": "CA", "total": 193265216.73099998, "groups": {"ZINC": 99028694.02999999, "ESTAÑO": 42959413.94, "COBRE": 30247584.411000002, "ORO_PLATA": 18017123.46, "HIERRO": 3010314.51, "OTROS": 2086.38}}, "INDIA": {"iso": "IN", "total": 362981594.63, "groups": {"COBRE": 362835877.84, "ZINC": 78924.19, "ESTAÑO": 66792.6}}, "PAISES BAJOS": {"iso": "NL", "total": 217551717.76999998, "groups": {"ESTAÑO": 114668642.07, "MOLIBDENO": 86046538.39, "PLOMO": 14161533.13, "ZINC": 2347902.0999999996, "COBRE": 327102.08}}, "CHILE": {"iso": "CL", "total": 540714695.0539999, "groups": {"MOLIBDENO": 489797911.57000005, "ZINC": 28471498.010000005, "COBRE": 15826713.647000002, "ORO_PLATA": 2096709.8399999999, "ESTAÑO": 2825761.9869999997, "HIERRO": 1690500.0, "OTROS": 5600.0}}, "ESPAÑA": {"iso": "ES", "total": 692628576.25, "groups": {"COBRE": 302137936.59000003, "ZINC": 305237231.64, "ESTAÑO": 85252496.72999999, "OTROS": 911.29}}, "REINO UNIDO": {"iso": "GB", "total": 43277035.980000004, "groups": {"ESTAÑO": 41823203.28, "ZINC": 1453124.3900000001, "OTROS": 708.31}}, "ALEMANIA": {"iso": "DE", "total": 855455192.06, "groups": {"COBRE": 709227438.63, "ZINC": 92213547.32999998, "ESTAÑO": 31747993.56, "ORO_PLATA": 20941757.15, "PLOMO": 1323455.39, "HIERRO": 1000.0}}, "BRASIL": {"iso": "BR", "total": 595012388.0899999, "groups": {"COBRE": 349749290.06, "ZINC": 245263097.03, "ORO_PLATA": 1.0}}, "ECUADOR": {"iso": "EC", "total": 34467232.072000004, "groups": {"COBRE": 18156891.18, "ZINC": 15999170.022, "ESTAÑO": 310739.74, "OTROS": 431.13}}, "COLOMBIA": {"iso": "CO", "total": 54300224.41600001, "groups": {"ZINC": 51956657.45000001, "ESTAÑO": 2343566.966}}, "EMIRATOS ARABES UNIDOS": {"iso": "AE", "total": 6668301.399999999, "groups": {"ZINC": 6668301.399999999}}, "BOLIVIA": {"iso": null, "total": 344209.94000000006, "groups": {"ZINC": 302586.53, "COBRE": 35203.41, "OTROS": 6420.0}}, "ITALIA": {"iso": "IT", "total": 440640829.497, "groups": {"COBRE": 322828201.07699996, "PLOMO": 68663769.17, "ZINC": 49148331.1, "OTROS": 528.15}}, "BELGICA": {"iso": "BE", "total": 295266881.0199999, "groups": {"ZINC": 197814675.74, "PLOMO": 86137192.97, "ORO_PLATA": 10033906.66, "COBRE": 1281105.65}}}, "2022": {"CHINA": {"iso": "CN", "total": 18422625918.7, "groups": {"COBRE": 14360401830.096998, "HIERRO": 1679465110.0799994, "ZINC": 725939715.436, "PLOMO": 664700350.5659999, "ORO_PLATA": 795633594.7420001, "MOLIBDENO": 128779559.014, "ESTAÑO": 64832215.22500001, "OTROS": 2873543.54}}, "ESTADOS UNIDOS": {"iso": "US", "total": 1413336709.42, "groups": {"COBRE": 490850651.05700004, "MOLIBDENO": 412647940.33, "ESTAÑO": 297500461.29300004, "ZINC": 212099782.53000003, "ORO_PLATA": 236589.21000000002, "HIERRO": 1242.0, "OTROS": 43.0}}, "JAPON": {"iso": "JP", "total": 1739528810.8800004, "groups": {"COBRE": 1343659583.89, "ZINC": 204328604.00000006, "ESTAÑO": 98517165.21, "HIERRO": 67230937.45, "ORO_PLATA": 18947207.75, "PLOMO": 6845312.579999999}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 1254120282.29, "groups": {"COBRE": 685993358.44, "PLOMO": 256538760.13000003, "ZINC": 252577803.85, "ORO_PLATA": 40309342.760000005, "MOLIBDENO": 17825898.799999997, "ESTAÑO": 875118.31}}, "CANADA": {"iso": "CA", "total": 295927180.77000004, "groups": {"ZINC": 141497870.6, "COBRE": 126812281.53000002, "ESTAÑO": 14384721.46, "ORO_PLATA": 13232207.51, "OTROS": 99.67}}, "INDIA": {"iso": "IN", "total": 342386764.13, "groups": {"COBRE": 342260864.53, "ORO_PLATA": 125899.6}}, "REINO UNIDO": {"iso": "GB", "total": 37957190.019999996, "groups": {"ESTAÑO": 36365197.629999995, "ZINC": 1591992.3900000001}}, "CHILE": {"iso": "CL", "total": 581630640.834, "groups": {"MOLIBDENO": 532190284.6999999, "ZINC": 30303389.846000005, "COBRE": 13994960.278, "PLOMO": 2066598.07, "ESTAÑO": 2612003.21, "ORO_PLATA": 453981.13, "OTROS": 9386.1, "HIERRO": 37.5}}, "PAISES BAJOS": {"iso": "NL", "total": 179728683.04999995, "groups": {"ESTAÑO": 106889415.97999999, "MOLIBDENO": 59083933.230000004, "COBRE": 8586731.139999999, "ZINC": 5168602.7}}, "BRASIL": {"iso": "BR", "total": 709741824.4340001, "groups": {"COBRE": 390388678.184, "ZINC": 319353085.4, "ORO_PLATA": 59.85, "ESTAÑO": 1.0}}, "ESPAÑA": {"iso": "ES", "total": 645974588.1299999, "groups": {"ZINC": 335868175.87999994, "COBRE": 232394333.72999996, "ESTAÑO": 77712078.51999998}}, "ECUADOR": {"iso": "EC", "total": 34175919.06, "groups": {"COBRE": 18954486.570000004, "ZINC": 15037089.060000002, "ESTAÑO": 184343.43}}, "ALEMANIA": {"iso": "DE", "total": 545985261.4209999, "groups": {"COBRE": 408380082.371, "ZINC": 101613239.64, "ESTAÑO": 15878542.490000002, "ORO_PLATA": 17146259.490000002, "HIERRO": 2967087.4299999997, "OTROS": 50.0}}, "COLOMBIA": {"iso": "CO", "total": 70903146.65400001, "groups": {"ZINC": 62853263.495000005, "COBRE": 4410772.55, "ESTAÑO": 3634979.51, "HIERRO": 2514.099, "OTROS": 1617.0}}, "BOLIVIA": {"iso": null, "total": 807206.4910000002, "groups": {"ZINC": 792880.3600000001, "COBRE": 8586.131, "OTROS": 5740.0}}, "MEXICO": {"iso": "MX", "total": 161561644.95099998, "groups": {"COBRE": 60303193.48099999, "ZINC": 63616720.88, "ESTAÑO": 37641730.59}}}, "2023": {"CHINA": {"iso": "CN", "total": 21020537843.3, "groups": {"COBRE": 16697797018.135, "HIERRO": 1589785177.8700001, "PLOMO": 1107555128.7260003, "ZINC": 732271783.1800001, "ORO_PLATA": 547031772.8499999, "MOLIBDENO": 187363631.57, "ESTAÑO": 158074014.03, "OTROS": 659316.939}}, "ESTADOS UNIDOS": {"iso": "US", "total": 1720704322.807, "groups": {"COBRE": 725754928.0459999, "MOLIBDENO": 550409431.22, "ESTAÑO": 267662771.921, "ZINC": 175519139.86000004, "ORO_PLATA": 1355624.85, "HIERRO": 1226.0, "OTROS": 1200.9099999999999}}, "CANADA": {"iso": "CA", "total": 198668245.92999998, "groups": {"ZINC": 101360293.77999999, "COBRE": 92003504.15, "ESTAÑO": 2825930.3099999996, "ORO_PLATA": 2478517.69}}, "INDIA": {"iso": "IN", "total": 232999667.83, "groups": {"COBRE": 231934411.06, "ZINC": 589297.37, "MOLIBDENO": 382901.96, "ORO_PLATA": 51063.06, "OTROS": 41994.38}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 1605931940.18, "groups": {"COBRE": 875497537.9599998, "PLOMO": 344189049.90999997, "ZINC": 261582867.24, "MOLIBDENO": 57739128.41000001, "ORO_PLATA": 43828552.03, "ESTAÑO": 23094804.630000003}}, "JAPON": {"iso": "JP", "total": 1594807770.3400004, "groups": {"COBRE": 1318585751.13, "ZINC": 152955365.23, "ESTAÑO": 63533382.26999999, "HIERRO": 57301971.79, "PLOMO": 2431299.92}}, "CHILE": {"iso": "CL", "total": 565021891.0489998, "groups": {"MOLIBDENO": 509978189.9779999, "COBRE": 31926992.431, "ZINC": 21161415.35, "ESTAÑO": 1419472.65, "ORO_PLATA": 529672.63, "OTROS": 6148.01}}, "ESPAÑA": {"iso": "ES", "total": 831326193.1499999, "groups": {"COBRE": 593404548.4599999, "ZINC": 213408231.95, "ESTAÑO": 24513103.740000002, "OTROS": 309.0}}, "PAISES BAJOS": {"iso": "NL", "total": 169979026.87999997, "groups": {"MOLIBDENO": 73652990.21, "ESTAÑO": 56344960.980000004, "COBRE": 22212172.830000002, "PLOMO": 15252827.19, "ZINC": 2516075.67}}, "BRASIL": {"iso": "BR", "total": 595859500.9600002, "groups": {"COBRE": 417573492.29, "ZINC": 178286008.57000002, "OTROS": 0.1}}, "REINO UNIDO": {"iso": "GB", "total": 15050461.49, "groups": {"ESTAÑO": 10797868.52, "COBRE": 2591344.97, "ZINC": 1661247.9999999998}}, "ECUADOR": {"iso": "EC", "total": 41946042.33, "groups": {"COBRE": 27208763.759999998, "ZINC": 14407498.88, "ESTAÑO": 329165.29, "OTROS": 614.4}}, "EMIRATOS ARABES UNIDOS": {"iso": "AE", "total": 35249.94, "groups": {"HIERRO": 35249.94}}, "ALEMANIA": {"iso": "DE", "total": 579421806.656, "groups": {"COBRE": 490252852.29999995, "ZINC": 55360681.07, "ORO_PLATA": 18954977.676000003, "ESTAÑO": 13442102.200000001, "MOLIBDENO": 1346672.24, "PLOMO": 64521.17}}, "MEXICO": {"iso": "MX", "total": 103517835.67999998, "groups": {"COBRE": 44259946.63, "ZINC": 57068565.029999994, "MOLIBDENO": 1822944.08, "ORO_PLATA": 366379.94}}, "COLOMBIA": {"iso": "CO", "total": 42071899.50599999, "groups": {"ZINC": 40101475.73, "ESTAÑO": 1931477.62, "COBRE": 29140.852, "OTROS": 8793.304, "HIERRO": 1012.0}}, "ITALIA": {"iso": "IT", "total": 490534210.971, "groups": {"COBRE": 469924591.424, "ZINC": 17892000.107, "ESTAÑO": 2717619.44}}, "PANAMA": {"iso": null, "total": 1240823.78, "groups": {"ZINC": 955819.1400000001, "COBRE": 285004.64}}}, "2024": {"CHINA": {"iso": "CN", "total": 22703496193.346996, "groups": {"COBRE": 16655120441.387001, "HIERRO": 1704794246.833, "ORO_PLATA": 2100953510.8600001, "PLOMO": 905712969.9749999, "ZINC": 861497535.5220002, "MOLIBDENO": 372658450.06, "ESTAÑO": 102387752.25, "OTROS": 371286.46}}, "ESTADOS UNIDOS": {"iso": "US", "total": 1595912463.922, "groups": {"COBRE": 569201927.7099999, "MOLIBDENO": 415145009.29999995, "ESTAÑO": 389391409.272, "ZINC": 221126585.54000002, "ORO_PLATA": 1047532.1}}, "INDIA": {"iso": "IN", "total": 384231213.51, "groups": {"COBRE": 372728217.33000004, "ESTAÑO": 7494987.26, "ORO_PLATA": 3833896.2699999996, "ZINC": 174102.65, "HIERRO": 10.0}}, "CANADA": {"iso": "CA", "total": 155308955.861, "groups": {"ZINC": 115228694.97, "ESTAÑO": 21305344.769999996, "COBRE": 18774606.821, "MOLIBDENO": 200.0, "OTROS": 109.3}}, "JAPON": {"iso": "JP", "total": 2140536589.5900004, "groups": {"COBRE": 1832171044.7400002, "ESTAÑO": 114278862.24000001, "ZINC": 121264961.8, "HIERRO": 47294526.72, "PLOMO": 22530658.740000002, "ORO_PLATA": 2996535.35}}, "SUIZA": {"iso": "CH", "total": 12658081.280000003, "groups": {"ORO_PLATA": 6286056.59, "COBRE": 4672374.44, "PLOMO": 1154980.12, "ZINC": 544659.63, "HIERRO": 10.5}}, "PAISES BAJOS": {"iso": "NL", "total": 132472886.68000002, "groups": {"MOLIBDENO": 83291178.34, "ESTAÑO": 35336495.43, "ZINC": 12234906.72, "COBRE": 1610306.19}}, "CHILE": {"iso": "CL", "total": 698637875.2949998, "groups": {"MOLIBDENO": 644703715.92, "COBRE": 33211193.080999993, "ZINC": 18240745.310000002, "ESTAÑO": 1626072.62, "ORO_PLATA": 851482.5900000001, "OTROS": 4665.774}}, "ESPAÑA": {"iso": "ES", "total": 960647311.6100001, "groups": {"COBRE": 665990461.6100001, "ZINC": 239845158.93999997, "ESTAÑO": 53036277.53999999, "ORO_PLATA": 1775413.52}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 1243991157.554, "groups": {"COBRE": 658538172.333, "PLOMO": 234880711.38, "ZINC": 172140525.76, "ESTAÑO": 65994999.79099999, "ORO_PLATA": 59795689.17, "MOLIBDENO": 52641059.12}}, "EMIRATOS ARABES UNIDOS": {"iso": "AE", "total": 7480630.94, "groups": {"ZINC": 7480630.94}}, "BRASIL": {"iso": "BR", "total": 651623139.2809999, "groups": {"COBRE": 448071627.65999997, "ZINC": 201669443.31100002, "MOLIBDENO": 1882068.31}}, "ECUADOR": {"iso": "EC", "total": 36414500.252, "groups": {"COBRE": 24976054.841999996, "ZINC": 11339027.88, "ESTAÑO": 99417.53}}, "ALEMANIA": {"iso": "DE", "total": 510448921.17099994, "groups": {"COBRE": 348677277.77, "ZINC": 136134993.67000002, "ESTAÑO": 25634739.060999997, "HIERRO": 1844.0, "PLOMO": 66.67}}, "COLOMBIA": {"iso": "CO", "total": 35063806.690000005, "groups": {"ZINC": 31958312.320000004, "ESTAÑO": 2995199.28, "COBRE": 109257.03, "HIERRO": 1038.06}}, "REINO UNIDO": {"iso": "GB", "total": 32004667.88, "groups": {"ESTAÑO": 28475370.5, "ZINC": 2392077.4, "COBRE": 1137219.98}}, "MEXICO": {"iso": "MX", "total": 62392718.44, "groups": {"COBRE": 38492906.61, "ZINC": 14289327.489999998, "ESTAÑO": 6837863.9399999995, "PLOMO": 2772620.4}}, "ITALIA": {"iso": "IT", "total": 519371700.031, "groups": {"COBRE": 482159011.501, "ZINC": 24762149.86, "ESTAÑO": 12450538.67}}, "BOLIVIA": {"iso": null, "total": 553940.76, "groups": {"ZINC": 535040.76, "OTROS": 18900.0}}}, "2025": {"CHINA": {"iso": "CN", "total": 28675018073.615997, "groups": {"COBRE": 20634723773.420994, "ORO_PLATA": 3487595874.777, "HIERRO": 1386593018.039, "PLOMO": 1337225758.832, "ZINC": 1253621796.8370001, "MOLIBDENO": 393368602.37, "ESTAÑO": 180374661.00000003, "OTROS": 1514588.34}}, "ESTADOS UNIDOS": {"iso": "US", "total": 1662599786.2719998, "groups": {"COBRE": 565719550.329, "ESTAÑO": 471338490.76, "MOLIBDENO": 326670108.38, "ZINC": 298829628.79999995, "ORO_PLATA": 41630.003, "HIERRO": 378.0}}, "INDIA": {"iso": "IN", "total": 769188079.67, "groups": {"COBRE": 694677034.4499999, "ESTAÑO": 66987319.56999999, "ORO_PLATA": 5435894.83, "MOLIBDENO": 1193407.45, "OTROS": 637773.6399999999, "ZINC": 256649.72999999998}}, "CANADA": {"iso": "CA", "total": 192415529.93199998, "groups": {"ZINC": 185844527.471, "COBRE": 5798361.651000001, "ESTAÑO": 771620.81, "OTROS": 1020.0}}, "JAPON": {"iso": "JP", "total": 2063875394.6799998, "groups": {"COBRE": 1761695125.68, "ESTAÑO": 145356139.63, "ZINC": 83654419.57000001, "PLOMO": 59184332.48, "HIERRO": 12822790.5, "ORO_PLATA": 1162586.82}}, "EMIRATOS ARABES UNIDOS": {"iso": "AE", "total": 867329.85, "groups": {"ZINC": 867329.85}}, "ESPAÑA": {"iso": "ES", "total": 1279981257.4099998, "groups": {"COBRE": 975054695.1099998, "ZINC": 273314365.84999996, "ESTAÑO": 31610594.569999997, "HIERRO": 1601.88}}, "PAISES BAJOS": {"iso": "NL", "total": 261889921.83499998, "groups": {"MOLIBDENO": 108636383.54099998, "ESTAÑO": 108514202.634, "COBRE": 38042416.089999996, "ZINC": 6696909.57, "HIERRO": 10.0}}, "CHILE": {"iso": "CL", "total": 755893733.3679999, "groups": {"MOLIBDENO": 693222601.0649998, "COBRE": 38300052.962, "ZINC": 21909188.55, "ESTAÑO": 2407495.53, "ORO_PLATA": 40698.46000000001, "HIERRO": 10725.01, "PLOMO": 1871.77, "OTROS": 1100.021}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 1151207913.2699997, "groups": {"COBRE": 468960250.61, "PLOMO": 337176520.16, "ZINC": 143817915.92, "MOLIBDENO": 83629087.94, "ESTAÑO": 62451892.32, "ORO_PLATA": 53940819.46999999, "OTROS": 1231426.85}}, "AUSTRALIA": {"iso": "AU", "total": 1102193.41, "groups": {"ORO_PLATA": 1036461.86, "ZINC": 65731.54, "COBRE": 0.01}}, "BRASIL": {"iso": "BR", "total": 598489623.88, "groups": {"COBRE": 456861354.37999994, "ZINC": 141622256.5, "ORO_PLATA": 6013.0}}, "ALEMANIA": {"iso": "DE", "total": 704036136.202, "groups": {"COBRE": 513068811.31200004, "ZINC": 159298818.34999996, "ESTAÑO": 24982284.12, "PLOMO": 6686222.42}}, "ECUADOR": {"iso": "EC", "total": 40952187.055999994, "groups": {"COBRE": 25790562.187, "ZINC": 14705581.905, "ESTAÑO": 456042.96400000004}}, "ITALIA": {"iso": "IT", "total": 603647106.243, "groups": {"COBRE": 560502207.94, "ZINC": 38207786.303, "ESTAÑO": 4937112.0}}, "COLOMBIA": {"iso": "CO", "total": 45154469.974999994, "groups": {"ZINC": 41102333.559999995, "ESTAÑO": 3915749.93, "COBRE": 136386.48500000002}}, "MEXICO": {"iso": "MX", "total": 54606725.54, "groups": {"COBRE": 18297017.4, "PLOMO": 10416147.23, "ZINC": 13328732.200000001, "ESTAÑO": 8418755.83, "ORO_PLATA": 3538429.13, "OTROS": 607643.75}}, "REINO UNIDO": {"iso": "GB", "total": 40932097.47, "groups": {"ESTAÑO": 37516039.56, "ZINC": 2644885.0, "COBRE": 771172.91}}, "BELGICA": {"iso": "BE", "total": 182283036.79000002, "groups": {"ZINC": 145863173.41000003, "PLOMO": 31264440.51, "ORO_PLATA": 2486600.88, "ESTAÑO": 2456958.69, "COBRE": 211863.3}}, "BOLIVIA": {"iso": null, "total": 787957.5599999999, "groups": {"ZINC": 787957.5599999999}}}, "2026": {"CHINA": {"iso": "CN", "total": 9900727637.792, "groups": {"COBRE": 6020073836.423, "ORO_PLATA": 1661039525.365, "PLOMO": 973129959.88, "HIERRO": 685117337.354, "ZINC": 415223852.33000004, "MOLIBDENO": 105230768.35000001, "ESTAÑO": 39342667.81, "OTROS": 1569690.28}}, "INDIA": {"iso": "IN", "total": 289229086.8, "groups": {"COBRE": 281727835.06, "ESTAÑO": 7301365.19, "ZINC": 199886.55}}, "ESTADOS UNIDOS": {"iso": "US", "total": 1080636497.435, "groups": {"COBRE": 620260631.843, "MOLIBDENO": 196207297.59000003, "ESTAÑO": 122051167.17999999, "ZINC": 142117400.82200003}}, "CANADA": {"iso": "CA", "total": 28563032.08, "groups": {"ZINC": 26523134.97, "ESTAÑO": 2039897.1099999999}}, "COREA (SUR), REPUBLICA DE": {"iso": "KR", "total": 681238097.85, "groups": {"COBRE": 250561042.23999998, "PLOMO": 219922915.89000002, "ZINC": 102870460.83, "ORO_PLATA": 44367714.26, "MOLIBDENO": 31908694.349999998, "ESTAÑO": 31607270.28}}, "JAPON": {"iso": "JP", "total": 748412611.86, "groups": {"COBRE": 610414577.7900001, "ESTAÑO": 92373765.97, "ZINC": 29552403.169999998, "HIERRO": 13697054.27, "PLOMO": 2374810.66}}, "AUSTRALIA": {"iso": "AU", "total": 12832189.08, "groups": {"ZINC": 12832189.08}}, "PAISES BAJOS": {"iso": "NL", "total": 72987009.30000001, "groups": {"MOLIBDENO": 31041642.68, "COBRE": 28051209.67, "ESTAÑO": 12296327.53, "ZINC": 1597829.42}}, "CHILE": {"iso": "CL", "total": 234807506.896, "groups": {"MOLIBDENO": 194770723.51999998, "COBRE": 27475419.073000003, "ZINC": 9794059.86, "ESTAÑO": 1756714.0899999999, "ORO_PLATA": 1008090.352, "OTROS": 2500.001}}, "ESPAÑA": {"iso": "ES", "total": 302126503.49, "groups": {"COBRE": 212328304.94000003, "ZINC": 84701135.4, "ESTAÑO": 5097063.149999999}}, "BRASIL": {"iso": "BR", "total": 289575163.87, "groups": {"COBRE": 277728973.92, "ZINC": 11846087.9, "HIERRO": 102.05}}, "ECUADOR": {"iso": "EC", "total": 23568107.678999998, "groups": {"COBRE": 16156717.59, "ZINC": 6781724.682, "ESTAÑO": 629665.407}}, "ITALIA": {"iso": "IT", "total": 316528484.10999995, "groups": {"COBRE": 282713209.44, "ZINC": 21749434.080000002, "ESTAÑO": 12065840.59}}, "HONG KONG": {"iso": "HK", "total": 3669395.2399999998, "groups": {"ZINC": 3159285.1999999997, "COBRE": 510110.04}}, "COLOMBIA": {"iso": "CO", "total": 23165371.222000003, "groups": {"ZINC": 23164782.78, "HIERRO": 588.442}}, "MEXICO": {"iso": "MX", "total": 36478050.0, "groups": {"PLOMO": 23007876.73, "ESTAÑO": 8996499.09, "ZINC": 4473674.18}}, "ALEMANIA": {"iso": "DE", "total": 162162027.30999997, "groups": {"COBRE": 125087171.47000001, "ZINC": 36270219.54, "PLOMO": 803843.1, "HIERRO": 793.2}}, "BULGARIA": {"iso": "BG", "total": 238991994.29999998, "groups": {"COBRE": 236594757.33999997, "ZINC": 2397236.96}}, "REINO UNIDO": {"iso": "GB", "total": 7732175.9399999995, "groups": {"ESTAÑO": 6562785.27, "ZINC": 598421.03, "COBRE": 570969.64}}, "BOLIVIA": {"iso": null, "total": 73736.57, "groups": {"ZINC": 73736.57}}, "BELGICA": {"iso": "BE", "total": 88955033.78999999, "groups": {"ZINC": 69573609.69, "PLOMO": 18871594.0, "COBRE": 509830.1}}, "PANAMA": {"iso": null, "total": 6125.0, "groups": {"ZINC": 6125.0}}, "TAIWAN (FORMOSA)": {"iso": "TW", "total": 103721661.96000001, "groups": {"COBRE": 86415374.47, "ZINC": 17306287.49}}, "FRANCIA": {"iso": "FR", "total": 3055132.6300000004, "groups": {"ZINC": 3055132.6300000004}}, "ARGENTINA": {"iso": "AR", "total": 304707.98, "groups": {"ZINC": 304707.98}}, "DINAMARCA": {"iso": null, "total": 99298.99, "groups": {"ZINC": 99298.99}}, "MALAYSIA": {"iso": null, "total": 86951626.54000002, "groups": {"ORO_PLATA": 47067618.15, "COBRE": 36867982.480000004, "ZINC": 1758432.01, "PLOMO": 1257593.9}}, "TURQUIA": {"iso": "TR", "total": 43038875.769999996, "groups": {"ZINC": 29186622.55, "ESTAÑO": 13852253.219999999}}, "REPUBLICA DOMINICANA": {"iso": null, "total": 88792.04, "groups": {"ZINC": 88792.04}}, "GUATEMALA": {"iso": null, "total": 1633345.6, "groups": {"ZINC": 1633345.6}}, "COSTA RICA": {"iso": null, "total": 6118037.83, "groups": {"ZINC": 6118037.83}}, "VENEZUELA": {"iso": null, "total": 429406.29000000004, "groups": {"ZINC": 429406.29000000004}}, "SUDAFRICA, REPUBLICA DE": {"iso": null, "total": 10096600.389999999, "groups": {"ZINC": 10096505.379999999, "OTROS": 95.01}}, "TAILANDIA": {"iso": "TH", "total": 4164288.8670000006, "groups": {"ZINC": 1865841.34, "MOLIBDENO": 1614961.77, "COBRE": 683485.757}}, "EL SALVADOR": {"iso": null, "total": 625738.19, "groups": {"ZINC": 625738.19}}}};
+
+  const GROUPS = {
+    COBRE: { label: 'Cobre', color: '#ea580c' },
+    HIERRO: { label: 'Hierro', color: '#64748b' },
+    PLOMO: { label: 'Plomo', color: '#78716c' },
+    ZINC: { label: 'Zinc', color: '#0d9488' },
+    ORO_PLATA: { label: 'Oro / Plata', color: '#ca8a04' },
+    MOLIBDENO: { label: 'Molibdeno', color: '#7c3aed' },
+    ESTAÑO: { label: 'Estaño', color: '#db2777' },
+    OTROS: { label: 'Otros', color: '#94a3b8' }
+  };
+  const GROUP_KEYS = Object.keys(GROUPS);
+  const ALL_YEARS = Object.keys(DATA).map(Number).sort((a,b)=>a-b);
+
+  // ISO name for echarts world map (english names used by world.js)
+  const ISO_TO_MAP = {
+    CN: 'China', JP: 'Japan', US: 'United States of America', KR: 'Korea', ES: 'Spain', CL: 'Chile',
+    BR: 'Brazil', IT: 'Italy', DE: 'Germany', IN: 'India', CA: 'Canada', CH: 'Switzerland',
+    NL: 'Netherlands', GB: 'United Kingdom', MX: 'Mexico', CO: 'Colombia', EC: 'Ecuador',
+    AE: 'United Arab Emirates', BE: 'Belgium', FR: 'France', TW: 'Taiwan', TH: 'Thailand',
+    MY: 'Malaysia', AU: 'Australia', TR: 'Turkey', VN: 'Vietnam', SG: 'Singapore',
+    SE: 'Sweden', FI: 'Finland', NO: 'Norway', PL: 'Poland', PT: 'Portugal', AR: 'Argentina',
+    PH: 'Philippines', ID: 'Indonesia', HK: 'Hong Kong', RU: 'Russia', ZA: 'South Africa',
+    EG: 'Egypt', MA: 'Morocco', BG: 'Bulgaria', BO: 'Bolivia', PE: 'Peru'
+  };
+  // Alternative names some world.json use
+  const NAME_ALIASES = {
+    'United States of America': ['United States', 'USA', 'United States of America'],
+    'Korea': ['Korea', 'South Korea', 'Korea (Republic of)'],
+  };
+
+  let yearFrom = 2016, yearTo = 2025;
+  let selected = new Set(GROUP_KEYS);
+  let chartPie, chartTrend, chartStack;
+  let mapChart;
+
+  function yearsInRange() {
+    return ALL_YEARS.filter(y => y >= yearFrom && y <= yearTo);
+  }
+
+  function aggregate() {
+    // country -> { total, groups: {G: sum} }
+    const byCountry = {};
+    const byGroup = {};
+    const byYear = {};
+    GROUP_KEYS.forEach(g => byGroup[g] = 0);
+
+    yearsInRange().forEach(y => {
+      const yd = DATA[String(y)] || {};
+      byYear[y] = 0;
+      Object.entries(yd).forEach(([cname, info]) => {
+        let cSum = 0;
+        const cGroups = {};
+        Object.entries(info.groups || {}).forEach(([g, v]) => {
+          if (!selected.has(g)) return;
+          cSum += v;
+          cGroups[g] = (cGroups[g] || 0) + v;
+          byGroup[g] += v;
+        });
+        if (cSum <= 0) return;
+        byYear[y] += cSum;
+        if (!byCountry[cname]) byCountry[cname] = { total: 0, groups: {}, iso: info.iso };
+        byCountry[cname].total += cSum;
+        Object.entries(cGroups).forEach(([g, v]) => {
+          byCountry[cname].groups[g] = (byCountry[cname].groups[g] || 0) + v;
+        });
+      });
+    });
+    return { byCountry, byGroup, byYear };
+  }
+
+  function fmtB(v) {
+    const b = v / 1e9;
+    if (b >= 1) return '$' + b.toFixed(2) + ' mil M';
+    return '$' + (b * 1000).toFixed(0) + ' M';
+  }
+  function fmtM(v) {
+    return new Intl.NumberFormat('es-PE', { maximumFractionDigits: 0 }).format(v / 1e6);
+  }
+
+  function update() {
+    const { byCountry, byGroup, byYear } = aggregate();
+    const countries = Object.entries(byCountry).sort((a,b) => b[1].total - a[1].total);
+    const total = countries.reduce((s, [,x]) => s + x.total, 0);
+
+    document.getElementById('kpiTotal').textContent = fmtB(total);
+    document.getElementById('kpiCountries').textContent = countries.length;
+    document.getElementById('kpiTopCountry').textContent = countries[0]
+      ? countries[0][0].replace(/, REPUBLICA DE/, '') + ' (' + fmtB(countries[0][1].total) + ')'
+      : '—';
+    const topG = Object.entries(byGroup).sort((a,b)=>b[1]-a[1])[0];
+    document.getElementById('kpiTopProduct').textContent = topG && topG[1] > 0
+      ? GROUPS[topG[0]].label + ' (' + fmtB(topG[1]) + ')' : '—';
+
+    // Ranking list
+    const maxC = countries[0] ? countries[0][1].total : 1;
+    document.getElementById('countryRank').innerHTML = countries.map(([name, info], i) => {
+      const pct = (info.total / maxC * 100).toFixed(0);
+      const short = name.length > 28 ? name.slice(0, 26) + '…' : name;
+      return `<div>
+        <div class="flex justify-between mb-0.5">
+          <span class="font-medium text-slate-700">${i+1}. ${short}</span>
+          <span class="font-mono text-slate-600">${fmtB(info.total)}</span>
+        </div>
+        <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+          <div class="h-full rounded-full bg-orange-500" style="width:${pct}%"></div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // Map
+    updateMap(countries);
+
+    // Pie
+    const pieLabels = [], pieData = [], pieColors = [];
+    GROUP_KEYS.forEach(g => {
+      if (byGroup[g] > 0 && selected.has(g)) {
+        pieLabels.push(GROUPS[g].label);
+        pieData.push(byGroup[g] / 1e9);
+        pieColors.push(GROUPS[g].color);
+      }
+    });
+    if (chartPie) chartPie.destroy();
+    chartPie = new Chart(document.getElementById('chartPie'), {
+      type: 'doughnut',
+      data: { labels: pieLabels, datasets: [{ data: pieData, backgroundColor: pieColors, borderWidth: 2, borderColor: '#fff' }] },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '55%',
+        plugins: {
+          legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } },
+          tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.toFixed(2)} mil M` } }
+        }
+      }
+    });
+
+    // Trend
+    const ys = yearsInRange();
+    if (chartTrend) chartTrend.destroy();
+    chartTrend = new Chart(document.getElementById('chartTrend'), {
+      type: 'line',
+      data: {
+        labels: ys.map(String),
+        datasets: [{
+          label: 'Total filtrado',
+          data: ys.map(y => (byYear[y] || 0) / 1e9),
+          borderColor: '#ea580c', backgroundColor: 'rgba(234,88,12,0.12)',
+          fill: true, tension: 0.3, borderWidth: 2.5, pointRadius: 3
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.y.toFixed(2)} mil M` } } },
+        scales: {
+          x: { grid: { color: '#f1f5f9' } },
+          y: { grid: { color: '#f1f5f9' }, title: { display: true, text: 'mil millones USD', color: '#94a3b8', font: { size: 11 } }, ticks: { callback: v => '$'+v } }
+        }
+      }
+    });
+
+    // Stacked top countries by product for latest year in range or average - use sum of range, top 8 countries
+    const top8 = countries.slice(0, 8);
+    const stackDatasets = GROUP_KEYS.filter(g => selected.has(g)).map(g => ({
+      label: GROUPS[g].label,
+      data: top8.map(([,info]) => (info.groups[g] || 0) / 1e9),
+      backgroundColor: GROUPS[g].color
+    }));
+    if (chartStack) chartStack.destroy();
+    chartStack = new Chart(document.getElementById('chartStack'), {
+      type: 'bar',
+      data: {
+        labels: top8.map(([n]) => n.replace(/, REPUBLICA DE/, '').slice(0, 18)),
+        datasets: stackDatasets
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 } } },
+          y: { stacked: true, grid: { color: '#f1f5f9' }, ticks: { callback: v => '$'+v } }
+        },
+        plugins: {
+          legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: $${ctx.parsed.y.toFixed(2)} mil M` } }
+        }
+      }
+    });
+
+    // Table
+    updateTable(countries);
+  }
+
+  let worldMapReady = false;
+  let pendingMapCountries = null;
+
+  function ensureWorldMap(cb) {
+    if (worldMapReady) { cb(); return; }
+    // Load world GeoJSON (works with ECharts 5)
+    fetch('https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/json/world.json')
+      .then(r => r.json())
+      .then(geoJson => {
+        echarts.registerMap('world', geoJson);
+        worldMapReady = true;
+        cb();
+      })
+      .catch(err => {
+        console.error('No se pudo cargar el mapa:', err);
+        document.getElementById('mapChart').innerHTML =
+          '<div class="flex items-center justify-center h-full text-slate-500 text-sm p-6 text-center">No se pudo cargar el mapa mundial.<br/>Revisa la conexión a internet (CDN).</div>';
+      });
+  }
+
+  function updateMap(countries) {
+    pendingMapCountries = countries;
+    ensureWorldMap(() => {
+      if (!pendingMapCountries) return;
+      const mapData = pendingMapCountries
+        .filter(([,info]) => info.iso && ISO_TO_MAP[info.iso])
+        .map(([,info]) => ({
+          name: ISO_TO_MAP[info.iso],
+          value: +(info.total / 1e9).toFixed(3)
+        }));
+
+      if (!mapChart) {
+        mapChart = echarts.init(document.getElementById('mapChart'));
+        window.addEventListener('resize', () => mapChart && mapChart.resize());
+      }
+      const maxV = mapData.length ? Math.max(...mapData.map(d => d.value), 0.01) : 1;
+      mapChart.setOption({
+        tooltip: {
+          trigger: 'item',
+          formatter: p => (p.data && p.data.value != null)
+            ? `${p.name}<br/><b>$${Number(p.data.value).toFixed(2)} mil M</b>`
+            : (p.name || '')
+        },
+        visualMap: {
+          min: 0,
+          max: maxV,
+          left: 12,
+          bottom: 20,
+          text: ['Alto', 'Bajo'],
+          inRange: { color: ['#ffedd5', '#fdba74', '#ea580c', '#9a3412'] },
+          textStyle: { color: '#64748b', fontSize: 11 },
+          calculable: true
+        },
+        series: [{
+          name: 'Exportaciones mineras',
+          type: 'map',
+          map: 'world',
+          roam: true,
+          scaleLimit: { min: 0.8, max: 8 },
+          emphasis: {
+            label: { show: true, color: '#0f172a' },
+            itemStyle: { areaColor: '#fed7aa' }
+          },
+          itemStyle: { areaColor: '#f1f5f9', borderColor: '#cbd5e1', borderWidth: 0.5 },
+          data: mapData
+        }]
+      }, true);
+    });
+  }
+
+  function updateTable(countries) {
+    const thead = document.querySelector('#tbl thead tr');
+    const tbody = document.querySelector('#tbl tbody');
+    const activeG = GROUP_KEYS.filter(g => selected.has(g));
+    thead.innerHTML = '<th class="py-2 pr-3 font-medium">País</th>' +
+      activeG.map(g => `<th class="py-2 px-2 text-right font-medium" style="color:${GROUPS[g].color}">${GROUPS[g].label}</th>`).join('') +
+      '<th class="py-2 pl-2 text-right font-medium">Total</th>';
+    tbody.innerHTML = countries.map(([name, info]) => {
+      let row = `<tr class="hover:bg-slate-50"><td class="py-2 pr-3 font-medium">${name}</td>`;
+      activeG.forEach(g => {
+        row += `<td class="py-2 px-2 text-right font-mono text-slate-700">${fmtM(info.groups[g] || 0)}</td>`;
+      });
+      row += `<td class="py-2 pl-2 text-right font-mono font-semibold">${fmtM(info.total)}</td></tr>`;
+      return row;
+    }).join('');
+  }
+
+  // Init UI
+  function init() {
+    const from = document.getElementById('yearFrom');
+    const to = document.getElementById('yearTo');
+    ALL_YEARS.forEach(y => {
+      from.innerHTML += `<option value="${y}">${y}</option>`;
+      to.innerHTML += `<option value="${y}">${y}</option>`;
+    });
+    from.value = String(yearFrom);
+    to.value = String(yearTo);
+    from.onchange = () => { yearFrom = +from.value; if (yearFrom > yearTo) { yearTo = yearFrom; to.value = yearFrom; } update(); };
+    to.onchange = () => { yearTo = +to.value; if (yearTo < yearFrom) { yearFrom = yearTo; from.value = yearTo; } update(); };
+
+    document.querySelectorAll('.year-quick').forEach(btn => {
+      btn.onclick = () => {
+        const v = btn.dataset.y;
+        if (v === 'all') { yearFrom = ALL_YEARS[0]; yearTo = Math.min(2025, ALL_YEARS[ALL_YEARS.length-1]); }
+        else if (v.includes('-')) { const [a,b] = v.split('-').map(Number); yearFrom = a; yearTo = b; }
+        else { yearFrom = yearTo = +v; }
+        from.value = yearFrom; to.value = yearTo;
+        update();
+      };
+    });
+
+    const box = document.getElementById('productChips');
+    GROUP_KEYS.forEach(g => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chip active';
+      chip.dataset.g = g;
+      chip.style.color = GROUPS[g].color;
+      chip.style.background = GROUPS[g].color + '18';
+      chip.innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:${GROUPS[g].color}"></span>${GROUPS[g].label}`;
+      chip.onclick = () => {
+        if (selected.has(g)) { if (selected.size > 1) selected.delete(g); }
+        else selected.add(g);
+        chip.classList.toggle('active', selected.has(g));
+        update();
+      };
+      box.appendChild(chip);
+    });
+    document.getElementById('selAll').onclick = () => {
+      selected = new Set(GROUP_KEYS);
+      document.querySelectorAll('.chip').forEach(c => c.classList.add('active'));
+      update();
+    };
+    document.getElementById('selNone').onclick = () => {
+      selected = new Set(['COBRE']);
+      document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.g === 'COBRE'));
+      update();
+    };
+
+    document.getElementById('btnCsv').onclick = () => {
+      const { byCountry } = aggregate();
+      const countries = Object.entries(byCountry).sort((a,b)=>b[1].total-a[1].total);
+      const activeG = GROUP_KEYS.filter(g => selected.has(g));
+      let csv = 'País,' + activeG.map(g => GROUPS[g].label).join(',') + ',Total\n';
+      countries.forEach(([n, info]) => {
+        csv += `"${n}",` + activeG.map(g => Math.round(info.groups[g]||0)).join(',') + ',' + Math.round(info.total) + '\n';
+      });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+      a.download = `mineria_destinos_${yearFrom}_${yearTo}.csv`;
+      a.click();
+    };
+
+    Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+    Chart.defaults.color = '#64748b';
+    update();
+  }
+
+  init();
+  </script>
+</body>
+</html>

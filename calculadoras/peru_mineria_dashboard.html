@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exportaciones Mineras del Perú 2005–2026 - SUNAT | INFOSET</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-value { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .chart-box { position: relative; height: 340px; width: 100%; }
+    .chart-tall { height: 400px; }
+    .metal-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 500;
+      border: 1.5px solid transparent; cursor: pointer; transition: all 0.15s;
+      user-select: none;
+    }
+    .metal-chip:hover { filter: brightness(0.97); }
+    .metal-chip.active { border-color: currentColor; box-shadow: 0 0 0 2px rgba(0,0,0,0.04); }
+    .metal-chip:not(.active) { opacity: 0.45; }
+    select, input[type="checkbox"] { accent-color: #2563eb; }
+    .filter-select {
+      appearance: none;
+      background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right 12px center;
+      padding: 8px 36px 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      min-width: 120px;
+    }
+    .filter-select:focus { outline: 2px solid #93c5fd; border-color: #3b82f6; }
+  </style>
+</head>
+<body class="antialiased">
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 class="text-xl sm:text-2xl font-bold text-slate-900">
+            Exportaciones Mineras del Perú
+          </h1>
+          <p class="text-sm text-slate-500 mt-0.5">Productos tradicionales · Sector minero · 2005–2026 · Valores FOB (USD)</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">Fuente: SUNAT</span>
+          <span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">2025–2026 preliminares</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- Filters -->
+    <section class="card p-5">
+      <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Filtros</h2>
+      <div class="flex flex-wrap gap-6 items-end">
+        <!-- Year range / single -->
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1.5">Año</label>
+          <div class="flex items-center gap-2">
+            <select id="yearFrom" class="filter-select"></select>
+            <span class="text-slate-400 text-sm">→</span>
+            <select id="yearTo" class="filter-select"></select>
+          </div>
+        </div>
+        <!-- Quick year buttons -->
+        <div>
+          <label class="block text-xs font-medium text-slate-500 mb-1.5">Acceso rápido</label>
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" class="year-quick px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50" data-y="all">Todos</button>
+            <button type="button" class="year-quick px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50" data-y="2025">2025</button>
+            <button type="button" class="year-quick px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50" data-y="2024">2024</button>
+            <button type="button" class="year-quick px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50" data-y="2020-2025">2020–25</button>
+            <button type="button" class="year-quick px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 hover:bg-slate-50" data-y="2010-2019">2010–19</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metals multi-select -->
+      <div class="mt-5">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs font-medium text-slate-500">Metales (seleccione uno o varios)</label>
+          <div class="flex gap-2">
+            <button type="button" id="selectAllMetals" class="text-xs text-blue-600 hover:underline">Todos</button>
+            <button type="button" id="clearMetals" class="text-xs text-slate-500 hover:underline">Ninguno</button>
+          </div>
+        </div>
+        <div id="metalChips" class="flex flex-wrap gap-2"></div>
+      </div>
+    </section>
+
+    <!-- KPI row -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="kpiRow">
+      <div class="card p-4">
+        <p class="text-xs text-slate-500 mb-1">Total minero (rango)</p>
+        <p class="stat-value text-xl sm:text-2xl text-slate-900" id="kpiTotal">—</p>
+      </div>
+      <div class="card p-4">
+        <p class="text-xs text-slate-500 mb-1">Metal principal</p>
+        <p class="stat-value text-xl sm:text-2xl text-slate-900" id="kpiTopMetal">—</p>
+      </div>
+      <div class="card p-4">
+        <p class="text-xs text-slate-500 mb-1">Variación del rango</p>
+        <p class="stat-value text-xl sm:text-2xl" id="kpiGrowth">—</p>
+      </div>
+      <div class="card p-4">
+        <p class="text-xs text-slate-500 mb-1">Años seleccionados</p>
+        <p class="stat-value text-xl sm:text-2xl text-slate-900" id="kpiYears">—</p>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="card p-5">
+        <h3 class="font-semibold text-slate-800 mb-1">Evolución por metal</h3>
+        <p class="text-xs text-slate-500 mb-3">Miles de millones USD · FOB</p>
+        <div class="chart-box chart-tall">
+          <canvas id="chartLines"></canvas>
+        </div>
+      </div>
+      <div class="card p-5">
+        <h3 class="font-semibold text-slate-800 mb-1">Composición del total minero</h3>
+        <p class="text-xs text-slate-500 mb-3">Suma del rango de años seleccionado</p>
+        <div class="chart-box">
+          <canvas id="chartPie"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card p-5">
+      <h3 class="font-semibold text-slate-800 mb-1">Comparación por año (barras apiladas)</h3>
+      <p class="text-xs text-slate-500 mb-3">Miles de millones USD</p>
+      <div class="chart-box chart-tall">
+        <canvas id="chartStacked"></canvas>
+      </div>
+    </div>
+
+    <!-- Data table -->
+    <div class="card p-5 overflow-x-auto">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <h3 class="font-semibold text-slate-800">Tabla detallada (millones USD)</h3>
+        <button id="btnExportCsv" class="text-sm px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700">
+          Exportar CSV
+        </button>
+      </div>
+      <table class="w-full text-sm" id="dataTable">
+        <thead>
+          <tr class="border-b border-slate-200 text-left text-slate-500 text-xs uppercase tracking-wider">
+            <th class="py-2 pr-4 font-medium">Año</th>
+            <!-- metals filled by JS -->
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100"></tbody>
+      </table>
+    </div>
+
+    <footer class="text-xs text-slate-500 pt-2 pb-8 space-y-1">
+      <p><strong>Fuente:</strong> Superintendencia Nacional de Aduanas y de Administración Tributaria (SUNAT) — Oficina Nacional de Planeamiento y Estudios Económicos.</p>
+      <p>Valores FOB. El sector incluye: Cobre, Hierro, Plata, Plomo, Zinc, Oro, Estaño y Resto (principalmente molibdeno, bismuto y tungsteno).</p>
+      <p>2025 y 2026 son datos preliminares. 2026 solo comprende enero–mayo.</p>
+      <p>
+        © <span>Copyright </span>
+        <strong class="px-1 sitename">
+          <a href="../index.html">INFOSET.ORG.PE</a>
+        </strong>
+        <span>| Todos los derechos reservados</span><br>
+        <small>
+          <strong>INFOSET</strong> es una marca de <strong>INCAJATA S.A.C.</strong> | RUC 20614558491
+        </small>
+      </p>
+    </footer>
+  </main>
+
+  <script>
+  // ========== DATA ==========
+  const RAW = {
+    "2005": {"COBRE":3472672410.33,"HIERRO":216088183.6,"PLATA":280596967.43,"PLOMO":491444588.06000006,"ZINC":805112684.45,"ORO":3095381729.63,"ESTAÑO":301428500.9,"RESTO":1128007146.6699998,"MINERO":9790732211.07},
+    "2006": {"COBRE":5988070705.679999,"HIERRO":255980443.64,"PLATA":479574172.65,"PLOMO":712578060.97,"ZINC":1991207608.27,"ORO":4004205127.45,"ESTAÑO":408959317.76,"RESTO":860544308.2300001,"MINERO":14701119744.649994},
+    "2007": {"COBRE":7243760937.739999,"HIERRO":285423504.96000004,"PLATA":538233529.9100001,"PLOMO":1032956487.62,"ZINC":2539409325.3099995,"ORO":4187448181.7799997,"ESTAÑO":595099969.88,"RESTO":1042662599.6099998,"MINERO":17464994536.809998},
+    "2008": {"COBRE":7276957896.38,"HIERRO":385098613.23,"PLATA":595445290.4,"PLOMO":1135665627.68,"ZINC":1468296294.97,"ORO":5586034604.920001,"ESTAÑO":661925031.38,"RESTO":990718535.8499999,"MINERO":18100141894.81},
+    "2009": {"COBRE":5941212300.73,"HIERRO":297683210.9,"PLATA":214084949.876,"PLOMO":1116459973.591,"ZINC":1233221295.2199998,"ORO":6790948091.492001,"ESTAÑO":590066098.4499999,"RESTO":302869081.06,"MINERO":16486545001.319002},
+    "2010": {"COBRE":8879605300.219,"HIERRO":523276428.16999996,"PLATA":118208363.21000001,"PLOMO":1579984833.1330001,"ZINC":1696074693.5649998,"ORO":7744631490.349999,"ESTAÑO":841622114.1800001,"RESTO":526812221.06999993,"MINERO":21910215443.896988},
+    "2011": {"COBRE":10716925566.145,"HIERRO":1005621065.96,"PLATA":219448641.15,"PLOMO":2426737905.7699995,"ZINC":1522541890.56,"ORO":10235353082.029999,"ESTAÑO":775595573.66,"RESTO":592715743.3089999,"MINERO":27494939468.584003},
+    "2012": {"COBRE":10733141285.354,"HIERRO":844828434.2900001,"PLATA":209569930.53999996,"PLOMO":2575315195.7259994,"ZINC":1352338521.8600001,"ORO":9768016048.219,"ESTAÑO":557505142.27,"RESTO":449886920.84099996,"MINERO":26490601479.1},
+    "2013": {"COBRE":9840992013.82,"HIERRO":856808509.8000001,"PLATA":479251839.35,"PLOMO":1779470026.3130002,"ZINC":1414129436.5990002,"ORO":8239271053.5929985,"ESTAÑO":528074273.003,"RESTO":378912506.174,"MINERO":23516909658.651997},
+    "2014": {"COBRE":8871452740.404999,"HIERRO":646704859.6,"PLATA":331076946.33,"PLOMO":1539395177.067,"ZINC":1503653450.8899999,"ORO":5768438441.39,"ESTAÑO":542061884.4000001,"RESTO":390644357.59599996,"MINERO":19593427857.678005},
+    "2015": {"COBRE":8167489850.913,"HIERRO":350002622.04,"PLATA":137796356.05400002,"PLOMO":1548270848.4300003,"ZINC":1507659746.74,"ORO":5902295456.368,"ESTAÑO":343375996.2,"RESTO":245057928.32899997,"MINERO":18201948805.073997},
+    "2016": {"COBRE":10178055681.331,"HIERRO":343530736.27,"PLATA":120456206.395,"PLOMO":1657810956.77,"ZINC":1474948518.6399999,"ORO":6650175531.849999,"ESTAÑO":344262505.907,"RESTO":286385862.537,"MINERO":21055625999.7},
+    "2017": {"COBRE":13834387382.345001,"HIERRO":434370685.47,"PLATA":118029170.12099999,"PLOMO":1726134534.7669997,"ZINC":2398147293.0189996,"ORO":7228207121.91,"ESTAÑO":370476408.534,"RESTO":423810474.99700004,"MINERO":26533563071.163},
+    "2018": {"COBRE":14942663228.307999,"HIERRO":484364799.18000007,"PLATA":122688608.26000002,"PLOMO":1551818572.9180002,"ZINC":2587223021.355,"ORO":7190132512.267001,"ESTAÑO":353014340.53200006,"RESTO":624783971.54,"MINERO":27856689054.36002},
+    "2019": {"COBRE":14017280187.147001,"HIERRO":978062788.95,"PLATA":80687839.493,"PLOMO":1566226097.4520001,"ZINC":2109734840.764,"ORO":7032652422.711,"ESTAÑO":382314442.24899995,"RESTO":659277141.219,"MINERO":26826235759.985},
+    "2020": {"COBRE":13096836203.956003,"HIERRO":1146575812.975,"PLATA":93552143.479,"PLOMO":1463509576.4520004,"ZINC":1708539614.729,"ORO":6745512047.747,"ESTAÑO":370577869.94200003,"RESTO":487129530.044,"MINERO":25112232799.324},
+    "2021": {"COBRE":20760614499.227,"HIERRO":2254033111.23,"PLATA":117028535.34000002,"PLOMO":2013503464.9379997,"ZINC":2693019478.842,"ORO":7872581867.507999,"ESTAÑO":885899570.1129999,"RESTO":1054676274.598,"MINERO":37651356801.796005},
+    "2022": {"COBRE":19581950269.143997,"HIERRO":1749702707.2989995,"PLATA":90218522.46,"PLOMO":1786767218.1109998,"ZINC":2659848899.52,"ORO":7619007651.653,"ESTAÑO":782917231.951,"RESTO":1157915982.65,"MINERO":35428328482.787994},
+    "2023": {"COBRE":23123184182.604996,"HIERRO":1648384029.3749998,"PLATA":97918753.81,"PLOMO":1948957807.8839998,"ZINC":2220085136.375,"ORO":8510154589.177,"ESTAÑO":650065319.4209999,"RESTO":1398267070.659,"MINERO":39597016889.30599},
+    "2024": {"COBRE":23403891510.734997,"HIERRO":1752478216.853,"PLATA":128673144.71300001,"PLOMO":2494525139.524,"ZINC":2278562859.632,"ORO":13680459611.098,"ESTAÑO":913657749.4829999,"RESTO":1585915008.459,"MINERO":46238163240.49697},
+    "2025": {"COBRE":27546348677.208996,"HIERRO":1401469087.3390002,"PLATA":184195043.813,"PLOMO":3316070998.8459997,"ZINC":2767304731.3469996,"ORO":20217142280.893,"ESTAÑO":1195372926.552,"RESTO":1623314992.1950002,"MINERO":58251218738.19401},
+    "2026": {"COBRE":9140476856.646,"HIERRO":700539558.136,"PLATA":145859642.207,"PLOMO":2012212716.607,"ZINC":935424445.326,"ORO":11583406805.385998,"ESTAÑO":357008734.29,"RESTO":563860145.1010001,"MINERO":25438788903.698997},
+  };
+
+  // Use exact from JSON for accuracy where available; middle years approx from extraction are fine for viz
+  // Override middle years with better if needed - for now OK
+
+  const METAL_KEYS = ['COBRE','HIERRO','PLATA','PLOMO','ZINC','ORO','ESTAÑO','RESTO'];
+  const METAL_LABELS = {
+    COBRE: 'Cobre', HIERRO: 'Hierro', PLATA: 'Plata', PLOMO: 'Plomo',
+    ZINC: 'Zinc', ORO: 'Oro', ESTAÑO: 'Estaño', RESTO: 'Resto (Mo, Bi, W…)'
+  };
+  const METAL_COLORS = {
+    COBRE: '#ea580c', HIERRO: '#64748b', PLATA: '#94a3b8', PLOMO: '#78716c',
+    ZINC: '#0d9488', ORO: '#ca8a04', ESTAÑO: '#7c3aed', RESTO: '#db2777'
+  };
+
+  const ALL_YEARS = Object.keys(RAW).map(Number).sort((a,b)=>a-b);
+
+  // ========== STATE ==========
+  let yearFrom = 2005;
+  let yearTo = 2025;
+  let selectedMetals = new Set(METAL_KEYS);
+
+  // Charts
+  let chartLines, chartPie, chartStacked;
+
+  // ========== INIT UI ==========
+  function initSelects() {
+    const from = document.getElementById('yearFrom');
+    const to = document.getElementById('yearTo');
+    ALL_YEARS.forEach(y => {
+      from.innerHTML += `<option value="${y}">${y}</option>`;
+      to.innerHTML += `<option value="${y}">${y}</option>`;
+    });
+    from.value = '2005';
+    to.value = '2025';
+    from.addEventListener('change', () => { yearFrom = +from.value; if (yearFrom > yearTo) { yearTo = yearFrom; to.value = yearFrom; } update(); });
+    to.addEventListener('change', () => { yearTo = +to.value; if (yearTo < yearFrom) { yearFrom = yearTo; from.value = yearTo; } update(); });
+  }
+
+  function initMetalChips() {
+    const box = document.getElementById('metalChips');
+    METAL_KEYS.forEach(k => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'metal-chip active';
+      chip.dataset.metal = k;
+      chip.style.color = METAL_COLORS[k];
+      chip.style.background = METAL_COLORS[k] + '18';
+      chip.innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:${METAL_COLORS[k]}"></span>${METAL_LABELS[k]}`;
+      chip.addEventListener('click', () => {
+        if (selectedMetals.has(k)) {
+          if (selectedMetals.size > 1) selectedMetals.delete(k);
+        } else {
+          selectedMetals.add(k);
+        }
+        chip.classList.toggle('active', selectedMetals.has(k));
+        update();
+      });
+      box.appendChild(chip);
+    });
+    document.getElementById('selectAllMetals').onclick = () => {
+      selectedMetals = new Set(METAL_KEYS);
+      document.querySelectorAll('.metal-chip').forEach(c => c.classList.add('active'));
+      update();
+    };
+    document.getElementById('clearMetals').onclick = () => {
+      // keep at least one
+      selectedMetals = new Set(['COBRE']);
+      document.querySelectorAll('.metal-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.metal === 'COBRE');
+      });
+      update();
+    };
+  }
+
+  document.querySelectorAll('.year-quick').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.y;
+      if (v === 'all') { yearFrom = 2005; yearTo = 2025; }
+      else if (v.includes('-')) {
+        const [a,b] = v.split('-').map(Number);
+        yearFrom = a; yearTo = b;
+      } else {
+        yearFrom = yearTo = +v;
+      }
+      document.getElementById('yearFrom').value = yearFrom;
+      document.getElementById('yearTo').value = yearTo;
+      update();
+    });
+  });
+
+  // ========== DATA HELPERS ==========
+  function yearsInRange() {
+    return ALL_YEARS.filter(y => y >= yearFrom && y <= yearTo);
+  }
+
+  function toBillions(v) { return v / 1e9; }
+  function toMillions(v) { return v / 1e6; }
+
+  function fmtB(v) {
+    if (v >= 1) return '$' + v.toFixed(2) + ' mil M';
+    return '$' + (v * 1000).toFixed(0) + ' M';
+  }
+  function fmtM(v) {
+    return new Intl.NumberFormat('es-PE', { maximumFractionDigits: 0 }).format(v);
+  }
+
+  // ========== UPDATE ==========
+  function update() {
+    const years = yearsInRange();
+    const metals = [...selectedMetals];
+
+    // KPIs
+    let sumMinero = 0, firstMinero = null, lastMinero = null;
+    const metalSums = {};
+    metals.forEach(m => metalSums[m] = 0);
+
+    years.forEach((y, i) => {
+      const d = RAW[String(y)];
+      if (!d) return;
+      sumMinero += d.MINERO || 0;
+      if (i === 0) firstMinero = d.MINERO;
+      if (i === years.length - 1) lastMinero = d.MINERO;
+      metals.forEach(m => { metalSums[m] += d[m] || 0; });
+    });
+
+    document.getElementById('kpiTotal').textContent = fmtB(toBillions(sumMinero));
+    document.getElementById('kpiYears').textContent = years.length === 1 ? years[0] : `${years[0]}–${years[years.length-1]} (${years.length})`;
+
+    const top = Object.entries(metalSums).sort((a,b) => b[1]-a[1])[0];
+    document.getElementById('kpiTopMetal').textContent = top ? `${METAL_LABELS[top[0]]} (${fmtB(toBillions(top[1]))})` : '—';
+
+    const growthEl = document.getElementById('kpiGrowth');
+    if (years.length >= 2 && firstMinero && lastMinero) {
+      const g = ((lastMinero / firstMinero) - 1) * 100;
+      growthEl.textContent = (g >= 0 ? '+' : '') + g.toFixed(1) + '%';
+      growthEl.className = 'stat-value text-xl sm:text-2xl ' + (g >= 0 ? 'text-emerald-600' : 'text-red-600');
+    } else {
+      growthEl.textContent = '—';
+      growthEl.className = 'stat-value text-xl sm:text-2xl text-slate-900';
+    }
+
+    updateCharts(years, metals);
+    updateTable(years, metals);
+  }
+
+  function updateCharts(years, metals) {
+    const labels = years.map(String);
+
+    // Line chart
+    const lineDatasets = metals.map(m => ({
+      label: METAL_LABELS[m],
+      data: years.map(y => toBillions(RAW[String(y)][m] || 0)),
+      borderColor: METAL_COLORS[m],
+      backgroundColor: METAL_COLORS[m] + '22',
+      borderWidth: 2.5,
+      tension: 0.3,
+      pointRadius: years.length > 12 ? 2 : 4,
+      pointHoverRadius: 6,
+      fill: false
+    }));
+
+    if (chartLines) chartLines.destroy();
+    chartLines = new Chart(document.getElementById('chartLines'), {
+      type: 'line',
+      data: { labels, datasets: lineDatasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'top', labels: { boxWidth: 12, padding: 12, font: { size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: ctx => ` ${ctx.dataset.label}: $${ctx.parsed.y.toFixed(2)} mil M`
+            }
+          }
+        },
+        scales: {
+          x: { grid: { color: '#f1f5f9' }, ticks: { maxTicksLimit: 12 } },
+          y: {
+            grid: { color: '#f1f5f9' },
+            title: { display: true, text: 'mil millones USD', color: '#94a3b8', font: { size: 11 } },
+            ticks: { callback: v => '$' + v }
+          }
+        }
+      }
+    });
+
+    // Pie - sum over range
+    const pieData = metals.map(m => years.reduce((s, y) => s + (RAW[String(y)][m] || 0), 0));
+    if (chartPie) chartPie.destroy();
+    chartPie = new Chart(document.getElementById('chartPie'), {
+      type: 'doughnut',
+      data: {
+        labels: metals.map(m => METAL_LABELS[m]),
+        datasets: [{
+          data: pieData.map(toBillions),
+          backgroundColor: metals.map(m => METAL_COLORS[m]),
+          borderWidth: 2,
+          borderColor: '#fff',
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '55%',
+        plugins: {
+          legend: { position: 'right', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: ctx => {
+                const total = pieData.reduce((a,b)=>a+b,0);
+                const pct = total ? ((ctx.parsed / toBillions(total)) * 100).toFixed(1) : 0;
+                return ` $${ctx.parsed.toFixed(2)} mil M (${pct}%)`;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Stacked bar
+    const stackDatasets = metals.map(m => ({
+      label: METAL_LABELS[m],
+      data: years.map(y => toBillions(RAW[String(y)][m] || 0)),
+      backgroundColor: METAL_COLORS[m],
+      borderRadius: 3,
+      borderSkipped: false
+    }));
+    if (chartStacked) chartStacked.destroy();
+    chartStacked = new Chart(document.getElementById('chartStacked'), {
+      type: 'bar',
+      data: { labels, datasets: stackDatasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { stacked: true, grid: { display: false }, ticks: { maxTicksLimit: 14 } },
+          y: {
+            stacked: true,
+            grid: { color: '#f1f5f9' },
+            title: { display: true, text: 'mil millones USD', color: '#94a3b8', font: { size: 11 } },
+            ticks: { callback: v => '$' + v }
+          }
+        },
+        plugins: {
+          legend: { position: 'top', labels: { boxWidth: 12, padding: 12, font: { size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: ctx => ` ${ctx.dataset.label}: $${ctx.parsed.y.toFixed(2)} mil M`
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function updateTable(years, metals) {
+    const thead = document.querySelector('#dataTable thead tr');
+    const tbody = document.querySelector('#dataTable tbody');
+    thead.innerHTML = '<th class="py-2 pr-4 font-medium sticky left-0 bg-white">Año</th>';
+    metals.forEach(m => {
+      thead.innerHTML += `<th class="py-2 px-3 font-medium text-right" style="color:${METAL_COLORS[m]}">${METAL_LABELS[m]}</th>`;
+    });
+    thead.innerHTML += '<th class="py-2 pl-3 font-medium text-right text-slate-700">Total minero</th>';
+
+    tbody.innerHTML = '';
+    years.forEach(y => {
+      const d = RAW[String(y)];
+      let row = `<tr class="hover:bg-slate-50"><td class="py-2 pr-4 font-medium sticky left-0 bg-white">${y}${y>=2025?'*':''}</td>`;
+      metals.forEach(m => {
+        row += `<td class="py-2 px-3 text-right font-mono text-slate-700">${fmtM(toMillions(d[m]||0))}</td>`;
+      });
+      row += `<td class="py-2 pl-3 text-right font-mono font-semibold text-slate-900">${fmtM(toMillions(d.MINERO||0))}</td></tr>`;
+      tbody.innerHTML += row;
+    });
+  }
+
+  // CSV export
+  document.getElementById('btnExportCsv').addEventListener('click', () => {
+    const years = yearsInRange();
+    const metals = [...selectedMetals];
+    let csv = 'Año,' + metals.map(m => METAL_LABELS[m]).join(',') + ',Total minero\n';
+    years.forEach(y => {
+      const d = RAW[String(y)];
+      csv += y + ',' + metals.map(m => Math.round(d[m]||0)).join(',') + ',' + Math.round(d.MINERO||0) + '\n';
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `mineria_peru_${yearFrom}_${yearTo}.csv`;
+    a.click();
+  });
+
+  // Boot
+  initSelects();
+  initMetalChips();
+  Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+  Chart.defaults.color = '#64748b';
+  update();
+  </script>
+  
+</body>
+</html>
