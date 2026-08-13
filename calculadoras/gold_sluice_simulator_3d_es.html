@@ -1,372 +1,414 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<title>Simulador de Canaleta de Oro 3D</title>
-<style>
-  :root{
-    --bg:#0a1016;
-    --panel:#141d26;
-    --panel2:#1b2632;
-    --text:#e8eef2;
-    --muted:#8fa3b3;
-    --gold:#e8b923;
-    --accent:#4fb0d8;
-    --border:#28394a;
-    --danger:#e05555;
-  }
-  *{box-sizing:border-box;}
-  html,body{height:100%;}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-    background:
-      radial-gradient(ellipse at top, #16222c 0%, #0a1016 55%);
-    color:var(--text);
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:22px 16px 50px;
-  }
-  h1{
-    font-size:20px;
-    font-weight:600;
-    margin:0 0 2px;
-    letter-spacing:.3px;
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
-  h1 .tag{
-    font-size:11px;
-    font-weight:600;
-    color:#062028;
-    background:var(--accent);
-    padding:2px 8px;
-    border-radius:20px;
-    letter-spacing:.4px;
-  }
-  .subtitle{
-    color:var(--muted);
-    font-size:13px;
-    margin-bottom:18px;
-  }
-  .layout{
-    display:flex;
-    gap:16px;
-    width:100%;
-    max-width:1240px;
-    align-items:flex-start;
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-  .panel{
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:16px 18px;
-  }
-  .controls{
-    width:280px;
-    flex-shrink:0;
-  }
-  .controls h2{
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:.8px;
-    color:var(--muted);
-    margin:0 0 12px;
-  }
-  .ctrl{ margin-bottom:14px; }
-  .ctrl label{
-    display:flex;
-    justify-content:space-between;
-    font-size:13px;
-    margin-bottom:6px;
-  }
-  .ctrl label span.val{
-    color:var(--accent);
-    font-variant-numeric:tabular-nums;
-  }
-  input[type=range]{ width:100%; accent-color:var(--accent); }
-  .ctrl .hint{ font-size:11px; color:var(--muted); margin-top:4px; }
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Simulador de Canaleta de Oro 3D - INFOSET</title>
+  <meta name="description" content="Simulador 3D interactivo de una canaleta de oro: ajustá pendiente, caudal, granulometría y riffles para ver cómo afectan la recuperación de oro.">
+  <meta name="keywords" content="canaleta, sluice box, simulador, oro, minería, gravimetría, INFOSET">
 
-  .presets{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    margin-bottom:16px;
-  }
-  .preset-btn{
-    flex:1 1 auto;
-    font-size:11px;
-    padding:7px 8px;
-    background:var(--panel2);
-    border:1px solid var(--border);
-    color:var(--text);
-    border-radius:7px;
-    cursor:pointer;
-  }
-  .preset-btn:hover{ background:#26384a; }
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  .btnrow{ display:flex; gap:8px; margin-top:4px; }
-  button{
-    flex:1;
-    background:var(--panel2);
-    border:1px solid var(--border);
-    color:var(--text);
-    padding:9px 10px;
-    border-radius:8px;
-    font-size:13px;
-    cursor:pointer;
-    transition:background .15s;
-  }
-  button:hover{ background:#26384a; }
-  button.primary{
-    background:var(--accent);
-    border-color:var(--accent);
-    color:#062028;
-    font-weight:600;
-  }
-  button.primary:hover{ background:#65bfe0; }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-  .stage{ flex:1; min-width:660px; }
-  .canvas-wrap{
-    position:relative;
-    width:100%;
-    aspect-ratio:16/9;
-    border-radius:10px;
-    overflow:hidden;
-    border:1px solid var(--border);
-    background:#050a0e;
-    cursor:grab;
-  }
-  .canvas-wrap:active{ cursor:grabbing; }
-  #gl{ width:100%; height:100%; display:block; }
-  .hud{
-    position:absolute;
-    top:10px; left:12px;
-    font-size:11px;
-    color:rgba(255,255,255,.55);
-    background:rgba(0,0,0,.28);
-    padding:5px 9px;
-    border-radius:6px;
-    pointer-events:none;
-  }
-  .hud-drag{
-    position:absolute;
-    bottom:10px; right:12px;
-    font-size:10.5px;
-    color:rgba(255,255,255,.45);
-    background:rgba(0,0,0,.28);
-    padding:5px 9px;
-    border-radius:6px;
-    pointer-events:none;
-  }
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  .stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:10px;
-    margin-top:14px;
-  }
-  .stat{
-    background:var(--panel2);
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:10px 12px;
-  }
-  .stat .num{ font-size:19px; font-weight:700; font-variant-numeric:tabular-nums; }
-  .stat .lbl{ font-size:11px; color:var(--muted); margin-top:2px; }
-  .stat.gold .num{ color:var(--gold); }
-  .stat.lost .num{ color:var(--danger); }
-  .stat.sand .num{ color:#9db4c4; }
+  <!-- Main CSS File -->
+  <link href="../assets/css/main.css" rel="stylesheet">
 
-  .chartbox{
-    margin-top:12px;
-    background:var(--panel2);
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:10px 12px;
-  }
-  .chartbox .lbl{ font-size:11px; color:var(--muted); margin-bottom:4px; }
-  #chart{ width:100%; height:60px; display:block; }
+  <!-- ===== Simulator-scoped styles (white theme, isolated under #sluice-sim) ===== -->
+  <style>
+    #sluice-sim{
+      --sim-bg:#ffffff;
+      --sim-panel:#ffffff;
+      --sim-panel2:#f3f5f8;
+      --sim-text:#1c2733;
+      --sim-muted:#66748a;
+      --sim-gold:#e8b923;
+      --sim-gold-dark:#a9750a;
+      --sim-accent:#1f7ea6;
+      --sim-border:#e2e7ee;
+      --sim-danger:#c0392b;
+      font-family:"Roboto", sans-serif;
+      color:var(--sim-text);
+    }
+    #sluice-sim h1, #sluice-sim h2{ font-family:"Raleway", sans-serif; }
 
-  .legend{
-    display:flex;
-    gap:16px;
-    margin-top:12px;
-    font-size:12px;
-    color:var(--muted);
-    flex-wrap:wrap;
-  }
-  .legend span{ display:inline-flex; align-items:center; gap:6px; }
-  .dot{ width:9px;height:9px;border-radius:50%;display:inline-block; }
+    #sluice-sim .sim-subtitle{
+      color:var(--sim-muted);
+      font-size:14px;
+      margin-bottom:20px;
+    }
+    #sluice-sim .sim-layout{
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    #sluice-sim .sim-panel{
+      background:var(--sim-panel);
+      border:1px solid var(--sim-border);
+      border-radius:12px;
+      padding:18px 20px;
+      box-shadow:0 2px 10px rgba(20,30,45,0.05);
+    }
+    #sluice-sim .sim-controls{ width:300px; flex-shrink:0; }
+    #sluice-sim .sim-controls h2{
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.7px;
+      color:var(--sim-muted);
+      margin:0 0 12px;
+      font-weight:700;
+    }
+    #sluice-sim .ctrl{ margin-bottom:15px; }
+    #sluice-sim .ctrl label{
+      display:flex;
+      justify-content:space-between;
+      font-size:13.5px;
+      margin-bottom:6px;
+      font-weight:500;
+    }
+    #sluice-sim .ctrl label span.val{
+      color:var(--sim-accent);
+      font-variant-numeric:tabular-nums;
+      font-weight:700;
+    }
+    #sluice-sim input[type=range]{ width:100%; accent-color:var(--sim-accent); }
+    #sluice-sim .ctrl .hint{ font-size:11.5px; color:var(--sim-muted); margin-top:4px; line-height:1.4; }
 
-  .cta{
-    margin-top:14px;
-    background:linear-gradient(135deg,rgba(232,185,35,.10),rgba(232,185,35,.03));
-    border:1px solid rgba(232,185,35,.4);
-    border-radius:10px;
-    padding:14px 16px;
-  }
-  .cta-title{
-    font-weight:700;
-    color:var(--gold);
-    font-size:14px;
-    margin-bottom:6px;
-  }
-  .cta-text{
-    font-size:12.5px;
-    color:var(--muted);
-    line-height:1.5;
-    margin-bottom:12px;
-  }
-  .cta-btn{
-    display:inline-block;
-    background:var(--gold);
-    color:#241a00;
-    font-weight:700;
-    padding:9px 18px;
-    border-radius:8px;
-    text-decoration:none;
-    font-size:13px;
-    transition:background .15s;
-  }
-  .cta-btn:hover{ background:#f5c93e; }
+    #sluice-sim .sim-presets{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+    #sluice-sim .preset-btn{
+      flex:1 1 auto;
+      font-size:11.5px;
+      padding:7px 8px;
+      background:var(--sim-panel2);
+      border:1px solid var(--sim-border);
+      color:var(--sim-text);
+      border-radius:7px;
+      cursor:pointer;
+    }
+    #sluice-sim .preset-btn:hover{ background:#e8edf3; }
 
-  footer{
-    margin-top:22px;
-    font-size:11px;
-    color:var(--muted);
-    text-align:center;
-    max-width:640px;
-  }
-</style>
+    #sluice-sim .sim-btnrow{ display:flex; gap:8px; margin-top:4px; }
+    #sluice-sim button{
+      flex:1;
+      background:var(--sim-panel2);
+      border:1px solid var(--sim-border);
+      color:var(--sim-text);
+      padding:9px 10px;
+      border-radius:8px;
+      font-size:13px;
+      cursor:pointer;
+      transition:background .15s;
+      font-family:inherit;
+    }
+    #sluice-sim button:hover{ background:#e8edf3; }
+    #sluice-sim button.primary{
+      background:var(--sim-accent);
+      border-color:var(--sim-accent);
+      color:#ffffff;
+      font-weight:600;
+    }
+    #sluice-sim button.primary:hover{ background:#256f92; }
+
+    #sluice-sim .sim-stage{ flex:1; min-width:660px; }
+    #sluice-sim .sim-canvas-wrap{
+      position:relative;
+      width:100%;
+      aspect-ratio:16/9;
+      border-radius:10px;
+      overflow:hidden;
+      border:1px solid var(--sim-border);
+      background:#050a0e;
+      cursor:grab;
+    }
+    #sluice-sim .sim-canvas-wrap:active{ cursor:grabbing; }
+    #sluice-sim #gl{ width:100%; height:100%; display:block; }
+    #sluice-sim .hud{
+      position:absolute; top:10px; left:12px;
+      font-size:11px; color:rgba(255,255,255,.6);
+      background:rgba(0,0,0,.32); padding:5px 9px; border-radius:6px;
+      pointer-events:none;
+    }
+    #sluice-sim .hud-drag{
+      position:absolute; bottom:10px; right:12px;
+      font-size:10.5px; color:rgba(255,255,255,.5);
+      background:rgba(0,0,0,.32); padding:5px 9px; border-radius:6px;
+      pointer-events:none;
+    }
+
+    #sluice-sim .sim-stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+    #sluice-sim .stat{
+      background:var(--sim-panel2);
+      border:1px solid var(--sim-border);
+      border-radius:8px;
+      padding:11px 12px;
+      text-align:center;
+    }
+    #sluice-sim .stat .num{ font-size:20px; font-weight:800; font-variant-numeric:tabular-nums; }
+    #sluice-sim .stat .lbl{ font-size:11px; color:var(--sim-muted); margin-top:2px; }
+    #sluice-sim .stat.gold .num{ color:var(--sim-gold-dark); }
+    #sluice-sim .stat.lost .num{ color:var(--sim-danger); }
+    #sluice-sim .stat.sand .num{ color:#5b7185; }
+
+    #sluice-sim .sim-chartbox{
+      margin-top:12px;
+      background:var(--sim-panel2);
+      border:1px solid var(--sim-border);
+      border-radius:8px;
+      padding:10px 12px;
+    }
+    #sluice-sim .sim-chartbox .lbl{ font-size:11px; color:var(--sim-muted); margin-bottom:4px; }
+    #sluice-sim #chart{ width:100%; height:60px; display:block; }
+
+    #sluice-sim .sim-legend{
+      display:flex; gap:16px; margin-top:12px;
+      font-size:12px; color:var(--sim-muted); flex-wrap:wrap;
+    }
+    #sluice-sim .sim-legend span{ display:inline-flex; align-items:center; gap:6px; }
+    #sluice-sim .dot{ width:9px; height:9px; border-radius:50%; display:inline-block; }
+
+    #sluice-sim .cta{
+      margin-top:14px;
+      background:linear-gradient(135deg,rgba(232,185,35,.12),rgba(232,185,35,.03));
+      border:1px solid rgba(201,150,10,.45);
+      border-radius:10px;
+      padding:16px 18px;
+    }
+    #sluice-sim .cta-title{
+      font-weight:800;
+      color:var(--sim-gold-dark);
+      font-size:15px;
+      margin-bottom:6px;
+    }
+    #sluice-sim .cta-text{
+      font-size:13px;
+      color:var(--sim-muted);
+      line-height:1.55;
+      margin-bottom:12px;
+    }
+    #sluice-sim .cta-btn{
+      display:inline-block;
+      background:var(--sim-gold-dark);
+      color:#fff;
+      font-weight:700;
+      padding:10px 20px;
+      border-radius:8px;
+      text-decoration:none;
+      font-size:13.5px;
+      transition:background .15s;
+    }
+    #sluice-sim .cta-btn:hover{ background:#8a5f08; color:#fff; }
+
+    #sluice-sim .sim-disclaimer{
+      margin-top:22px;
+      font-size:11.5px;
+      color:var(--sim-muted);
+      text-align:center;
+      max-width:700px;
+      margin-left:auto; margin-right:auto;
+      line-height:1.5;
+    }
+
+    @media (max-width: 900px){
+      #sluice-sim .sim-controls{ width:100%; }
+      #sluice-sim .sim-stage{ min-width:0; width:100%; }
+    }
+  </style>
+
+  <!-- =======================================================
+  * Template Name: NewBiz
+  * Template URL: https://bootstrapmade.com/newbiz-bootstrap-business-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
-<body>
 
-<h1>⛏ Simulador de Canaleta de Oro <span class="tag">3D</span></h1>
-<div class="subtitle">Modelo físico interactivo de una canaleta (sluice box) para la concentración gravimétrica de oro.</div>
+<body class="starter-page-page">
 
-<div class="layout">
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-  <div class="panel controls">
-    <h2>Escenarios predefinidos</h2>
-    <div class="presets">
-      <button class="preset-btn" data-preset="coarse">Oro grueso</button>
-      <button class="preset-btn" data-preset="fine">Oro fino</button>
-      <button class="preset-btn" data-preset="clog">Colmatación</button>
-      <button class="preset-btn" data-preset="wash">Arrastre</button>
+      <a href="../index.html" class="logo d-flex align-items-center">
+        <img src="../assets/img/logo.png" alt="">
+        <!-- Uncomment the line below if you also wish to use text logo -->
+        <!-- <h1 class="sitename">NewBiz</h1>  -->
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="../index.html">Inicio</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
     </div>
+  </header>
 
-    <h2>Parámetros</h2>
+  <main class="main">
 
-    <div class="ctrl">
-      <label>Pendiente de la canaleta <span class="val" id="v_slope">6°</span></label>
-      <input type="range" id="slope" min="3" max="14" value="6" step="0.5">
-      <div class="hint">Práctica de campo: ~1″ por pie (≈4.8°) como punto de partida. El rango habitual de trabajo es 4–7°, hasta ~12° en mantas/highbankers para oro fino.</div>
-    </div>
-
-    <div class="ctrl">
-      <label>Caudal de agua <span class="val" id="v_flow">1.00</span></label>
-      <input type="range" id="flow" min="20" max="200" value="100" step="5">
-    </div>
-
-    <div class="ctrl">
-      <label>Alimentación de material <span class="val" id="v_feed">18/s</span></label>
-      <input type="range" id="feed" min="4" max="40" value="18" step="1">
-    </div>
-
-    <div class="ctrl">
-      <label>Ley de oro en el mineral <span class="val" id="v_gold">3%</span></label>
-      <input type="range" id="goldpct" min="1" max="20" value="3" step="1">
-    </div>
-
-    <div class="ctrl">
-      <label>Granulometría del material <span class="val" id="v_size">media</span></label>
-      <input type="range" id="grainsize" min="1" max="3" value="2" step="1">
-      <div class="hint">Afecta la velocidad de sedimentación de las partículas</div>
-    </div>
-
-    <div class="ctrl">
-      <label>Altura de los riffles <span class="val" id="v_rh">7</span></label>
-      <input type="range" id="riffleH" min="3" max="14" value="7" step="1">
-      <div class="hint">Referencia de campo: riffles de ~1.5″ (≈3.8 cm), con separación de 0.5″ a varias pulgadas.</div>
-    </div>
-
-    <div class="ctrl">
-      <label>Separación entre riffles <span class="val" id="v_rs">55</span></label>
-      <input type="range" id="riffleS" min="30" max="90" value="55" step="5">
-    </div>
-
-    <div class="btnrow">
-      <button class="primary" id="toggleBtn">Pausa</button>
-      <button id="resetBtn">Reiniciar</button>
-    </div>
-    <div class="btnrow" style="margin-top:8px;">
-      <button id="reportBtn">Descargar informe (.csv)</button>
-    </div>
-
-    <div class="legend">
-      <span><span class="dot" style="background:var(--gold);"></span>oro</span>
-      <span><span class="dot" style="background:#9db4c4;"></span>arena</span>
-    </div>
-  </div>
-
-  <div class="panel stage">
-    <div class="canvas-wrap" id="canvasWrap">
-      <canvas id="gl"></canvas>
-      <div class="hud" id="hud">pendiente: 6°&nbsp;&nbsp;caudal: 1.00</div>
-      <div class="hud-drag">arrastra para rotar, rueda para zoom</div>
-    </div>
-
-    <div class="stats">
-      <div class="stat gold">
-        <div class="num" id="s_captured">0</div>
-        <div class="lbl">oro capturado</div>
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Simulador de Canaleta de Oro 3D</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="../index.html">Inicio</a></li>
+            <li class="current">Simulador de Canaleta 3D</li>
+          </ol>
+        </nav>
       </div>
-      <div class="stat lost">
-        <div class="num" id="s_lost">0</div>
-        <div class="lbl">oro perdido</div>
+    </div><!-- End Page Title -->
+
+    <!-- Starter Section Section -->
+    <section id="starter-section" class="starter-section section">
+      <div class="container">
+
+        <div id="sluice-sim">
+          <div class="sim-subtitle">Modelo físico interactivo de una canaleta (sluice box) para la concentración gravimétrica de oro. Ajustá los parámetros y mirá cómo cambia la recuperación.</div>
+
+          <div class="sim-layout">
+
+            <div class="sim-panel sim-controls">
+              <h2>Escenarios predefinidos</h2>
+              <div class="sim-presets">
+                <button class="preset-btn" data-preset="coarse">Oro grueso</button>
+                <button class="preset-btn" data-preset="fine">Oro fino</button>
+                <button class="preset-btn" data-preset="clog">Colmatación</button>
+                <button class="preset-btn" data-preset="wash">Arrastre</button>
+              </div>
+
+              <h2>Parámetros</h2>
+
+              <div class="ctrl">
+                <label>Pendiente de la canaleta <span class="val" id="v_slope">6°</span></label>
+                <input type="range" id="slope" min="3" max="14" value="6" step="0.5">
+                <div class="hint">Práctica de campo: ~1″ por pie (≈4.8°) como punto de partida. El rango habitual de trabajo es 4–7°, hasta ~12° en mantas/highbankers para oro fino.</div>
+              </div>
+
+              <div class="ctrl">
+                <label>Caudal de agua <span class="val" id="v_flow">1.00</span></label>
+                <input type="range" id="flow" min="20" max="200" value="100" step="5">
+              </div>
+
+              <div class="ctrl">
+                <label>Alimentación de material <span class="val" id="v_feed">18/s</span></label>
+                <input type="range" id="feed" min="4" max="40" value="18" step="1">
+              </div>
+
+              <div class="ctrl">
+                <label>Ley de oro en el mineral <span class="val" id="v_gold">3%</span></label>
+                <input type="range" id="goldpct" min="1" max="20" value="3" step="1">
+              </div>
+
+              <div class="ctrl">
+                <label>Granulometría del material <span class="val" id="v_size">media</span></label>
+                <input type="range" id="grainsize" min="1" max="3" value="2" step="1">
+                <div class="hint">Afecta la velocidad de sedimentación de las partículas</div>
+              </div>
+
+              <div class="ctrl">
+                <label>Altura de los riffles <span class="val" id="v_rh">7</span></label>
+                <input type="range" id="riffleH" min="3" max="14" value="7" step="1">
+                <div class="hint">Referencia de campo: riffles de ~1.5″ (≈3.8 cm), con separación de 0.5″ a varias pulgadas.</div>
+              </div>
+
+              <div class="ctrl">
+                <label>Separación entre riffles <span class="val" id="v_rs">55</span></label>
+                <input type="range" id="riffleS" min="30" max="90" value="55" step="5">
+              </div>
+
+              <div class="sim-btnrow">
+                <button class="primary" id="toggleBtn">Pausa</button>
+                <button id="resetBtn">Reiniciar</button>
+              </div>
+              <div class="sim-btnrow" style="margin-top:8px;">
+                <button id="reportBtn">Descargar informe (.csv)</button>
+              </div>
+
+              <div class="sim-legend">
+                <span><span class="dot" style="background:var(--sim-gold);"></span>oro</span>
+                <span><span class="dot" style="background:#9db4c4;"></span>arena</span>
+              </div>
+            </div>
+
+            <div class="sim-panel sim-stage">
+              <div class="sim-canvas-wrap" id="canvasWrap">
+                <canvas id="gl"></canvas>
+                <div class="hud" id="hud">pendiente: 6°&nbsp;&nbsp;caudal: 1.00</div>
+                <div class="hud-drag">arrastra para rotar, rueda para zoom</div>
+              </div>
+
+              <div class="sim-stats">
+                <div class="stat gold">
+                  <div class="num" id="s_captured">0</div>
+                  <div class="lbl">oro capturado</div>
+                </div>
+                <div class="stat lost">
+                  <div class="num" id="s_lost">0</div>
+                  <div class="lbl">oro perdido</div>
+                </div>
+                <div class="stat">
+                  <div class="num" id="s_recovery">—</div>
+                  <div class="lbl">recuperación, %</div>
+                </div>
+                <div class="stat sand">
+                  <div class="num" id="s_sand">0</div>
+                  <div class="lbl">arena procesada</div>
+                </div>
+              </div>
+
+              <div class="sim-chartbox">
+                <div class="lbl">recuperación de oro en el tiempo</div>
+                <canvas id="chart" width="600" height="60"></canvas>
+              </div>
+
+              <div class="cta">
+                <div class="cta-title">¿Este es tu material real?</div>
+                <div class="cta-text">
+                  La simulación es una aproximación. Si querés un cálculo de canaleta ajustado a la
+                  granulometría y el caudal de tu yacimiento — pendiente óptima, tipo de riffle,
+                  estimación de pérdidas de oro fino — podemos ayudarte.
+                </div>
+                <a class="cta-btn" href="../contactos.html">Solicitar análisis →</a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="sim-disclaimer">
+            Modelo demostrativo con fines educativos y de marketing de equipos. La física está simplificada
+            para ilustrar de forma intuitiva los principios de la concentración gravimétrica y no constituye
+            una herramienta de cálculo de ingeniería.
+          </div>
+        </div>
+
       </div>
-      <div class="stat">
-        <div class="num" id="s_recovery">—</div>
-        <div class="lbl">recuperación, %</div>
-      </div>
-      <div class="stat sand">
-        <div class="num" id="s_sand">0</div>
-        <div class="lbl">arena procesada</div>
-      </div>
-    </div>
+    </section><!-- /Starter Section Section -->
 
-    <div class="chartbox">
-      <div class="lbl">recuperación de oro en el tiempo</div>
-      <canvas id="chart" width="600" height="60"></canvas>
-    </div>
+  </main>
 
-    <div class="cta">
-      <div class="cta-title">¿Este es tu material real?</div>
-      <div class="cta-text">
-        La simulación es una aproximación. Si querés un cálculo de canaleta ajustado a la
-        granulometría y el caudal de tu yacimiento - pendiente óptima, tipo de riffle,
-        estimación de pérdidas (recuperaciòn) de oro fino - podemos ayudarte.
-      </div>
-      <a class="cta-btn" href="../contactos.html">Solicitar análisis →</a>
-    </div>
+  <footer id="footer" class="footer dark-background">
 
-    
-  </div>
-
-</div>
-
-<footer>
-  Modelo demostrativo con fines educativos y de marketing de equipos. La física está simplificada
-  para ilustrar de forma intuitiva los principios de la concentración gravimétrica y no constituye
-  una herramienta de cálculo de ingeniería.
-
-          <div class="container copyright text-center mt-4">
+        <div class="container copyright text-center mt-4">
       <p>
         © <span>Copyright 2024-<span id="year"></span> |</span>
         <strong class="px-1 sitename">
@@ -381,11 +423,38 @@
       <script>
         document.getElementById('year').textContent = new Date().getFullYear();
       </script>
-
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
     </div>
-</footer>
 
-<script>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="../assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+  <!-- ===== Gold Sluice Simulator (Three.js embedded inline below) ===== -->
+  <script>
 console.warn( 'Scripts "build/three.js" and "build/three.min.js" are deprecated with r150+, and will be removed with r160. Please use ES Modules or alternatives: https://threejs.org/docs/index.html#manual/en/introduction/Installation' );
 /**
  * @license
