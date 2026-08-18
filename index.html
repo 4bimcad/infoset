@@ -129,293 +129,206 @@
         </div>
       </div>
 
-    </section><!-- /Hero Section -->
+    </section>
 
-    <!-- About Section -->
-    <section id="about" class="about section">
+    <section>
 
-      <div class="container">
 
-        <div class="row gy-4">
-
-          <div class="col-lg-6 position-relative align-self-start order-lg-last order-first" data-aos="fade-up"
-            data-aos-delay="200">
-            <img src="assets/img/about.png" class="img-fluid" alt="">
-            <!-- <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a> -->
-          </div>
-
-          <div class="col-lg-6 content order-last  order-lg-first" data-aos="fade-up" data-aos-delay="100">
-            <h3>Sobre nosotros</h3>
-            <p>
-              INFOSET ofrece gestión integral de negocios, formación profesional y soluciones tecnológicas para el
-              sector minero.
-            </p>
-            <ul>
-              <li>
-                <i class="bi bi-people"></i>
-                <div>
-                  <h5>Trabajo Individual con Clientes y Capacitación</h5>
-                  <p>Ofrecemos un enfoque personalizado para cada profesional y empresa. Nuestros servicios incluyen
-                    diseño e implementación de cursos de capacitación con certificación válida, asesoría en
-                    automatización de procesos administrativos, y desarrollo de herramientas tecnológicas para optimizar
-                    el trabajo en el sector.</p>
-                </div>
-              </li>
-              <li>
-                <i class="bi bi-buildings"></i>
-                <div>
-                  <h5>Servicios Corporativos y Formación Profesional</h5>
-                  <p>Para empresas, proporcionamos programas de capacitación especializados, consultoría en gestión
-                    operativa, e implementación de soluciones tecnológicas básicas. Nuestra formación culmina con
-                    certificados que validan las competencias técnicas de los trabajadores, contribuyendo a su
-                    crecimiento profesional y a la eficiencia organizacional.</p>
-                </div>
-              </li>
-              <li>
-                <i class="bi bi-graph-up"></i>
-                <div>
-                  <h5>Consultoría y Soluciones Tecnológicas</h5>
-                  <p>Brindamos servicios de consultoría y apoyamos a los clientes en el desarrollo comercial, incluido
-                    el análisis de rentabilidad, la gestión de costos, la automatización y la previsión. Nuestro equipo
-                    desarrolla herramientas digitales para la gestión de proyectos, aumentando la eficiencia de la
-                    producción y ahorrando recursos.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-
+      <section id="infoset-news" class="py-5">
+        <div class="container" style="max-width: 720px;">
+          <div id="news-list"><!-- рендерится через JS ниже --></div>
         </div>
+      </section>
 
-      </div>
+      <style>
+        #infoset-news h3 {
+          font-size: 1.25rem;
+          font-weight: 700;
+          text-decoration: underline;
+          margin: 1.5rem 0 0.75rem;
+        }
 
-    </section><!-- /About Section -->
+        #infoset-news h3:first-child {
+          margin-top: 0;
+        }
 
-    <!-- Features Section -->
-    <section id="features" class="features section">
+        #infoset-news ul {
+          list-style: none;
+          padding-left: 0;
+          margin: 0;
+        }
 
-      <div class="container">
+        #infoset-news li {
+          margin-bottom: 0.7rem;
+          line-height: 1.45;
+          font-size: 1.1rem;
+        }
 
-        <div class="row gy-4 align-items-center features-item">
-          <div class="col-md-5 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="100">
-            <img src="assets/img/empresario.png" class="img-fluid" alt="">
-          </div>
-          <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
-            <h3>Las principales ventajas de trabajar con nosotros.</h3>
-            <p class="fst-italic">
-              Nos esforzamos por crear el máximo valor para nuestros clientes a través de una combinación de
-              experiencia, tecnología y un enfoque personalizado. Nuestras soluciones le ayudarán a mejorar los procesos
-              operativos, aumentar la rentabilidad de la producción y desarrollar el personal.
-            </p>
-            <ul>
-              <li><i class="bi bi-check-circle"></i><span> Un enfoque integrado para la automatización.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span> Formación y certificación de especialistas.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span> Soluciones de consultoría personalizadas.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span> Tecnologías avanzadas para los negocios.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span> Experiencia y confiabilidad.</span></li>
-            </ul>
-          </div>
-        </div><!-- Features Item -->
+        #infoset-news a {
+          color: #000000;
+          text-decoration: none;
+        }
 
-        <div class="row gy-4 align-items-center features-item">
-          <div class="col-md-5 order-lg-last d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-            <img src="assets/img/smart_service.png" class="img-fluid" alt="">
-          </div>
-          <div class="col-md-7" data-aos="fade-up" data-aos-delay="200">
-            <h3>Los mejores especialistas en soluciones de minería</h3>
-            <p class="fst-italic">
-              INFOSET es un equipo de profesionales con amplia trayectoria práctica en el sector de Minería.
-            </p>
-            <p>
-              Hemos crecido desde el trabajo de campo hasta la gestión de grandes proyectos, conociendo todos los
-              aspectos de la industria desde adentro. Combinamos esta experiencia directa con soluciones tecnológicas
-              avanzadas para ofrecer servicios que realmente impulsan su negocio.
-            </p>
+        #infoset-news a:hover {
+          text-decoration: underline;
+        }
 
-          </div>
-        </div><!-- Features Item -->
+        #infoset-news .news-date {
+          color: #666;
+          font-size: 0.9em;
+          margin-right: 0.4em;
+          white-space: nowrap;
+        }
 
-      </div>
+        #infoset-news .news-source {
+          color: #888;
+          font-size: 0.95em;
+        }
 
-    </section><!-- /Features Section -->
+        #infoset-news .news-toggle {
+          background: none;
+          border: none;
+          color: #22579E;
+          text-decoration: underline;
+          font-size: 1rem;
+          cursor: pointer;
+          padding: 0.3rem 0 1rem;
+          display: block;
+          margin-left: auto;
+        }
 
-    <!-- Services Section -->
-    <section id="services" class="services section light-background">
+        #infoset-news .news-toggle:hover {
+          text-decoration: underline;
+        }
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Servicios</h2>
-        <p>A continuación se detallan nuestros principales servicios que brinda nuestra empresa.</p>
-      </div><!-- End Section Title -->
+        #infoset-news .news-more {
+          display: none;
+        }
 
-      <div class="container">
-        <div class="row gy-4">
+        #infoset-news .news-more.expanded {
+          display: block;
+        }
+      </style>
 
-          <!-- Administración Empresarial -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-building-gear" style="color: #0d6efd;"></i>
-              </div>
-              <a class="stretched-link">
-                <h3>Administración Empresarial</h3>
-              </a>
-              <p>Gestión integral para empresas mineras: optimización de procesos, asesoría financiera y
-                elaboración de informes gerenciales.</p>
-            </div>
-          </div><!-- End Service Item -->
+      <script>
+        const SUPABASE_URL = "https://qsmojrfnwqnaxodqhufb.supabase.co"; // TODO: заменить
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzbW9qcmZud3FuYXhvZHFodWZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwMTEwMDgsImV4cCI6MjEwMjU4NzAwOH0.271hpYhJsjYUmQSH1tax833gx2dHj2JRNvgF8rjWbXA";                // TODO: заменить
 
-          <!-- Consultoría Especializada -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-graph-up-arrow" style="color: #fd7e14;"></i>
-              </div>
-              <a class="stretched-link">
-                <h3>Consultoría Especializada</h3>
-              </a>
-              <p>Asesoramiento en rentabilidad de proyectos, reducción de costos operativos y cumplimiento normativo
-                sectorial.</p>
-            </div>
-          </div><!-- End Service Item -->
+        const VISIBLE_COUNT = 5; // сколько новостей видно сразу в каждой категории
 
-          <!-- Cursos y Certificaciones -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-mortarboard" style="color: #20c997;"></i>
-              </div>
-              <a class="stretched-link">
-                <h3>Cursos y Certificaciones</h3>
-              </a>
-              <p>Programas de formación práctica para especialistas del sector, con certificación oficial que valida sus
-                competencias profesionales.</p>
-            </div>
-          </div><!-- End Service Item -->
+        // Красивые названия источников (id из sources.yaml -> подпись на сайте)
+        const SOURCE_LABELS = {
+          rumbominero: "Rumbo Minero",
+          energiminas: "Energiminas",
+          proactivo: "Proactivo",
+          mineria_pan_americana: "Minería Pan-Americana",
+          gestion_economia: "Gestión",
+          elcomercio_economia: "El Comercio",
+          minem_noticias: "MINEM",
+          minam_noticias: "MINAM",
+          mining_com: "Mining.com",
+          im_mining: "International Mining",
+          emj: "E&MJ",
+        };
 
-          <!-- Automatización -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-robot" style="color: #6f42c1;"></i>
-              </div>
-              <a class="stretched-link">
-                <h3>Automatización</h3>
-              </a>
-              <p>Simplificación y automatización de procesos administrativos utilizando tecnologías modernas para
-                ahorrar tiempo y recursos.</p>
-            </div>
-          </div><!-- End Service Item -->
+        const CATEGORY_LABELS = {
+          noticias: "Noticias del sector",
+          normativa: "Normativa y regulación",
+          internacional: "Internacional",
+        };
 
-          <!-- Soluciones Tecnológicas -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-tools" style="color: #d63384;"></i>
-              </div>
-              <a class="stretched-link">
-                <h3>Soluciones a Medida</h3>
-              </a>
-              <p>Desarrollo de herramientas tecnológicas específicas para resolver problemas únicos de su empresa en el
-                sector minero.</p>
-            </div>
-          </div><!-- End Service Item -->
+        const MONTHS_ES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
-          <!-- BI y Reportes -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-clipboard2-data" style="color: #198754;"></i>
-              </div>
-              <a class="stretched-link">
-                <h3>BI y Reportes</h3>
-              </a>
-              <p>Tableros de control y reportes ejecutivos con los indicadores clave de su operación para una mejor toma
-                de decisiones.</p>
-            </div>
-          </div><!-- End Service Item -->
-        </div>
-      </div>
+        async function loadNews() {
+          const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    </section><!-- /Services Section -->
+          const { data, error } = await client
+            .from("news_items")
+            .select("title,url,published_at,category,source")
+            .order("published_at", { ascending: false })
+            .limit(300);
 
-    <!-- Why Us Section -->
-    <section id="why-us" class="why-us section dark-background">
+          if (error) {
+            console.error("Error cargando noticias:", error);
+            return;
+          }
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>¿Por qué elegirnos?</h2>
-        <p>Ofrecemos soluciones asequibles y de alta calidad para ayudarle a alcanzar sus objetivos con eficiencia y
-          rapidez.</p>
-      </div><!-- End Section Title -->
+          renderList(data || []);
+        }
 
-      <div class="container">
+        function renderList(items) {
+          const grouped = {};
+          for (const item of items) {
+            (grouped[item.category] ??= []).push(item);
+          }
 
-        <div class="row gy-4">
+          const container = document.getElementById("news-list");
+          container.innerHTML = "";
 
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="card-item">
-              <span>01</span>
-              <h4><a class="stretched-link">Calidad Que Necesites</a></h4>
-              <p>Servicios prácticos creados por quienes conocen el trabajo real en minería y construcción.</p>
-            </div>
-          </div><!-- Card Item -->
+          for (const [category, label] of Object.entries(CATEGORY_LABELS)) {
+            const categoryItems = grouped[category] || [];
+            if (categoryItems.length === 0) continue;
 
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="card-item">
-              <span>02</span>
-              <h4><a class="stretched-link">Precios Sin Sorpresas</a></h4>
-              <p>Soluciones profesionales a costos transparentes y accesibles.</p>
-            </div>
-          </div><!-- Card Item -->
+            const heading = document.createElement("h3");
+            heading.textContent = label;
+            container.appendChild(heading);
 
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="card-item">
-              <span>03</span>
-              <h4><a class="stretched-link">Resultados Rápidos</a></h4>
-              <p>Sin largos trámites, al punto.</p>
-            </div>
-          </div><!-- Card Item -->
+            const visibleItems = categoryItems.slice(0, VISIBLE_COUNT);
+            const restItems = categoryItems.slice(VISIBLE_COUNT);
 
-        </div>
+            const ul = document.createElement("ul");
+            ul.innerHTML = visibleItems.map(renderItem).join("");
+            container.appendChild(ul);
 
-      </div>
+            if (restItems.length > 0) {
+              const moreId = `news-more-${category}`;
+              const moreUl = document.createElement("ul");
+              moreUl.className = "news-more";
+              moreUl.id = moreId;
+              moreUl.innerHTML = restItems.map(renderItem).join("");
+              container.appendChild(moreUl);
 
-    </section><!-- /Why Us Section -->
+              const toggle = document.createElement("button");
+              toggle.className = "news-toggle";
+              toggle.type = "button";
+              toggle.textContent = `Mostrar todas las noticias (${restItems.length} más)`;
+              toggle.addEventListener("click", () => {
+                const isExpanded = moreUl.classList.toggle("expanded");
+                toggle.textContent = isExpanded
+                  ? "Mostrar menos"
+                  : `Mostrar todas las noticias (${restItems.length} más)`;
+              });
+              container.appendChild(toggle);
+            }
+          }
+        }
 
+        function renderItem(item) {
+          const sourceLabel = SOURCE_LABELS[item.source] || item.source;
+          return `
+      <li>
+        <span class="news-date">${formatDate(item.published_at)}</span>
+        <a href="${item.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title)}</a>
+        <span class="news-source">(${escapeHtml(sourceLabel)})</span>
+      </li>`;
+        }
 
+        function formatDate(iso) {
+          if (!iso) return "";
+          const d = new Date(iso);
+          return `${d.getDate()} ${MONTHS_ES[d.getMonth()]}`;
+        }
 
-    <!-- Clients Section -->
-    <section id="clients" class="clients section light-background">
+        function escapeHtml(str) {
+          const div = document.createElement("div");
+          div.textContent = str || "";
+          return div.innerHTML;
+        }
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        document.addEventListener("DOMContentLoaded", loadNews);
+      </script>
 
-        <div class="row g-0 clients-wrap">
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/1.png" class="img-fluid" alt=""
-              title="Nuestros clientes están satisfechos y vuelven a nosotros">
-          </div>
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/2.png" class="img-fluid" alt=""
-              title="Trabajamos las 24 horas, los 7 días de la semana">
-          </div>
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/3.png" class="img-fluid" alt=""
-              title="Verificación de autenticidad de certificados mediante código QR">
-          </div>
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="assets/img/clients/4.png" class="img-fluid" alt=""
-              title="Conexión SSL protegida para la seguridad de tus datos">
-          </div>
-
-        </div>
-
-      </div>
-
-    </section><!-- /Clients Section -->
+    </section>
 
 
   </main>
@@ -534,6 +447,7 @@
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
