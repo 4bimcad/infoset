@@ -61,6 +61,88 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+<style>
+  /* Было: min-height: 90vh; padding: 120px 0; */
+  .hero {
+    min-height: calc(30vh + 30px) !important;
+    padding: 55px 0 !important; /* было 40px -- добавлено +15px сверху и снизу (+30px итого) */
+  }
+ 
+  /* Было: padding: 60px 0; (планшеты/десктоп <=1200px) */
+  @media (max-width: 1200px) {
+    .hero {
+      padding: 39px 0 !important; /* было 24px -- тоже +15px на сторону */
+    }
+  }
+ 
+  /* Было: font-size: 48px; line-height: 56px; */
+  .hero h1 {
+    font-size: 30px !important;
+    line-height: 36px !important;
+  }
+ 
+  /* Было: font-size: 20px; margin: 5px 0 30px 0; */
+  .hero p {
+    font-size: 16px !important;
+    margin: 5px 0 16px 0 !important;
+  }
+ 
+  /* Было: padding: 10px 28px 12px 28px; font-size: 15px; font-weight: 400; */
+  .hero .btn-get-started {
+    padding: 8px 22px 9px 22px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important; /* жирнее, как просил */
+  }
+ 
+  .hero .btn-watch-video {
+    font-size: 14px !important;
+  }
+ 
+  /* Картинка не имела ограничения по размеру в оригинале (просто img-fluid
+     на всю ширину колонки col-lg-5) -- ограничение по max-height ломало
+     адаптивность (при разных пропорциях экрана масштабировалась криво).
+     Оставляем масштабирование по ШИРИНЕ колонки, как и было задумано --
+     это и даёт настоящую адаптивность. */
+  .hero .hero-img img {
+    max-width: 65% !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+ 
+  /* Было: font-size: 28px/36px (h1), 18px/24px (p), 13px (кнопки) на <640px */
+  @media (max-width: 640px) {
+    .hero h1 {
+      font-size: 20px !important;
+      line-height: 26px !important;
+    }
+ 
+    .hero p {
+      font-size: 13px !important;
+      line-height: 18px !important;
+      margin-bottom: 12px !important;
+    }
+ 
+    .hero .btn-get-started,
+    .hero .btn-watch-video {
+      font-size: 12px !important;
+      padding: 6px 16px 7px 16px !important;
+    }
+ 
+    .hero .hero-img img {
+      max-width: 60% !important;
+    }
+  }
+ 
+  @media (max-width: 991.98px) {
+    .hero .hero-img {
+      order: 2 !important;
+      margin-top: 20px !important;
+    }
+  }
+</style>
+
   <!-- =======================================================
   * Template Name: NewBiz
   * Template URL: https://bootstrapmade.com/newbiz-bootstrap-business-template/
