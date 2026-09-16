@@ -192,12 +192,66 @@
             <p>Cursos gratis, herramientas, certificación, consultas, información y servicios tecnológicos para Minería.
             </p>
             <div class="d-flex gap-2">
-              <a href="cursos.html" class="btn-get-started">Ver Cursos Gratis</a>
-              <a href="informacion_premium.html" class="btn-get-started">Ver Info Premium</a>
+              <a href="cursos.html" class="btn-get-started btn-cursos">
+                <i class="bi bi-mortarboard-fill"></i> CURSOS GRATIS
+              </a>
+              <a href="https://mineroranking.infoset.org.pe/" target="_blank" rel="noopener"
+                class="btn-get-started btn-ranking">
+                <i class="bi bi-graph-up-arrow"></i> MINERO RANKING
+              </a>
             </div>
           </div>
         </div>
       </div>
+      <style>
+        .btn-get-started {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 26px;
+          border-radius: 50px;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          font-size: 15px;
+          text-decoration: none;
+          transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+
+        .btn-get-started i {
+          transition: transform 0.25s ease;
+        }
+
+        .btn-get-started:hover i {
+          transform: scale(1.15) rotate(-5deg);
+        }
+
+        a.btn-get-started.btn-cursos {
+          background: #FFC107 !important;
+          color: #1a1a1a !important;
+          border: 2px solid #FFC107 !important;
+        }
+
+        a.btn-get-started.btn-cursos:hover {
+          background: #ffcd2e !important;
+          color: #1a1a1a !important;
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(255, 193, 7, 0.45);
+        }
+
+        a.btn-get-started.btn-ranking {
+          background: #ffffff !important;
+          color: #0d47a1 !important;
+          border: 2px solid #ffffff !important;
+        }
+
+        a.btn-get-started.btn-ranking:hover {
+          background: #ffffff !important;
+          color: #0d47a1 !important;
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(255, 255, 255, 0.35);
+        }
+      </style>
+
 
     </section>
 
