@@ -22,9 +22,40 @@
 
     <p class="mb-3 fs-5">Página no encontrada o temporalmente no disponible  :((</p>
 
-    <a href="https://infoset.org.pe" class="btn btn-primary">
-        <i class="bi bi-house me-2"></i> INFOSET.ORG.PE
-    </a>
+ <style>
+  .btn-infoset {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .85rem 1.8rem;
+    border: 0;
+    border-radius: 50rem;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: .03em;
+    background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+    box-shadow: 0 8px 20px rgba(13, 110, 253, .35);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-infoset:hover {
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(102, 16, 242, .4);
+  }
+  .btn-infoset:active { transform: translateY(0); }
+  .btn-infoset .bi-arrow-right {
+    transition: transform .2s ease;
+  }
+  .btn-infoset:hover .bi-arrow-right {
+    transform: translateX(5px);
+  }
+</style>
+
+<a href="https://infoset.org.pe" class="btn-infoset text-decoration-none">
+  <i class="bi bi-house"></i>
+  <span>Volver a INFOSET</span>
+  <i class="bi bi-arrow-right"></i>
+</a>
 
 </body>
 
