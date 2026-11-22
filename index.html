@@ -20,7 +20,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJNKVKZCP1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
+    function gtag() {dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-PJNKVKZCP1');
   </script>
@@ -251,6 +251,138 @@
       </style>
     </section>
 
+    <!-- ===== Bloque MAPE para infoset.org.pe (autónomo, sin dependencias) =====
+     Pégalo donde quieras que aparezca. El botón lleva a https://mape.infoset.org.pe (se abre en una pestaña nueva). -->
+    <style>
+      .mape-ad {
+        box-sizing: border-box;
+        max-width: 1100px;
+        margin: 24px auto;
+        padding: 28px 32px;
+        background: #fff;
+        color: #212529;
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+        font-family: inherit;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 20px 32px;
+      }
+
+      .mape-ad * {
+        box-sizing: border-box;
+      }
+
+      .mape-ad__text {
+        flex: 1 1 380px;
+      }
+
+      .mape-ad__tag {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        background: #f1f3f5;
+        color: #212529;
+        padding: 3px 10px;
+        border-radius: 20px;
+        margin-bottom: 10px;
+      }
+
+      .mape-ad__title {
+        margin: 0 0 8px;
+        font-size: 1.6rem;
+        line-height: 1.25;
+        font-weight: 700;
+        color: #212529;
+      }
+
+      .mape-ad__desc {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #343a40;
+      }
+
+      .mape-ad__action {
+        flex: 0 0 auto;
+        text-align: center;
+      }
+
+      .mape-ad__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #dc3545;
+        color: #fff !important;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: 14px 28px;
+        border-radius: 8px;
+        text-decoration: none;
+      }
+
+      .mape-ad__btn:hover {
+        background: #bb2d3b;
+        color: #fff;
+      }
+
+      .mape-ad__btn svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+
+      .mape-ad__note {
+        margin: 10px 0 0;
+        font-size: 12px;
+        color: #6c757d;
+        max-width: 280px;
+      }
+
+      @media (max-width: 600px) {
+        .mape-ad {
+          padding: 22px 18px;
+        }
+
+        .mape-ad__action {
+          width: 100%;
+        }
+
+        .mape-ad__btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .mape-ad__note {
+          max-width: none;
+        }
+      }
+    </style>
+
+    <div class="mape-ad">
+      <div class="mape-ad__text">
+        <span class="mape-ad__tag">Guía gratuita</span>
+        <h3 class="mape-ad__title">¿Estás inscrito en el REINFO? Prepárate para el nuevo régimen MAPE</h3>
+        <p class="mape-ad__desc">Regístrate gratis y recibe por correo una guía práctica con los nuevos requisitos,
+          procedimientos y cambios normativos para la pequeña minería y minería artesanal en el Perú.</p>
+      </div>
+      <div class="mape-ad__action">
+        <a class="mape-ad__btn" href="https://mape.infoset.org.pe" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M8 1a.5.5 0 0 1 .5.5v7.79l2.65-2.64a.5.5 0 0 1 .7.7l-3.5 3.5a.5.5 0 0 1-.7 0l-3.5-3.5a.5.5 0 1 1 .7-.7L7.5 9.29V1.5A.5.5 0 0 1 8 1zM2 13.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+          </svg>
+          Solicitar guía gratuita
+        </a>
+        <p class="mape-ad__note">* La guía se enviará cuando la ley sea aprobada y estén claras las medidas y reglas de
+          aplicación.</p>
+      </div>
+    </div>
+    <!-- ===== Fin del bloque MAPE ===== -->
+
 
 
     <section>
@@ -362,10 +494,10 @@
         async function loadNews() {
           const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-          const { data, error } = await client
+          const {data, error} = await client
             .from("news_items")
             .select("title,url,published_at,category,source")
-            .order("published_at", { ascending: false })
+            .order("published_at", {ascending: false})
             .limit(300);
 
           if (error) {
